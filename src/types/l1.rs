@@ -1,4 +1,4 @@
-use core::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign};
+use core::ops::{Add, AddAssign, Sub, SubAssign, Mul};
 use core::marker::PhantomData;
 
 use crate::types::l1_t1::{L1_T1, MeterSecond};
@@ -8,8 +8,8 @@ use crate::{Dimension, QuantityNum, Unit};
 pub type Length<V, U> = L1<V, U>;
 pub struct L1<V, U>
 where V: QuantityNum, U: Unit {
-    unit: PhantomData<U>,
-    value: V
+    pub(crate) unit: PhantomData<U>,
+    pub(crate) value: V
 }
 
 impl<V: QuantityNum, U: Unit> Dimension for L1<V, U> {
@@ -58,7 +58,7 @@ impl<V: QuantityNum, U: Unit> SubAssign<L1<V, U>> for L1<V,U> {
     }
 }
 
-/// Mul
+/// Mul with same ValueType and Second and Meter
 impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for L1<V, Meter> {
     type Output = L1_T1<V, MeterSecond>;
 
@@ -70,5 +70,17 @@ impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for L1<V, Meter> {
     }
 }
 
+pub struct Kilometer;
+impl Unit for Kilometer {}
+
 pub struct Meter;
 impl Unit for Meter {}
+
+pub struct Millimeter;
+impl Unit for Millimeter {}
+
+pub struct Micrometer;
+impl Unit for Micrometer {}
+
+pub struct Nanometer;
+impl Unit for Nanometer {}
