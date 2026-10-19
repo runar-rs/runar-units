@@ -1,5 +1,6 @@
 use core::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
 
+pub mod consts;
 pub mod types;
 
 pub trait QuantityNum: Add + AddAssign + Sub + SubAssign + Mul + MulAssign + Div + DivAssign + Clone + Sized {}

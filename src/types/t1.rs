@@ -1,11 +1,12 @@
+use core::ops::{Add, AddAssign, Sub, SubAssign};
 use core::marker::PhantomData;
 use crate::{Dimension, DimensionWithUnit, QuantityNum, Unit};
 
 pub type Time<V, U> = T1<V, U>;
 pub struct T1<V, U>
 where V: QuantityNum, U: Unit {
-    unit: PhantomData<U>,
-    value: V
+    pub(crate) unit: PhantomData<U>,
+    pub(crate) value: V
 }
 
 impl<V: QuantityNum, U: Unit> Dimension for T1<V, U> {
@@ -16,8 +17,42 @@ impl<V: QuantityNum, U: Unit> Dimension for T1<V, U> {
     }
 }
 
+// Operators
+/// Add with same ValueType and same Unit
+impl<V: QuantityNum + Add<Output = V>, U: Unit> Add<T1<V, U>> for T1<V, U> {
+    type Output = Self;
+    fn add(self, rhs: T1<V, U>) -> Self::Output {
+        T1 {
+            unit: PhantomData,
+            value: self.value + rhs.value,
+        }
+    }
+}
 
+/// AddAssign with same ValueType and same Unit
+impl<V: QuantityNum, U: Unit> AddAssign<T1<V, U>> for T1<V, U> {
+    fn add_assign(&mut self, rhs: T1<V, U>) {
+        self.value += rhs.value;
+    }
+}
 
+/// Sub with same ValueType and same Unit
+impl<V: QuantityNum + Sub<Output = V>, U: Unit> Sub<T1<V, U>> for T1<V, U> {
+    type Output = Self;
+    fn sub(self, rhs: T1<V, U>) -> Self::Output {
+        T1 {
+            unit: PhantomData,
+            value: self.value - rhs.value,
+        }
+    }
+}
+
+/// SubAssign with same ValueType and same Unit
+impl<V: QuantityNum, U: Unit> SubAssign<T1<V, U>> for T1<V, U> {
+    fn sub_assign(&mut self, rhs: T1<V, U>) {
+        self.value -= rhs.value;
+    }
+}
 // Units
 
 pub struct Day;
