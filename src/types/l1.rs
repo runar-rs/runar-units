@@ -1,7 +1,8 @@
-use core::ops::{Add, AddAssign, Sub, SubAssign, Mul};
+use core::ops::{Add, AddAssign, Div, Mul, Sub, SubAssign};
 use core::marker::PhantomData;
 
 use crate::types::l1_t1::{L1_T1, MeterSecond};
+use crate::types::l1_tn1::L1_TN1;
 use crate::types::t1::{Second, T1};
 use crate::{Dimension, QuantityNum, Unit};
 
@@ -66,6 +67,17 @@ impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for L1<V, Meter> {
         L1_T1 {
             unit: PhantomData,
             value: self.value * rhs.value,
+        }
+    }
+}
+
+impl<V: QuantityNum + Div<Output = V>> Div<T1<V, Second>> for L1<V, Meter> {
+    type Output = L1_TN1<V, MeterSecond>;
+
+    fn div(self, rhs: T1<V, Second>) -> Self::Output {
+        L1_TN1 {
+            unit: PhantomData,
+            value: self.value / rhs.value,
         }
     }
 }

@@ -6,8 +6,8 @@ pub type Velocity<V, U> = L1_TN1<V, U>;
 
 #[allow(non_camel_case_types)]
 pub struct L1_TN1<V: QuantityNum, U: Unit> {
-    unit: PhantomData<U>,
-    value: V
+    pub (crate) unit: PhantomData<U>,
+    pub (crate) value: V
 }
 
 impl<V: QuantityNum, U: Unit> Dimension for L1_TN1<V, U> {
@@ -51,3 +51,6 @@ impl<V: QuantityNum, U: Unit> SubAssign<L1_TN1<V, U>> for L1_TN1<V,U> {
         self.value -= rhs.value;
     }
 }
+
+pub struct MeterPerSecond;
+impl Unit for MeterPerSecond {}
