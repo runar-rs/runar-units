@@ -225,15 +225,15 @@ impl<V: QuantityNum, U: T1Unit> DimensionWithUnit<U> for T1<V, U> {
 /// Value is saved in second and getter wants minute
 impl DimensionWithUnit<Minute> for T1<f32, Second> {
     fn get(&self) -> Self::ValueType {
-        self.value.clone() / 60.0
+        self.value / 60.0
     }
 }
 
-impl Into<T1<f32, Second>> for T1<f32, Minute> {
-    fn into(self) -> T1<f32, Second> {
+impl From<T1<f32, Minute>> for T1<f32, Second> {
+    fn from(val: T1<f32, Minute>) -> Self {
         T1 {
             unit: PhantomData,
-            value: self.value / 60.0
+            value: val.value / 60.0
         }
     }
 }
@@ -241,15 +241,15 @@ impl Into<T1<f32, Second>> for T1<f32, Minute> {
 /// Value is saved in second and getter wants minute
 impl DimensionWithUnit<Minute> for T1<f64, Second> {
     fn get(&self) -> Self::ValueType {
-        self.value.clone() / 60.0
+        self.value / 60.0
     }
 }
 
-impl Into<T1<f64, Second>> for T1<f64, Minute> {
-    fn into(self) -> T1<f64, Second> {
+impl From<T1<f64, Minute>> for T1<f64, Second> {
+    fn from(val: T1<f64, Minute>) -> Self {
         T1 {
             unit: PhantomData,
-            value: self.value / 60.0
+            value: val.value / 60.0
         }
     }
 }
@@ -257,15 +257,15 @@ impl Into<T1<f64, Second>> for T1<f64, Minute> {
 /// Value is saved in second and getter wants hour
 impl DimensionWithUnit<Hour> for T1<f32, Second> {
     fn get(&self) -> Self::ValueType {
-        self.value.clone() / 3600.0
+        self.value / 3600.0
     }
 }
 
-impl Into<T1<f32, Second>> for T1<f32, Hour> {
-    fn into(self) -> T1<f32, Second> {
+impl From<T1<f32, Hour>> for T1<f32, Second> {
+    fn from(val: T1<f32, Hour>) -> Self {
         T1 {
             unit: PhantomData,
-            value: self.value / 3600.0
+            value: val.value / 3600.0
         }
     }
 }
@@ -273,15 +273,15 @@ impl Into<T1<f32, Second>> for T1<f32, Hour> {
 /// Value is saved in second and getter wants hour
 impl DimensionWithUnit<Hour> for T1<f64, Second> {
     fn get(&self) -> Self::ValueType {
-        self.value.clone() / 3600.0
+        self.value / 3600.0
     }
 }
 
-impl Into<T1<f64, Second>> for T1<f64, Hour> {
-    fn into(self) -> T1<f64, Second> {
+impl From<T1<f64, Hour>> for T1<f64, Second> {
+    fn from(val: T1<f64, Hour>) -> Self {
         T1 {
             unit: PhantomData,
-            value: self.value / 3600.0
+            value: val.value / 3600.0
         }
     }
 }
@@ -289,15 +289,15 @@ impl Into<T1<f64, Second>> for T1<f64, Hour> {
 /// Value is saved in second and getter wants day
 impl DimensionWithUnit<Day> for T1<f32, Second> {
     fn get(&self) -> Self::ValueType {
-        self.value.clone() / 86400.0
+        self.value / 86400.0
     }
 }
 
-impl Into<T1<f32, Second>> for T1<f32, Day> {
-    fn into(self) -> T1<f32, Second> {
+impl From<T1<f32, Day>> for T1<f32, Second> {
+    fn from(val: T1<f32, Day>) -> Self {
         T1 {
             unit: PhantomData,
-            value: self.value / 86400.0,
+            value: val.value / 86400.0,
         }
     }
 }
@@ -305,15 +305,15 @@ impl Into<T1<f32, Second>> for T1<f32, Day> {
 /// Value is saved in second and getter wants day
 impl DimensionWithUnit<Day> for T1<f64, Second> {
     fn get(&self) -> Self::ValueType {
-        self.value.clone() / 86400.0
+        self.value / 86400.0
     }
 }
 
-impl Into<T1<f64, Second>> for T1<f64, Day> {
-    fn into(self) -> T1<f64, Second> {
+impl From<T1<f64, Day>> for T1<f64, Second> {
+    fn from(val: T1<f64, Day>) -> Self {
         T1 {
             unit: PhantomData,
-            value: self.value / 86400.0
+            value: val.value / 86400.0
         }
     }
 }
