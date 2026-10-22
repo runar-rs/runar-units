@@ -1,4 +1,4 @@
-use std::marker::PhantomData;
+use core::marker::PhantomData;
 use core::ops::{Add, AddAssign, Sub, SubAssign};
 
 use crate::{Dimension, QuantityNum, Unit};

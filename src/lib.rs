@@ -1,3 +1,5 @@
+#![no_std]
+
 use core::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
 
 pub mod consts;
