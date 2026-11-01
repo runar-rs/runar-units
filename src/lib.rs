@@ -13,10 +13,12 @@ impl QuantityNum for f64 {}
 pub trait Dimension {
     type ValueType: QuantityNum;
 
+    #[must_use]
     fn get_raw(&self) -> &Self::ValueType;
 }
 
 pub trait DimensionWithUnit<U: Unit>: Dimension {
+    #[must_use]
     fn get(&self) -> Self::ValueType;
 }
 
