@@ -2,7 +2,7 @@
 /// 
 use core::fmt::Display;
 use core::marker::PhantomData;
-use core::ops::{Add, AddAssign, Sub, SubAssign};
+use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 use crate::{Dimension, QuantityNum, Unit};
 
 pub struct TN1<V, U>
@@ -50,6 +50,44 @@ impl<V: QuantityNum + Sub<Output = V>, U: Unit> Sub<TN1<V, U>> for TN1<V, U> {
 impl<V: QuantityNum, U: Unit> SubAssign<TN1<V, U>> for TN1<V, U> {
     fn sub_assign(&mut self, rhs: TN1<V, U>) {
         self.value -= rhs.value;
+    }
+}
+
+/// Mul with scalar of same ValueType
+impl<V: QuantityNum + Mul<Output = V>, U: Unit> Mul<V> for TN1<V, U> {
+    type Output = Self;
+
+    fn mul(self, rhs: V) -> Self::Output {
+        TN1 {
+            unit: PhantomData,
+            value: self.value * rhs,
+        }
+    }
+}
+
+/// MulAssign with scalar of same ValueType
+impl<V: QuantityNum + Mul<Output = V>, U: Unit> MulAssign<V> for TN1<V, U> {
+    fn mul_assign(&mut self, rhs: V) {
+        self.value *= rhs;
+    }
+}
+
+/// Div with scalar of same ValueType
+impl<V: QuantityNum + Div<Output = V>, U: Unit> Div<V> for TN1<V, U> {
+    type Output = Self;
+
+    fn div(self, rhs: V) -> Self::Output {
+        TN1 {
+            unit: PhantomData,
+            value: self.value / rhs,
+        }
+    }
+}
+
+/// DivAssign with scalar of same ValueType
+impl<V: QuantityNum + Div<Output = V>, U: Unit> DivAssign<V> for TN1<V, U> {
+    fn div_assign(&mut self, rhs: V) {
+        self.value /= rhs;
     }
 }
 
@@ -116,7 +154,7 @@ impl Unit for Microhertz {}
 impl TN1Unit for Microhertz {}
 
 /// Display for TN1 in Microhertz
-impl<V: QuantityNum + Display> core::fmt::Display for TN1<V, Microhertz> {
+impl<V: QuantityNum + Display> Display for TN1<V, Microhertz> {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "{} μHz", self.value)
     }
