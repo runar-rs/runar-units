@@ -4,3 +4,4 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+runar-libm = { git = "https://github.com/runar-rs/runar-libm.git", version = "0.1.0" }

@@ -3,5 +3,13 @@
 version = 4
 
 [[package]]
+name = "runar-libm"
+version = "0.1.0"
+source = "git+https://github.com/runar-rs/runar-libm.git#9f22164ce82c6a8ac43f50884c1ac491863bf7ff"
+
+[[package]]
 name = "runar-units"
 version = "0.1.0"
+dependencies = [
+ "runar-libm",
+]
