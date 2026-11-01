@@ -56,6 +56,25 @@ impl<V: QuantityNum, U: T1Unit> SubAssign<T1<V, U>> for T1<V, U> {
         self.value -= rhs.value;
     }
 }
+
+impl<U: T1Unit> T1<f64, U> {
+    #[must_use]
+    pub fn new(value: f64) -> Self {
+        T1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
+impl<V: QuantityNum + Display, U: T1Unit> core::fmt::Display for T1<V, U> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        Display::fmt(&self.value, f)?;
+        write!(f, " {}", U::ABBREVIATION)
+    }
+}
+
+
 // Units
 
 /// Marker trait for units, that represent time.
@@ -87,25 +106,11 @@ impl Unit for Minute {
 }
 impl T1Unit for Minute {}
 
-/// Display for T1 in Minute
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Minute> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} min", self.value)
-    }
-}
-
 pub struct Second;
 impl Unit for Second {
     const ABBREVIATION: &'static str = "s";
 }
 impl T1Unit for Second {}
-
-/// Display for T1 in Second
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Second> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} s", self.value)
-    }
-}
 
 pub struct Millisecond;
 impl Unit for Millisecond {
@@ -113,23 +118,11 @@ impl Unit for Millisecond {
 }
 impl T1Unit for Millisecond {}
 
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Millisecond> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} ms", self.value)
-    }
-}
-
 pub struct Microsecond;
 impl Unit for Microsecond {
     const ABBREVIATION: &'static str = "μs";
 }
 impl T1Unit for Microsecond {}
-
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Microsecond> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} μs", self.value)
-    }
-}
 
 pub struct Nanosecond;
 impl Unit for Nanosecond {
@@ -137,35 +130,17 @@ impl Unit for Nanosecond {
 }
 impl T1Unit for Nanosecond {}
 
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Nanosecond> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} ns", self.value)
-    }
-}
-
 pub struct Picosecond;
 impl Unit for Picosecond {
     const ABBREVIATION: &'static str = "ps";
 }
 impl T1Unit for Picosecond {}
 
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Picosecond> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} ps", self.value)
-    }
-}
-
 pub struct Femtosecond;
 impl Unit for Femtosecond {
     const ABBREVIATION: &'static str = "fs";
 }
 impl T1Unit for Femtosecond {}
-
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Femtosecond> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} fs", self.value)
-    }
-}
 
 /// Unit Attosecond
 pub struct Attosecond;
@@ -174,24 +149,12 @@ impl Unit for Attosecond {
 }
 impl T1Unit for Attosecond {}
 
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Attosecond> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} as", self.value)
-    }
-}
-
 /// Unit Zeptosecond
 pub struct Zeptosecond;
 impl Unit for Zeptosecond {
     const ABBREVIATION: &'static str = "zs";
 }
 impl T1Unit for Zeptosecond {}
-
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Zeptosecond> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} zs", self.value)
-    }
-}
 
 /// Unit Yoktosecond
 pub struct Yoktosecond;
@@ -200,12 +163,6 @@ impl Unit for Yoktosecond {
 }
 impl T1Unit for Yoktosecond {}
 
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Yoktosecond> {  
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} ys", self.value)
-    }
-}
-
 /// Unit Rontosecond
 pub struct Rontosecond;
 impl Unit for Rontosecond {
@@ -213,24 +170,12 @@ impl Unit for Rontosecond {
 }
 impl T1Unit for Rontosecond {}
 
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Rontosecond> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} rs", self.value)
-    }
-}
-
 /// Unit Quectosecond
 pub struct Quectosecond;
 impl Unit for Quectosecond {
     const ABBREVIATION: &'static str = "qs";
 }
 impl T1Unit for Quectosecond {}
-
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Quectosecond> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} qs", self.value)
-    }
-}
 
 /// Value is saved in the format, the getter requested.
 impl<V: QuantityNum, U: T1Unit> DimensionWithUnit<U> for T1<V, U> {
@@ -332,5 +277,34 @@ impl From<T1<f64, Day>> for T1<f64, Second> {
             unit: PhantomData,
             value: val.value / 86400.0
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{test_utils::assert_close, types::t1::Second};
+
+    use super::*;
+
+    #[test]
+    fn test_t1_display() {
+        let time = T1::<f64, Second>::new(42.0);
+        assert_eq!(format!("{}", time), "42 s");
+    }
+
+    #[test]
+    fn test_t1_display_precision() {
+        let time = T1::<f64, Second>::new(42.123456789);
+        assert_eq!(format!("{:.1}", time), "42.1 s");
+        assert_eq!(format!("{:.2}", time), "42.12 s");
+        assert_eq!(format!("{:.3}", time), "42.123 s");
+    }
+
+    #[test]
+    fn test_t1_add() {
+        let a = T1::<f64, Second>::new(5.0);
+        let b = T1::<f64, Second>::new(3.0);
+        let c = a + b;
+        assert_close(c.value, 8.0, 1e-10);
     }
 }

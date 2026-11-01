@@ -28,3 +28,18 @@ pub trait Unit {
     /// Optional LaTeX abbreviation for the unit. If not provided, the `ABBREVIATION` will be used.
     const LATEX_ABBREVIATION: &'static str = Self::ABBREVIATION;
 }
+
+#[cfg(test)]
+mod test_utils {
+    /// Asserts that two floating point numbers are approximately equal, within a given epsilon.
+    #[inline(always)]
+    pub fn assert_close(a: f64, b: f64, epsilon: f64) {
+        assert!(
+            (a - b).abs() < epsilon,
+            "Expected {} to be approximately equal to {} within epsilon {}",
+            a,
+            b,
+            epsilon
+        );
+    }
+}

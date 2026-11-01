@@ -22,6 +22,16 @@ impl<V: QuantityNum, U: TN1Unit> Dimension for TN1<V, U> {
     }
 }
 
+impl<U: TN1Unit> TN1<f64, U> {
+    #[must_use]
+    pub fn new(value: f64) -> Self {
+        TN1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
 /// Add with same `ValueType` and same Unit
 impl<V: QuantityNum + Add<Output = V>, U: TN1Unit> Add<TN1<V, U>> for TN1<V, U> {
     type Output = Self;
