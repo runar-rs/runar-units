@@ -71,6 +71,7 @@ impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for L1<V, Meter> {
     }
 }
 
+/// Div with same ValueType and Meter divided by Second
 impl<V: QuantityNum + Div<Output = V>> Div<T1<V, Second>> for L1<V, Meter> {
     type Output = L1_TN1<V, MeterSecond>;
 
@@ -80,6 +81,36 @@ impl<V: QuantityNum + Div<Output = V>> Div<T1<V, Second>> for L1<V, Meter> {
             value: self.value / rhs.value,
         }
     }
+}
+/// PartialEq with same ValueType and same Unit
+impl<V: QuantityNum + PartialEq, U: Unit> PartialEq for L1<V, U> {
+    fn eq(&self, other: &Self) -> bool {
+        self.value == other.value
+    }
+}
+
+/// PartialOrd with same ValueType and same Unit
+impl<V: QuantityNum + PartialOrd, U: Unit> PartialOrd for L1<V, U> {
+    fn partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering> {
+        self.value.partial_cmp(&other.value)
+    }
+}
+
+impl<U: Unit> L1<f64, U> {
+    pub fn new(value: f64) -> Self {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+
+    pub fn abs(self) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: self.value.abs()
+        }
+    }
+
 }
 
 pub struct Kilometer;
