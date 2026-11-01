@@ -57,4 +57,6 @@ impl<V: QuantityNum, U: Unit> SubAssign<L1_T1<V, U>> for L1_T1<V, U> {
 }
 
 pub struct MeterSecond;
-impl Unit for MeterSecond {}
+impl Unit for MeterSecond {
+    const ABBREVIATION: &'static str = "ms";
+}

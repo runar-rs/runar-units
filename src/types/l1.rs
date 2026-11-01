@@ -1,3 +1,4 @@
+use core::fmt::Display;
 use core::ops::{Add, AddAssign, Div, Mul, Sub, SubAssign};
 use core::marker::PhantomData;
 
@@ -7,11 +8,20 @@ use crate::types::t1::{Second, T1};
 use crate::{Dimension, QuantityNum, Unit};
 
 pub type Length<V, U> = L1<V, U>;
+#[derive(Debug, Clone, Copy)]
 pub struct L1<V, U>
 where V: QuantityNum, U: Unit {
     pub(crate) unit: PhantomData<U>,
     pub(crate) value: V
 }
+
+impl<V: QuantityNum + Display, U: Unit> core::fmt::Display for L1<V, U> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        Display::fmt(&self.value, f)?;
+        write!(f, " {}", U::ABBREVIATION)
+    }
+}
+
 
 impl<V: QuantityNum, U: Unit> Dimension for L1<V, U> {
     type ValueType = V;
@@ -114,18 +124,70 @@ impl<U: Unit> L1<f64, U> {
     }
 
 }
-
+#[derive(Debug, Clone, Copy)]
 pub struct Kilometer;
-impl Unit for Kilometer {}
+impl Unit for Kilometer {
+    const ABBREVIATION: &'static str = "km";
+}
 
+#[derive(Debug, Clone, Copy)]
 pub struct Meter;
-impl Unit for Meter {}
+impl Unit for Meter {
+    const ABBREVIATION: &'static str = "m";
+}
 
+#[derive(Debug, Clone, Copy)]
 pub struct Millimeter;
-impl Unit for Millimeter {}
+impl Unit for Millimeter {
+    const ABBREVIATION: &'static str = "mm";
+}
 
+#[derive(Debug, Clone, Copy)]
 pub struct Micrometer;
-impl Unit for Micrometer {}
+impl Unit for Micrometer {
+    const ABBREVIATION: &'static str = "µm";
+}
 
+#[derive(Debug, Clone, Copy)]
 pub struct Nanometer;
-impl Unit for Nanometer {}
+impl Unit for Nanometer {
+    const ABBREVIATION: &'static str = "nm";
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_l1_display() {
+        let length = L1::<f64, Meter>::new(42.0);
+        assert_eq!(format!("{}", length), "42 m");
+    }
+
+    #[test]
+    fn test_l1_display_precision() {
+        let length = L1::<f64, Meter>::new(42.123456789);
+        assert_eq!(format!("{:.1}", length), "42.1 m");
+        assert_eq!(format!("{:.2}", length), "42.12 m");
+        assert_eq!(format!("{:.3}", length), "42.123 m");
+    }
+
+    #[test]
+    fn test_l1_add() {
+        let a = L1::<f64, Meter>::new(5.0);
+        let b = L1::<f64, Meter>::new(3.0);
+        let c = a + b;
+        assert_eq!(c.value, 8.0);
+
+        let d = b + a;
+        assert_eq!(d.value, 8.0);
+    }
+
+    #[test]
+    fn test_l1_sub() {
+        let a = L1::<f64, Meter>::new(5.0);
+        let b = L1::<f64, Meter>::new(3.0);
+        let c = a - b;
+        assert_eq!(c.value, 2.0);
+    }
+}

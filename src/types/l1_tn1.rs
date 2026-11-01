@@ -53,4 +53,7 @@ impl<V: QuantityNum, U: Unit> SubAssign<L1_TN1<V, U>> for L1_TN1<V,U> {
 }
 
 pub struct MeterPerSecond;
-impl Unit for MeterPerSecond {}
+impl Unit for MeterPerSecond {
+    const ABBREVIATION: &'static str = "m/s";
+    const LATEX_ABBREVIATION: &'static str = "\\frac{\\text{m}}{\\text{s}}";
+}

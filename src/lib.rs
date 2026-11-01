@@ -1,4 +1,4 @@
-#![no_std]
+#![cfg_attr(not(test), no_std)]
 
 use core::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
 
@@ -23,4 +23,8 @@ pub trait DimensionWithUnit<U: Unit>: Dimension {
 }
 
 /// Marker Traits for Units
-pub trait Unit {}
+pub trait Unit {
+    const ABBREVIATION: &'static str;
+    /// Optional LaTeX abbreviation for the unit. If not provided, the `ABBREVIATION` will be used.
+    const LATEX_ABBREVIATION: &'static str = Self::ABBREVIATION;
+}

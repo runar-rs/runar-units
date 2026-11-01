@@ -3,6 +3,8 @@
 use core::fmt::Display;
 use core::marker::PhantomData;
 use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+use crate::types::l1::{L1, Meter};
+use crate::types::l1_tn1::{L1_TN1, MeterPerSecond};
 use crate::types::t1::{Second, T1};
 use crate::{Dimension, QuantityNum, Unit};
 
@@ -114,11 +116,23 @@ impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for TN1<V, Hertz> {
     }
 }
 
+/// Mul with same `ValueType` and Hertz and Meter
+impl<V: QuantityNum + Mul<Output = V>> Mul<L1<V, Meter>> for TN1<V, Hertz> {
+    type Output = L1_TN1<V, MeterPerSecond>;
+    fn mul(self, rhs: L1<V, Meter>) -> Self::Output {
+        L1_TN1 {
+            unit: PhantomData,
+            value: self.value * rhs.value,
+        }
+    }
+}
 
 pub trait TN1Unit: Unit {}
 
 pub struct Quettahertz;
-impl Unit for Quettahertz {}
+impl Unit for Quettahertz {
+    const ABBREVIATION: &'static str = "QHz";
+}
 impl TN1Unit for Quettahertz {}
 
 /// Display for TN1 in Quettahertz
@@ -129,7 +143,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Quettahertz> {
 }
 
 pub struct Ronnahertz;
-impl Unit for Ronnahertz {}
+impl Unit for Ronnahertz {
+    const ABBREVIATION: &'static str = "RHz";
+}
 impl TN1Unit for Ronnahertz {}
 
 /// Display for TN1 in Ronnahertz
@@ -140,7 +156,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Ronnahertz> {
 }
 
 pub struct Yottahertz;
-impl Unit for Yottahertz {}
+impl Unit for Yottahertz {
+    const ABBREVIATION: &'static str = "YHz";
+}
 impl TN1Unit for Yottahertz {}
 
 impl<V: QuantityNum + Display> Display for TN1<V, Yottahertz> {
@@ -150,7 +168,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Yottahertz> {
 }
 
 pub struct Zettahertz;
-impl Unit for Zettahertz {}
+impl Unit for Zettahertz {
+    const ABBREVIATION: &'static str = "ZHz";
+}
 impl TN1Unit for Zettahertz {}
 
 impl<V: QuantityNum + Display> Display for TN1<V, Zettahertz> {
@@ -161,7 +181,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Zettahertz> {
 
 
 pub struct Exahertz;
-impl Unit for Exahertz {}
+impl Unit for Exahertz {
+    const ABBREVIATION: &'static str = "EHz";
+}
 impl TN1Unit for Exahertz {}
 
 /// Display for TN1 in Exahertz
@@ -173,7 +195,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Exahertz> {
 
 
 pub struct Petahertz;
-impl Unit for Petahertz {}
+impl Unit for Petahertz {
+    const ABBREVIATION: &'static str = "PHz";
+}
 impl TN1Unit for Petahertz {}
 
 /// Display for TN1 in Petahertz
@@ -185,7 +209,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Petahertz> {
 
 
 pub struct Terahertz;
-impl Unit for Terahertz {}
+impl Unit for Terahertz {
+    const ABBREVIATION: &'static str = "THz";
+}
 impl TN1Unit for Terahertz {}
 
 /// Display for TN1 in Terahertz
@@ -196,7 +222,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Terahertz> {
 }
 
 pub struct Gigahertz;
-impl Unit for Gigahertz {}
+impl Unit for Gigahertz {
+    const ABBREVIATION: &'static str = "GHz";
+}
 impl TN1Unit for Gigahertz {}
 
 /// Display for TN1 in Gigahertz
@@ -207,7 +235,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Gigahertz> {
 }
 
 pub struct Megahertz;
-impl Unit for Megahertz {}
+impl Unit for Megahertz {
+    const ABBREVIATION: &'static str = "MHz";
+}
 impl TN1Unit for Megahertz {}
 
 /// Display for TN1 in Megahertz
@@ -218,7 +248,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Megahertz> {
 }
 
 pub struct Kilohertz;
-impl Unit for Kilohertz {}
+impl Unit for Kilohertz {
+    const ABBREVIATION: &'static str = "kHz";
+}
 impl TN1Unit for Kilohertz {}
 
 /// Display for TN1 in Kilohertz
@@ -229,7 +261,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Kilohertz> {
 }
 
 pub struct Hertz;
-impl Unit for Hertz {}
+impl Unit for Hertz {
+    const ABBREVIATION: &'static str = "Hz";
+}
 impl TN1Unit for Hertz {}
 
 /// Display for TN1 in Hertz
@@ -240,7 +274,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Hertz> {
 }
 
 pub struct Millihertz;
-impl Unit for Millihertz {}
+impl Unit for Millihertz {
+    const ABBREVIATION: &'static str = "mHz";
+}
 impl TN1Unit for Millihertz {}
 
 /// Display for TN1 in Millihertz
@@ -251,7 +287,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Millihertz> {
 }
 
 pub struct Microhertz;
-impl Unit for Microhertz {}
+impl Unit for Microhertz {
+    const ABBREVIATION: &'static str = "μHz";
+}
 impl TN1Unit for Microhertz {}
 
 /// Display for TN1 in Microhertz
@@ -262,7 +300,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Microhertz> {
 }
 
 pub struct Nanohertz;
-impl Unit for Nanohertz {}
+impl Unit for Nanohertz {
+    const ABBREVIATION: &'static str = "nHz";
+}
 impl TN1Unit for Nanohertz {}
 
 /// Display for TN1 in Nanohertz
@@ -273,7 +313,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Nanohertz> {
 }
 
 pub struct Picohertz;
-impl Unit for Picohertz {}
+impl Unit for Picohertz {
+    const ABBREVIATION: &'static str = "pHz";
+}
 impl TN1Unit for Picohertz {}
 
 /// Display for TN1 in Picohertz
@@ -284,7 +326,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Picohertz> {
 }
 
 pub struct Femtohertz;
-impl Unit for Femtohertz {}
+impl Unit for Femtohertz {
+    const ABBREVIATION: &'static str = "fHz";
+}
 impl TN1Unit for Femtohertz {}
 
 /// Display for TN1 in Femtohertz
@@ -295,7 +339,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Femtohertz> {
 }
 
 pub struct Attohertz;
-impl Unit for Attohertz {}
+impl Unit for Attohertz {
+    const ABBREVIATION: &'static str = "aHz";
+}
 impl TN1Unit for Attohertz {}
 
 /// Display for TN1 in Attohertz
@@ -306,7 +352,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Attohertz> {
 }
 
 pub struct Zeptohertz;
-impl Unit for Zeptohertz {}
+impl Unit for Zeptohertz {
+    const ABBREVIATION: &'static str = "zHz";
+}
 impl TN1Unit for Zeptohertz {}
 
 /// Display for TN1 in Zeptohertz
@@ -317,7 +365,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Zeptohertz> {
 }
 
 pub struct Yoctohertz;
-impl Unit for Yoctohertz {}
+impl Unit for Yoctohertz {
+    const ABBREVIATION: &'static str = "yHz";
+}
 impl TN1Unit for Yoctohertz {}
 
 /// Display for TN1 in Yoctohertz
@@ -328,7 +378,9 @@ impl<V: QuantityNum + Display> Display for TN1<V, Yoctohertz> {
 }
 
 pub struct Rontohertz;
-impl Unit for Rontohertz {}
+impl Unit for Rontohertz {
+    const ABBREVIATION: &'static str = "rHz";
+}
 impl TN1Unit for Rontohertz {}
 
 /// Display for TN1 in Rontohertz

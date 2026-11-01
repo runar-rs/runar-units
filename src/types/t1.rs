@@ -68,39 +68,36 @@ pub trait T1Unit: Unit {}
 /// 
 /// ## From Day
 pub struct Day;
-impl Unit for Day {}
+impl Unit for Day {
+    const ABBREVIATION: &'static str = "d";
+}
 impl T1Unit for Day {}
 
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Day> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} d", self.value)
-    }
-}
 
 pub struct Hour;
-impl Unit for Hour {}
+impl Unit for Hour {
+    const ABBREVIATION: &'static str = "h";
+}
 impl T1Unit for Hour {}
 
-/// Display for T1 in Hour
-impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Hour> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} h", self.value)
-    }
-}
 
 pub struct Minute;
-impl Unit for Minute {}
+impl Unit for Minute {
+    const ABBREVIATION: &'static str = "min";
+}
 impl T1Unit for Minute {}
 
 /// Display for T1 in Minute
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Minute> {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "{} m", self.value)
+        write!(f, "{} min", self.value)
     }
 }
 
 pub struct Second;
-impl Unit for Second {}
+impl Unit for Second {
+    const ABBREVIATION: &'static str = "s";
+}
 impl T1Unit for Second {}
 
 /// Display for T1 in Second
@@ -111,7 +108,9 @@ impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Second> {
 }
 
 pub struct Millisecond;
-impl Unit for Millisecond {}
+impl Unit for Millisecond {
+    const ABBREVIATION: &'static str = "ms";
+}
 impl T1Unit for Millisecond {}
 
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Millisecond> {
@@ -121,7 +120,9 @@ impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Millisecond> {
 }
 
 pub struct Microsecond;
-impl Unit for Microsecond {}
+impl Unit for Microsecond {
+    const ABBREVIATION: &'static str = "μs";
+}
 impl T1Unit for Microsecond {}
 
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Microsecond> {
@@ -131,7 +132,9 @@ impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Microsecond> {
 }
 
 pub struct Nanosecond;
-impl Unit for Nanosecond {}
+impl Unit for Nanosecond {
+    const ABBREVIATION: &'static str = "ns";
+}
 impl T1Unit for Nanosecond {}
 
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Nanosecond> {
@@ -141,7 +144,9 @@ impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Nanosecond> {
 }
 
 pub struct Picosecond;
-impl Unit for Picosecond {}
+impl Unit for Picosecond {
+    const ABBREVIATION: &'static str = "ps";
+}
 impl T1Unit for Picosecond {}
 
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Picosecond> {
@@ -151,7 +156,9 @@ impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Picosecond> {
 }
 
 pub struct Femtosecond;
-impl Unit for Femtosecond {}
+impl Unit for Femtosecond {
+    const ABBREVIATION: &'static str = "fs";
+}
 impl T1Unit for Femtosecond {}
 
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Femtosecond> {
@@ -162,7 +169,9 @@ impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Femtosecond> {
 
 /// Unit Attosecond
 pub struct Attosecond;
-impl Unit for Attosecond {}
+impl Unit for Attosecond {
+    const ABBREVIATION: &'static str = "as";
+}
 impl T1Unit for Attosecond {}
 
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Attosecond> {
@@ -173,7 +182,9 @@ impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Attosecond> {
 
 /// Unit Zeptosecond
 pub struct Zeptosecond;
-impl Unit for Zeptosecond {}
+impl Unit for Zeptosecond {
+    const ABBREVIATION: &'static str = "zs";
+}
 impl T1Unit for Zeptosecond {}
 
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Zeptosecond> {
@@ -184,7 +195,9 @@ impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Zeptosecond> {
 
 /// Unit Yoktosecond
 pub struct Yoktosecond;
-impl Unit for Yoktosecond {}
+impl Unit for Yoktosecond {
+    const ABBREVIATION: &'static str = "ys";
+}
 impl T1Unit for Yoktosecond {}
 
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Yoktosecond> {  
@@ -195,7 +208,9 @@ impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Yoktosecond> {
 
 /// Unit Rontosecond
 pub struct Rontosecond;
-impl Unit for Rontosecond {}
+impl Unit for Rontosecond {
+    const ABBREVIATION: &'static str = "rs";
+}
 impl T1Unit for Rontosecond {}
 
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Rontosecond> {
@@ -206,7 +221,9 @@ impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Rontosecond> {
 
 /// Unit Quectosecond
 pub struct Quectosecond;
-impl Unit for Quectosecond {}
+impl Unit for Quectosecond {
+    const ABBREVIATION: &'static str = "qs";
+}
 impl T1Unit for Quectosecond {}
 
 impl<V: QuantityNum + Display> core::fmt::Display for T1<V, Quectosecond> {
