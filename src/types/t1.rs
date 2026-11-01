@@ -5,7 +5,7 @@ use crate::{Dimension, DimensionWithUnit, QuantityNum, Unit};
 
 pub type Time<V, U> = T1<V, U>;
 /// T1 is a dimension for time, with a value type V and a unit U. The unit U must implement the
-/// T1Unit trait, which is a marker trait for units that represent time.
+/// `T1Unit` trait, which is a marker trait for units that represent time.
 pub struct T1<V, U>
 where V: QuantityNum, U: T1Unit {
     pub(crate) unit: PhantomData<U>,
@@ -21,7 +21,7 @@ impl<V: QuantityNum, U: T1Unit> Dimension for T1<V, U> {
 }
 
 // Operators
-/// Add with same ValueType and same Unit
+/// Add with same `ValueType` and same Unit
 impl<V: QuantityNum + Add<Output = V>, U: T1Unit> Add<T1<V, U>> for T1<V, U> {
     type Output = Self;
     fn add(self, rhs: T1<V, U>) -> Self::Output {
@@ -32,14 +32,14 @@ impl<V: QuantityNum + Add<Output = V>, U: T1Unit> Add<T1<V, U>> for T1<V, U> {
     }
 }
 
-/// AddAssign with same ValueType and same Unit
+/// `AddAssign` with same `ValueType` and same Unit
 impl<V: QuantityNum, U: T1Unit> AddAssign<T1<V, U>> for T1<V, U> {
     fn add_assign(&mut self, rhs: T1<V, U>) {
         self.value += rhs.value;
     }
 }
 
-/// Sub with same ValueType and same Unit
+/// Sub with same `ValueType` and same Unit
 impl<V: QuantityNum + Sub<Output = V>, U: T1Unit> Sub<T1<V, U>> for T1<V, U> {
     type Output = Self;
     fn sub(self, rhs: T1<V, U>) -> Self::Output {
@@ -50,7 +50,7 @@ impl<V: QuantityNum + Sub<Output = V>, U: T1Unit> Sub<T1<V, U>> for T1<V, U> {
     }
 }
 
-/// SubAssign with same ValueType and same Unit
+/// `SubAssign` with same `ValueType` and same Unit
 impl<V: QuantityNum, U: T1Unit> SubAssign<T1<V, U>> for T1<V, U> {
     fn sub_assign(&mut self, rhs: T1<V, U>) {
         self.value -= rhs.value;

@@ -18,7 +18,7 @@ impl<V: QuantityNum, U: Unit> Dimension for L1_T1<V, U> {
     }
 }
 
-/// Add for same ValueType and same Unit
+/// Add for same `ValueType` and same Unit
 impl<V: QuantityNum + Add<Output = V>, U: Unit> Add<L1_T1<V, U>> for L1_T1<V, U> {
     type Output = L1_T1<V, U>;
 
@@ -30,14 +30,14 @@ impl<V: QuantityNum + Add<Output = V>, U: Unit> Add<L1_T1<V, U>> for L1_T1<V, U>
     }
 }
 
-/// AddAssign for same ValueType and same Unit
+/// `AddAssign` for same `ValueType` and same Unit
 impl<V: QuantityNum, U: Unit> AddAssign<L1_T1<V, U>> for L1_T1<V, U> {
     fn add_assign(&mut self, rhs: L1_T1<V, U>) {
         self.value += rhs.value;
     }
 }
 
-/// Sub for same ValueType and same Unit
+/// Sub for same `ValueType` and same Unit
 impl<V: QuantityNum + Sub<Output = V>, U: Unit> Sub<L1_T1<V, U>> for L1_T1<V, U> {
     type Output = L1_T1<V, U>;
 
@@ -49,10 +49,10 @@ impl<V: QuantityNum + Sub<Output = V>, U: Unit> Sub<L1_T1<V, U>> for L1_T1<V, U>
     }
 }
 
-/// SubAssign for same ValueType and same Unit
+/// `SubAssign` for same `ValueType` and same Unit
 impl<V: QuantityNum, U: Unit> SubAssign<L1_T1<V, U>> for L1_T1<V, U> {
     fn sub_assign(&mut self, rhs: L1_T1<V, U>) {
-        self.value -= rhs.value
+        self.value -= rhs.value;
     }
 }
 

@@ -17,7 +17,7 @@ impl<V: QuantityNum, U: Unit> Dimension for L1_TN1<V, U> {
         &self.value
     }
 }
-/// Add same ValueType and same Unit
+/// Add same `ValueType` and same Unit
 impl<V: QuantityNum + Add<Output = V>, U: Unit> Add<L1_TN1<V, U>> for L1_TN1<V, U> {
     type Output = L1_TN1<V, U>;
 
@@ -28,7 +28,7 @@ impl<V: QuantityNum + Add<Output = V>, U: Unit> Add<L1_TN1<V, U>> for L1_TN1<V, 
         }
     }
 }
-/// AddAssign with same ValueType and same Unit
+/// `AddAssign` with same `ValueType` and same Unit
 impl<V: QuantityNum, U: Unit> AddAssign<L1_TN1<V, U>> for L1_TN1<V, U> {
     fn add_assign(&mut self, rhs: L1_TN1<V, U>) {
         self.value += rhs.value;

@@ -21,7 +21,7 @@ impl<V: QuantityNum, U: Unit> Dimension for L1<V, U> {
     }
 }
 
-/// Add with same ValueType and same Unit
+/// Add with same `ValueType` and same Unit
 impl<V: QuantityNum + Add<Output = V>, U: Unit> Add<L1<V, U>> for L1<V, U> {
     type Output = Self;
 
@@ -33,14 +33,14 @@ impl<V: QuantityNum + Add<Output = V>, U: Unit> Add<L1<V, U>> for L1<V, U> {
     }
 }
 
-/// AddAssign with same ValueType and same Unit
+/// `AddAssign` with same `ValueType` and same Unit
 impl<V: QuantityNum, U: Unit> AddAssign<L1<V, U>> for L1<V, U> {
     fn add_assign(&mut self, rhs: L1<V, U>) {
         self.value += rhs.value;
     }
 }
 
-/// Sub with same ValueType and same Unit
+/// Sub with same `ValueType` and same Unit
 impl<V: QuantityNum + Sub<Output = V>, U: Unit> Sub<L1<V,U>> for L1<V, U> {
     type Output = Self;
 
@@ -52,14 +52,14 @@ impl<V: QuantityNum + Sub<Output = V>, U: Unit> Sub<L1<V,U>> for L1<V, U> {
     }
 }
 
-/// SubAssign with same ValueType and same Unit
+/// `SubAssign` with same `ValueType` and same Unit
 impl<V: QuantityNum, U: Unit> SubAssign<L1<V, U>> for L1<V,U> {
     fn sub_assign(&mut self, rhs: L1<V, U>) {
         self.value -= rhs.value;
     }
 }
 
-/// Mul with same ValueType and Second and Meter
+/// Mul with same `ValueType` and Second and Meter
 impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for L1<V, Meter> {
     type Output = L1_T1<V, MeterSecond>;
 
@@ -71,7 +71,7 @@ impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for L1<V, Meter> {
     }
 }
 
-/// Div with same ValueType and Meter divided by Second
+/// Div with same `ValueType` and Meter divided by Second
 impl<V: QuantityNum + Div<Output = V>> Div<T1<V, Second>> for L1<V, Meter> {
     type Output = L1_TN1<V, MeterSecond>;
 
@@ -82,14 +82,14 @@ impl<V: QuantityNum + Div<Output = V>> Div<T1<V, Second>> for L1<V, Meter> {
         }
     }
 }
-/// PartialEq with same ValueType and same Unit
+/// `PartialEq` with same `ValueType` and same Unit
 impl<V: QuantityNum + PartialEq, U: Unit> PartialEq for L1<V, U> {
     fn eq(&self, other: &Self) -> bool {
         self.value == other.value
     }
 }
 
-/// PartialOrd with same ValueType and same Unit
+/// `PartialOrd` with same `ValueType` and same Unit
 impl<V: QuantityNum + PartialOrd, U: Unit> PartialOrd for L1<V, U> {
     fn partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering> {
         self.value.partial_cmp(&other.value)
@@ -97,6 +97,7 @@ impl<V: QuantityNum + PartialOrd, U: Unit> PartialOrd for L1<V, U> {
 }
 
 impl<U: Unit> L1<f64, U> {
+    #[must_use]
     pub fn new(value: f64) -> Self {
         L1 {
             unit: PhantomData,
@@ -104,6 +105,7 @@ impl<U: Unit> L1<f64, U> {
         }
     }
 
+    #[must_use]
     pub fn abs(self) -> Self {
         L1 {
             unit: PhantomData,

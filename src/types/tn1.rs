@@ -20,6 +20,7 @@ impl<V: QuantityNum, U: TN1Unit> Dimension for TN1<V, U> {
     }
 }
 
+/// Add with same `ValueType` and same Unit
 impl<V: QuantityNum + Add<Output = V>, U: TN1Unit> Add<TN1<V, U>> for TN1<V, U> {
     type Output = Self;
 
@@ -31,12 +32,14 @@ impl<V: QuantityNum + Add<Output = V>, U: TN1Unit> Add<TN1<V, U>> for TN1<V, U> 
     }
 }
 
+/// `AddAssign` with same `ValueType` and same Unit
 impl<V: QuantityNum, U: TN1Unit> AddAssign<TN1<V, U>> for TN1<V, U> {
     fn add_assign(&mut self, rhs: TN1<V, U>) {
         self.value += rhs.value;
     }
 }
 
+/// Sub with same `ValueType` and same Unit
 impl<V: QuantityNum + Sub<Output = V>, U: TN1Unit> Sub<TN1<V, U>> for TN1<V, U> {
     type Output = Self;
 
@@ -48,13 +51,14 @@ impl<V: QuantityNum + Sub<Output = V>, U: TN1Unit> Sub<TN1<V, U>> for TN1<V, U> 
     }
 }
 
+/// `SubAssign` with same `ValueType` and same Unit
 impl<V: QuantityNum, U: TN1Unit> SubAssign<TN1<V, U>> for TN1<V, U> {
     fn sub_assign(&mut self, rhs: TN1<V, U>) {
         self.value -= rhs.value;
     }
 }
 
-/// Mul with scalar of same ValueType
+/// Mul with scalar of same `ValueType`
 impl<V: QuantityNum + Mul<Output = V>, U: TN1Unit> Mul<V> for TN1<V, U> {
     type Output = Self;
 
@@ -66,14 +70,14 @@ impl<V: QuantityNum + Mul<Output = V>, U: TN1Unit> Mul<V> for TN1<V, U> {
     }
 }
 
-/// MulAssign with scalar of same ValueType
+/// `MulAssign` with scalar of same `ValueType`
 impl<V: QuantityNum + Mul<Output = V>, U: TN1Unit> MulAssign<V> for TN1<V, U> {
     fn mul_assign(&mut self, rhs: V) {
         self.value *= rhs;
     }
 }
 
-/// Div with scalar of same ValueType
+/// Div with scalar of same `ValueType`
 impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> Div<V> for TN1<V, U> {
     type Output = Self;
 
@@ -85,14 +89,14 @@ impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> Div<V> for TN1<V, U> {
     }
 }
 
-/// DivAssign with scalar of same ValueType
+/// `DivAssign` with scalar of same `ValueType`
 impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> DivAssign<V> for TN1<V, U> {
     fn div_assign(&mut self, rhs: V) {
         self.value /= rhs;
     }
 }
 
-/// Div with same ValueType and same Unit
+/// Div with same `ValueType` and same Unit
 impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> Div<TN1<V, U>> for TN1<V, U> {
     type Output = V;
 
@@ -101,7 +105,7 @@ impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> Div<TN1<V, U>> for TN1<V, U> 
     }
 }
 
-/// Mul with same ValueType and Hertz and Second
+/// Mul with same `ValueType` and Hertz and Second
 impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for TN1<V, Hertz> {
     type Output = V;
 
