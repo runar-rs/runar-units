@@ -1,7 +1,7 @@
 use core::ops::{Add, AddAssign, Sub, SubAssign};
 use core::marker::PhantomData;
 use core::fmt::Display;
-use crate::{Dimension, DimensionWithUnit, QuantityNum, Unit};
+use crate::{Dimension, QuantityNum, Unit};
 
 pub type Time<V, U> = T1<V, U>;
 /// T1 is a dimension for time, with a value type V and a unit U. The unit U must implement the
@@ -83,59 +83,82 @@ pub trait T1Unit: Unit {}
 /// Unit Day
 /// 
 /// # Implemented Conversions
-/// ## To Day
-/// 
-/// ## From Day
+/// - [`T1<f32, Day>`] to [`T1<f32, Second>`]
+/// - [`T1<f32, Day>`] to [`T1<f32, Minute>`]
+/// - [`T1<f32, Day>`] to [`T1<f32, Hour>`]
+/// - [`T1<f64, Day>`] to [`T1<f64, Second>`]
+/// - [`T1<f64, Day>`] to [`T1<f64, Minute>`]
+/// - [`T1<f64, Day>`] to [`T1<f64, Hour>`]
 pub struct Day;
 impl Unit for Day {
     const ABBREVIATION: &'static str = "d";
 }
 impl T1Unit for Day {}
 
-
+/// Unit Hour
+/// 
+/// # Implemented Conversions
+/// - [`T1<f32, Hour>`] to [`T1<f32, Minute>`]
+/// - [`T1<f32, Hour>`] to [`T1<f32, Second>`]
+/// - [`T1<f64, Hour>`] to [`T1<f64, Minute>`]
+/// - [`T1<f64, Hour>`] to [`T1<f64, Second>`]
 pub struct Hour;
 impl Unit for Hour {
     const ABBREVIATION: &'static str = "h";
 }
 impl T1Unit for Hour {}
 
-
+/// Unit Minute
+/// 
+/// # Implemented Conversions
+/// - [`T1<f32, Minute>`] to [`T1<f32, Second>`]
+/// - [`T1<f64, Minute>`] to [`T1<f64, Second>`]
 pub struct Minute;
 impl Unit for Minute {
     const ABBREVIATION: &'static str = "min";
 }
 impl T1Unit for Minute {}
 
+/// Unit Second
+/// 
+/// # Implemented Conversions
+/// - [`T1<f32, Second>`] to [`T1<f32, Millisecond>`]
+/// - [`T1<f64, Second>`] to [`T1<f64, Millisecond>`]
 pub struct Second;
 impl Unit for Second {
     const ABBREVIATION: &'static str = "s";
 }
 impl T1Unit for Second {}
 
+/// Unit Millisecond
 pub struct Millisecond;
 impl Unit for Millisecond {
     const ABBREVIATION: &'static str = "ms";
 }
 impl T1Unit for Millisecond {}
 
+/// Unit Microsecond
 pub struct Microsecond;
 impl Unit for Microsecond {
     const ABBREVIATION: &'static str = "μs";
 }
 impl T1Unit for Microsecond {}
 
+/// Unit Nanosecond
 pub struct Nanosecond;
 impl Unit for Nanosecond {
     const ABBREVIATION: &'static str = "ns";
 }
 impl T1Unit for Nanosecond {}
 
+/// Unit Picosecond
 pub struct Picosecond;
 impl Unit for Picosecond {
     const ABBREVIATION: &'static str = "ps";
 }
 impl T1Unit for Picosecond {}
 
+/// Unit Femtosecond
 pub struct Femtosecond;
 impl Unit for Femtosecond {
     const ABBREVIATION: &'static str = "fs";
@@ -177,81 +200,22 @@ impl Unit for Quectosecond {
 }
 impl T1Unit for Quectosecond {}
 
-/// Value is saved in the format, the getter requested.
-impl<V: QuantityNum, U: T1Unit> DimensionWithUnit<U> for T1<V, U> {
-    fn get(&self) -> Self::ValueType {
-        self.value.clone()
-    }
-}
 
-/// Value is saved in second and getter wants minute
-impl DimensionWithUnit<Minute> for T1<f32, Second> {
-    fn get(&self) -> Self::ValueType {
-        self.value / 60.0
-    }
-}
-
-impl From<T1<f32, Minute>> for T1<f32, Second> {
-    fn from(val: T1<f32, Minute>) -> Self {
+impl From<T1<f32, Day>> for T1<f32, Hour> {
+    fn from(val: T1<f32, Day>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value / 60.0
+            value: val.value / 24.0
         }
     }
 }
 
-/// Value is saved in second and getter wants minute
-impl DimensionWithUnit<Minute> for T1<f64, Second> {
-    fn get(&self) -> Self::ValueType {
-        self.value / 60.0
-    }
-}
-
-impl From<T1<f64, Minute>> for T1<f64, Second> {
-    fn from(val: T1<f64, Minute>) -> Self {
+impl From<T1<f32, Day>> for T1<f32, Minute> {
+    fn from(val: T1<f32, Day>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value / 60.0
+            value: val.value / 1440.0
         }
-    }
-}
-
-/// Value is saved in second and getter wants hour
-impl DimensionWithUnit<Hour> for T1<f32, Second> {
-    fn get(&self) -> Self::ValueType {
-        self.value / 3600.0
-    }
-}
-
-impl From<T1<f32, Hour>> for T1<f32, Second> {
-    fn from(val: T1<f32, Hour>) -> Self {
-        T1 {
-            unit: PhantomData,
-            value: val.value / 3600.0
-        }
-    }
-}
-
-/// Value is saved in second and getter wants hour
-impl DimensionWithUnit<Hour> for T1<f64, Second> {
-    fn get(&self) -> Self::ValueType {
-        self.value / 3600.0
-    }
-}
-
-impl From<T1<f64, Hour>> for T1<f64, Second> {
-    fn from(val: T1<f64, Hour>) -> Self {
-        T1 {
-            unit: PhantomData,
-            value: val.value / 3600.0
-        }
-    }
-}
-
-/// Value is saved in second and getter wants day
-impl DimensionWithUnit<Day> for T1<f32, Second> {
-    fn get(&self) -> Self::ValueType {
-        self.value / 86400.0
     }
 }
 
@@ -264,10 +228,21 @@ impl From<T1<f32, Day>> for T1<f32, Second> {
     }
 }
 
-/// Value is saved in second and getter wants day
-impl DimensionWithUnit<Day> for T1<f64, Second> {
-    fn get(&self) -> Self::ValueType {
-        self.value / 86400.0
+impl From<T1<f64, Day>> for T1<f64, Hour> {
+    fn from(val: T1<f64, Day>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 24.0
+        }
+    }
+}
+
+impl From<T1<f64, Day>> for T1<f64, Minute> {
+    fn from(val: T1<f64, Day>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 1440.0
+        }
     }
 }
 
@@ -279,6 +254,61 @@ impl From<T1<f64, Day>> for T1<f64, Second> {
         }
     }
 }
+
+impl From<T1<f32, Hour>> for T1<f32, Minute> {
+    fn from(val: T1<f32, Hour>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 60.0
+        }
+    }
+}
+
+impl From<T1<f32, Hour>> for T1<f32, Second> {
+    fn from(val: T1<f32, Hour>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 3600.0
+        }
+    }
+}
+
+impl From<T1<f64, Hour>> for T1<f64, Minute> {
+    fn from(val: T1<f64, Hour>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 60.0
+        }
+    }
+}
+
+impl From<T1<f64, Hour>> for T1<f64, Second> {
+    fn from(val: T1<f64, Hour>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 3600.0
+        }
+    }
+}
+
+impl From<T1<f32, Minute>> for T1<f32, Second> {
+    fn from(val: T1<f32, Minute>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 60.0
+        }
+    }
+}
+
+impl From<T1<f64, Minute>> for T1<f64, Second> {
+    fn from(val: T1<f64, Minute>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 60.0
+        }
+    }
+}
+
 
 #[cfg(test)]
 mod tests {

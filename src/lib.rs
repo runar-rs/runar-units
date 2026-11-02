@@ -17,11 +17,6 @@ pub trait Dimension {
     fn get_raw(&self) -> &Self::ValueType;
 }
 
-pub trait DimensionWithUnit<U: Unit>: Dimension {
-    #[must_use]
-    fn get(&self) -> Self::ValueType;
-}
-
 /// Marker Traits for Units
 pub trait Unit {
     const ABBREVIATION: &'static str;
