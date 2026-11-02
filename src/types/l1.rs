@@ -212,6 +212,129 @@ impl Nanometer {
     }
 }
 
+#[derive(Debug, Clone, Copy)]
+pub struct Picometer;
+impl Unit for Picometer {
+    const ABBREVIATION: &'static str = "pm";
+}
+impl L1Unit for Picometer {}
+
+impl Picometer {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Picometer> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
+
+#[derive(Debug, Clone, Copy)]
+pub struct Femtometer;
+impl Unit for Femtometer {
+    const ABBREVIATION: &'static str = "fm";
+}
+impl L1Unit for Femtometer {}
+
+impl Femtometer {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Femtometer> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
+
+#[derive(Debug, Clone, Copy)]
+pub struct Attometer;
+impl Unit for Attometer {
+    const ABBREVIATION: &'static str = "am";
+}
+impl L1Unit for Attometer {}
+
+impl Attometer {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Attometer> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct Zeptometer;
+impl Unit for Zeptometer {
+    const ABBREVIATION: &'static str = "zm";
+}
+impl L1Unit for Zeptometer {}
+
+impl Zeptometer {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Zeptometer> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
+
+
+#[derive(Debug, Clone, Copy)]
+pub struct Yoctometer;
+impl Unit for Yoctometer {
+    const ABBREVIATION: &'static str = "ym";
+}
+impl L1Unit for Yoctometer {}
+
+impl Yoctometer {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Yoctometer> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct Rontometer;
+impl Unit for Rontometer {
+    const ABBREVIATION: &'static str = "rm";
+}
+impl L1Unit for Rontometer {}
+
+impl Rontometer {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Rontometer> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct Quectometer;
+impl Unit for Quectometer {
+    const ABBREVIATION: &'static str = "qm";
+}
+impl L1Unit for Quectometer {}
+
+impl Quectometer {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Quectometer> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::{test_utils::assert_close, types::l1_tn1::MeterPerSecond};
