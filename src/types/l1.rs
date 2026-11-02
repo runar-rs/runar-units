@@ -134,12 +134,32 @@ impl Unit for Kilometer {
 }
 impl L1Unit for Kilometer {}
 
+impl Kilometer {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Kilometer> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy)]
 pub struct Meter;
 impl Unit for Meter {
     const ABBREVIATION: &'static str = "m";
 }
 impl L1Unit for Meter {}
+
+impl Meter {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Meter> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
 
 #[derive(Debug, Clone, Copy)]
 pub struct Millimeter;
@@ -148,6 +168,16 @@ impl Unit for Millimeter {
 }
 impl L1Unit for Millimeter {}
 
+impl Millimeter {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Millimeter> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy)]
 pub struct Micrometer;
 impl Unit for Micrometer {
@@ -155,12 +185,32 @@ impl Unit for Micrometer {
 }
 impl L1Unit for Micrometer {}
 
+impl Micrometer {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Micrometer> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy)]
 pub struct Nanometer;
 impl Unit for Nanometer {
     const ABBREVIATION: &'static str = "nm";
 }
 impl L1Unit for Nanometer {}
+
+impl Nanometer {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Nanometer> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -170,13 +220,13 @@ mod tests {
 
     #[test]
     fn test_l1_display() {
-        let length = L1::<f64, Meter>::new(42.0);
+        let length = Meter::new(42.0);
         assert_eq!(format!("{}", length), "42 m");
     }
 
     #[test]
     fn test_l1_display_precision() {
-        let length = L1::<f64, Meter>::new(42.123456789);
+        let length = Meter::new(42.123456789);
         assert_eq!(format!("{:.1}", length), "42.1 m");
         assert_eq!(format!("{:.2}", length), "42.12 m");
         assert_eq!(format!("{:.3}", length), "42.123 m");
@@ -184,17 +234,17 @@ mod tests {
 
     #[test]
     fn test_l1_add() {
-        let a = L1::<f64, Meter>::new(5.0);
-        let b = L1::<f64, Meter>::new(3.0);
+        let a = Meter::new(5.0);
+        let b = Meter::new(3.0);
         let c = a + b;
         assert_eq!(c.value, 8.0);
     }
 
     #[test]
     fn test_l1_add_associativity() {
-        let a = L1::<f64, Meter>::new(5.0);
-        let b = L1::<f64, Meter>::new(3.0);
-        let c = L1::<f64, Meter>::new(2.0);
+        let a = Meter::new(5.0);
+        let b = Meter::new(3.0);
+        let c = Meter::new(2.0);
 
         let result1 = (a + b) + c;
         let result2 = a + (b + c);
@@ -204,8 +254,8 @@ mod tests {
 
     #[test]
     fn test_l1_add_commutativity() {
-        let a = L1::<f64, Meter>::new(5.0);
-        let b = L1::<f64, Meter>::new(3.0);
+        let a = Meter::new(5.0);
+        let b = Meter::new(3.0);
 
         let result1 = a + b;
         let result2 = b + a;
@@ -217,16 +267,16 @@ mod tests {
 
     #[test]
     fn test_l1_sub() {
-        let a = L1::<f64, Meter>::new(5.0);
-        let b = L1::<f64, Meter>::new(3.0);
+        let a = Meter::new(5.0);
+        let b = Meter::new(3.0);
         let c = a - b;
         assert_close(c.value, 2.0, 1e-10);
     }
 
     #[test]
     fn test_l1_mul_t1() {
-        let length = L1::<f64, Meter>::new(10.0);
-        let time = T1::<f64, Second>::new(2.0);
+        let length = Meter::new(10.0);
+        let time = Second::new(2.0);
 
         // Force the type of result to be L1_T1<f64, MeterSecond>, as this is the expected output
         // type of the multiplication
@@ -236,8 +286,8 @@ mod tests {
 
     #[test]
     fn test_l1_div_t1() {
-        let length = L1::<f64, Meter>::new(10.0);
-        let time = T1::<f64, Second>::new(2.0);
+        let length = Meter::new(10.0);
+        let time = Second::new(2.0);
 
         // Force the type of result to be L1_TN1<f64, MeterSecond>, as this is the expected output
         // type of the division
