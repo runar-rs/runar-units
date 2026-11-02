@@ -9,7 +9,7 @@ source = "git+https://github.com/runar-rs/runar-libm.git#9f22164ce82c6a8ac43f508
 
 [[package]]
 name = "runar-units"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "runar-libm",
 ]

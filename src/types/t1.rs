@@ -87,9 +87,11 @@ pub trait T1Unit: Unit {}
 /// - [`T1<f32, Day>`] to [`T1<f32, Hour>`]
 /// - [`T1<f32, Day>`] to [`T1<f32, Minute>`]
 /// - [`T1<f32, Day>`] to [`T1<f32, Second>`]
+/// - [`T1<f64, Day>`] to [`T1<f32, Millisecond>`]
 /// - [`T1<f64, Day>`] to [`T1<f64, Hour>`]
 /// - [`T1<f64, Day>`] to [`T1<f64, Minute>`]
 /// - [`T1<f64, Day>`] to [`T1<f64, Second>`]
+/// - [`T1<f64, Day>`] to [`T1<f64, Millisecond>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Day;
 impl Unit for Day {
@@ -112,9 +114,11 @@ impl Day {
 /// - [`T1<f32, Hour>`] to [`T1<f32, Day>`]
 /// - [`T1<f32, Hour>`] to [`T1<f32, Minute>`]
 /// - [`T1<f32, Hour>`] to [`T1<f32, Second>`]
+/// - [`T1<f32, Hour>`] to [`T1<f32, Millisecond>`]
 /// - [`T1<f64, Hour>`] to [`T1<f64, Day>`]
 /// - [`T1<f64, Hour>`] to [`T1<f64, Minute>`]
 /// - [`T1<f64, Hour>`] to [`T1<f64, Second>`]
+/// - [`T1<f64, Hour>`] to [`T1<f64, Millisecond>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Hour;
 impl Unit for Hour {
@@ -134,8 +138,14 @@ impl Hour {
 /// Unit Minute
 /// 
 /// # Implemented Conversions
+/// - [`T1<f32, Minute>`] to [`T1<f32, Day>`]
+/// - [`T1<f32, Minute>`] to [`T1<f32, Hour>`]
 /// - [`T1<f32, Minute>`] to [`T1<f32, Second>`]
+/// - [`T1<f32, Minute>`] to [`T1<f32, Millisecond>`]
+/// - [`T1<f64, Minute>`] to [`T1<f64, Day>`]
+/// - [`T1<f64, Minute>`] to [`T1<f64, Hour>`]
 /// - [`T1<f64, Minute>`] to [`T1<f64, Second>`]
+/// - [`T1<f64, Minute>`] to [`T1<f64, Millisecond>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Minute;
 impl Unit for Minute {
@@ -212,6 +222,7 @@ impl Unit for Microsecond {
 impl T1Unit for Microsecond {}
 
 impl Microsecond {
+    /// Creates a new instance of `T1` with the given value and the unit `Microsecond`.
     #[must_use]
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Microsecond> {
         T1 {
@@ -230,6 +241,7 @@ impl Unit for Nanosecond {
 impl T1Unit for Nanosecond {}
 
 impl Nanosecond {
+    /// Creates a new instance of `T1` with the given value and the unit `Nanosecond`.
     #[must_use]
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Nanosecond> {
         T1 {
@@ -247,6 +259,7 @@ impl Unit for Picosecond {
 impl T1Unit for Picosecond {}
 
 impl Picosecond {
+    /// Creates a new instance of `T1` with the given value and the unit `Picosecond`.
     #[must_use]
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Picosecond> {
         T1 {
@@ -264,6 +277,7 @@ impl Unit for Femtosecond {
 impl T1Unit for Femtosecond {}
 
 impl Femtosecond {
+    /// Creates a new instance of `T1` with the given value and the unit `Femtosecond`.
     #[must_use]
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Femtosecond> {
         T1 {
@@ -281,6 +295,7 @@ impl Unit for Attosecond {
 impl T1Unit for Attosecond {}
 
 impl Attosecond {
+    /// Creates a new instance of `T1` with the given value and the unit `Attosecond`.
     #[must_use]
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Attosecond> {
         T1 {
@@ -298,6 +313,7 @@ impl Unit for Zeptosecond {
 impl T1Unit for Zeptosecond {}
 
 impl Zeptosecond {
+    /// Creates a new instance of `T1` with the given value and the unit `Zeptosecond`.
     #[must_use]
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Zeptosecond> {
         T1 {
@@ -315,6 +331,7 @@ impl Unit for Yoktosecond {
 impl T1Unit for Yoktosecond {}
 
 impl Yoktosecond {
+    /// Creates a new instance of `T1` with the given value and the unit `Yoktosecond`.
     #[must_use]
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Yoktosecond> {
         T1 {
@@ -332,6 +349,7 @@ impl Unit for Rontosecond {
 impl T1Unit for Rontosecond {}
 
 impl Rontosecond {
+    /// Creates a new instance of `T1` with the given value and the unit `Rontosecond`.
     #[must_use]
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Rontosecond> {
         T1 {
@@ -349,6 +367,7 @@ impl Unit for Quectosecond {
 impl T1Unit for Quectosecond {}
 
 impl Quectosecond {
+    /// Creates a new instance of `T1` with the given value and the unit `Quectosecond`.
     #[must_use]
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Quectosecond> {
         T1 {
@@ -420,6 +439,15 @@ impl From<T1<f64, Day>> for T1<f64, Second> {
     }
 }
 
+impl From<T1<f64, Day>> for T1<f64, Millisecond> {
+    fn from(val: T1<f64, Day>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value * 86400000.0
+        }
+    }
+}
+
 impl From<T1<f32, Hour>> for T1<f32, Day> {
     fn from(val: T1<f32, Hour>) -> Self {
         T1 {
@@ -443,6 +471,15 @@ impl From<T1<f32, Hour>> for T1<f32, Second> {
         T1 {
             unit: PhantomData,
             value: val.value * 3600.0
+        }
+    }
+}
+
+impl From<T1<f32, Hour>> for T1<f32, Millisecond> {
+    fn from(val: T1<f32, Hour>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value * 3600000.0
         }
     }
 }
@@ -474,6 +511,33 @@ impl From<T1<f64, Hour>> for T1<f64, Second> {
     }
 }
 
+impl From<T1<f64, Hour>> for T1<f64, Millisecond> {
+    fn from(val: T1<f64, Hour>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value * 3600000.0
+        }
+    }
+}
+
+impl From<T1<f32, Minute>> for T1<f32, Day> {
+    fn from(val: T1<f32, Minute>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 1440.0
+        }
+    }
+}
+
+impl From<T1<f32, Minute>> for T1<f32, Hour> {
+    fn from(val: T1<f32, Minute>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 60.0
+        }
+    }
+}
+
 impl From<T1<f32, Minute>> for T1<f32, Second> {
     fn from(val: T1<f32, Minute>) -> Self {
         T1 {
@@ -488,6 +552,24 @@ impl From<T1<f32, Minute>> for T1<f32, Millisecond> {
         T1 {
             unit: PhantomData,
             value: val.value * 60000.0
+        }
+    }
+}
+
+impl From<T1<f64, Minute>> for T1<f64, Day> {
+    fn from(val: T1<f64, Minute>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 1440.0
+        }
+    }
+}
+
+impl From<T1<f64, Minute>> for T1<f64, Hour> {
+    fn from(val: T1<f64, Minute>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 60.0
         }
     }
 }
