@@ -6,6 +6,7 @@ use crate::{Dimension, QuantityNum, Unit};
 pub type Time<V, U> = T1<V, U>;
 /// T1 is a dimension for time, with a value type V and a unit U. The unit U must implement the
 /// `T1Unit` trait, which is a marker trait for units that represent time.
+#[derive(Debug, Clone, Copy)]
 pub struct T1<V, U>
 where V: QuantityNum, U: T1Unit {
     pub(crate) unit: PhantomData<U>,
@@ -89,6 +90,7 @@ pub trait T1Unit: Unit {}
 /// - [`T1<f64, Day>`] to [`T1<f64, Second>`]
 /// - [`T1<f64, Day>`] to [`T1<f64, Minute>`]
 /// - [`T1<f64, Day>`] to [`T1<f64, Hour>`]
+#[derive(Debug, Clone, Copy)]
 pub struct Day;
 impl Unit for Day {
     const ABBREVIATION: &'static str = "d";
@@ -102,6 +104,7 @@ impl T1Unit for Day {}
 /// - [`T1<f32, Hour>`] to [`T1<f32, Second>`]
 /// - [`T1<f64, Hour>`] to [`T1<f64, Minute>`]
 /// - [`T1<f64, Hour>`] to [`T1<f64, Second>`]
+#[derive(Debug, Clone, Copy)]
 pub struct Hour;
 impl Unit for Hour {
     const ABBREVIATION: &'static str = "h";
@@ -113,6 +116,7 @@ impl T1Unit for Hour {}
 /// # Implemented Conversions
 /// - [`T1<f32, Minute>`] to [`T1<f32, Second>`]
 /// - [`T1<f64, Minute>`] to [`T1<f64, Second>`]
+#[derive(Debug, Clone, Copy)]
 pub struct Minute;
 impl Unit for Minute {
     const ABBREVIATION: &'static str = "min";
@@ -124,6 +128,7 @@ impl T1Unit for Minute {}
 /// # Implemented Conversions
 /// - [`T1<f32, Second>`] to [`T1<f32, Millisecond>`]
 /// - [`T1<f64, Second>`] to [`T1<f64, Millisecond>`]
+#[derive(Debug, Clone, Copy)]
 pub struct Second;
 impl Unit for Second {
     const ABBREVIATION: &'static str = "s";
@@ -131,6 +136,7 @@ impl Unit for Second {
 impl T1Unit for Second {}
 
 /// Unit Millisecond
+#[derive(Debug, Clone, Copy)]
 pub struct Millisecond;
 impl Unit for Millisecond {
     const ABBREVIATION: &'static str = "ms";
@@ -138,6 +144,7 @@ impl Unit for Millisecond {
 impl T1Unit for Millisecond {}
 
 /// Unit Microsecond
+#[derive(Debug, Clone, Copy)]
 pub struct Microsecond;
 impl Unit for Microsecond {
     const ABBREVIATION: &'static str = "μs";
@@ -145,6 +152,7 @@ impl Unit for Microsecond {
 impl T1Unit for Microsecond {}
 
 /// Unit Nanosecond
+#[derive(Debug, Clone, Copy)]
 pub struct Nanosecond;
 impl Unit for Nanosecond {
     const ABBREVIATION: &'static str = "ns";
@@ -152,6 +160,7 @@ impl Unit for Nanosecond {
 impl T1Unit for Nanosecond {}
 
 /// Unit Picosecond
+#[derive(Debug, Clone, Copy)]
 pub struct Picosecond;
 impl Unit for Picosecond {
     const ABBREVIATION: &'static str = "ps";
@@ -159,6 +168,7 @@ impl Unit for Picosecond {
 impl T1Unit for Picosecond {}
 
 /// Unit Femtosecond
+#[derive(Debug, Clone, Copy)]
 pub struct Femtosecond;
 impl Unit for Femtosecond {
     const ABBREVIATION: &'static str = "fs";
@@ -166,6 +176,7 @@ impl Unit for Femtosecond {
 impl T1Unit for Femtosecond {}
 
 /// Unit Attosecond
+#[derive(Debug, Clone, Copy)]
 pub struct Attosecond;
 impl Unit for Attosecond {
     const ABBREVIATION: &'static str = "as";
@@ -180,6 +191,7 @@ impl Unit for Zeptosecond {
 impl T1Unit for Zeptosecond {}
 
 /// Unit Yoktosecond
+#[derive(Debug, Clone, Copy)]
 pub struct Yoktosecond;
 impl Unit for Yoktosecond {
     const ABBREVIATION: &'static str = "ys";
@@ -187,6 +199,7 @@ impl Unit for Yoktosecond {
 impl T1Unit for Yoktosecond {}
 
 /// Unit Rontosecond
+#[derive(Debug, Clone, Copy)]
 pub struct Rontosecond;
 impl Unit for Rontosecond {
     const ABBREVIATION: &'static str = "rs";
@@ -194,6 +207,7 @@ impl Unit for Rontosecond {
 impl T1Unit for Rontosecond {}
 
 /// Unit Quectosecond
+#[derive(Debug, Clone, Copy)]
 pub struct Quectosecond;
 impl Unit for Quectosecond {
     const ABBREVIATION: &'static str = "qs";
@@ -277,7 +291,7 @@ impl From<T1<f64, Hour>> for T1<f64, Minute> {
     fn from(val: T1<f64, Hour>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value / 60.0
+            value: val.value * 60.0
         }
     }
 }
@@ -300,15 +314,59 @@ impl From<T1<f32, Minute>> for T1<f32, Second> {
     }
 }
 
-impl From<T1<f64, Minute>> for T1<f64, Second> {
-    fn from(val: T1<f64, Minute>) -> Self {
+impl From<T1<f32, Minute>> for T1<f32, Millisecond> {
+    fn from(val: T1<f32, Minute>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value / 60.0
+            value: val.value * 60000.0
         }
     }
 }
 
+impl From<T1<f64, Minute>> for T1<f64, Second> {
+    fn from(val: T1<f64, Minute>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value * 60.0
+        }
+    }
+}
+
+impl From<T1<f64, Minute>> for T1<f64, Millisecond> {
+    fn from(val: T1<f64, Minute>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value * 60000.0
+        }
+    }
+}
+
+impl From<T1<f32, Second>> for T1<f32, Millisecond> {
+    fn from(val: T1<f32, Second>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value * 1000.0
+        }
+    }
+}
+
+impl From<T1<f64, Second>> for T1<f64, Hour> {
+    fn from(val: T1<f64, Second>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value / 3600.0
+        }
+    }
+}
+
+impl From<T1<f64, Second>> for T1<f64, Millisecond> {
+    fn from(val: T1<f64, Second>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value * 1000.0
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -336,5 +394,15 @@ mod tests {
         let b = T1::<f64, Second>::new(3.0);
         let c = a + b;
         assert_close(c.value, 8.0, 1e-10);
+    }
+
+    #[test]
+    fn test_t1_units_conversion() {
+        let time_in_hours = T1::<f64, Hour>::new(2.0);
+        let time_in_minutes: T1<f64, Minute> = time_in_hours.into();
+        let time_in_seconds: T1<f64, Second> = time_in_minutes.into();
+
+        let time_in_hours_back: T1<f64, Hour> = time_in_seconds.into();
+        assert_close(time_in_hours.value, time_in_hours_back.value, 1e-10);
     }
 }
