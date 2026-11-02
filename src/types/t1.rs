@@ -160,10 +160,12 @@ impl Minute {
 /// - [`T1<f32, Second>`] to [`T1<f32, Hour>`]
 /// - [`T1<f32, Second>`] to [`T1<f32, Minute>`]
 /// - [`T1<f32, Second>`] to [`T1<f32, Millisecond>`]
+/// - [`T1<f32, Second>`] to [`T1<f32, Microsecond>`]
 /// - [`T1<f64, Second>`] to [`T1<f64, Day>`]
 /// - [`T1<f64, Second>`] to [`T1<f64, Hour>`]
 /// - [`T1<f64, Second>`] to [`T1<f64, Minute>`]
 /// - [`T1<f64, Second>`] to [`T1<f64, Millisecond>`]
+/// - [`T1<f64, Second>`] to [`T1<f64, Microsecond>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Second;
 impl Unit for Second {
@@ -544,6 +546,15 @@ impl From<T1<f32, Second>> for T1<f32, Millisecond> {
     }
 }
 
+impl From<T1<f32, Second>> for T1<f32, Microsecond> {
+    fn from(val: T1<f32, Second>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value * 1_000_000.0
+        }
+    }
+}
+
 impl From<T1<f64, Second>> for T1<f64, Day> {
     fn from(val: T1<f64, Second>) -> Self {
         T1 {
@@ -576,6 +587,15 @@ impl From<T1<f64, Second>> for T1<f64, Millisecond> {
         T1 {
             unit: PhantomData,
             value: val.value * 1000.0
+        }
+    }
+}
+
+impl From<T1<f64, Second>> for T1<f64, Microsecond> {
+    fn from(val: T1<f64, Second>) -> Self {
+        T1 {
+            unit: PhantomData,
+            value: val.value * 1_000_000.0
         }
     }
 }
