@@ -192,8 +192,8 @@ impl Unit for Millisecond {
 }
 impl T1Unit for Millisecond {}
 
-/// Creates a new instance of `T1` with the given value and the unit `Millisecond`.
 impl Millisecond {
+    /// Creates a new instance of `T1` with the given value and the unit `Millisecond`.
     #[must_use]
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Millisecond> {
         T1 {
