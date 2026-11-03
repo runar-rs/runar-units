@@ -127,6 +127,16 @@ impl<U: L1Unit> L1<f64, U> {
 
 pub trait L1Unit: Unit {}
 
+
+/// Unit Kilometer
+/// 
+/// # Implemented Conversions
+/// - [`L1<f32, Kilometer>`] to [`L1<f32, Meter>`]
+/// - [`L1<f32, Kilometer>`] to [`L1<f32, Centimeter>`]
+/// - [`L1<f32, Kilometer>`] to [`L1<f32, Millimeter>`]
+/// - [`L1<f64, Kilometer>`] to [`L1<f64, Meter>`]
+/// - [`L1<f64, Kilometer>`] to [`L1<f64, Centimeter>`]
+/// - [`L1<f64, Kilometer>`] to [`L1<f64, Millimeter>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Kilometer;
 impl Unit for Kilometer {
@@ -144,6 +154,15 @@ impl Kilometer {
     }
 }
 
+/// Unit Meter
+/// 
+/// # Implemented Conversions
+/// - [`L1<f32, Meter>`] to [`L1<f32, Kilometer>`]
+/// - [`L1<f32, Meter>`] to [`L1<f32, Centimeter>`]
+/// - [`L1<f32, Meter>`] to [`L1<f32, Millimeter>`]
+/// - [`L1<f64, Meter>`] to [`L1<f64, Kilometer>`]
+/// - [`L1<f64, Meter>`] to [`L1<f64, Centimeter>`]
+/// - [`L1<f64, Meter>`] to [`L1<f64, Millimeter>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Meter;
 impl Unit for Meter {
@@ -161,6 +180,35 @@ impl Meter {
     }
 }
 
+/// Unit Centimeter
+/// 
+/// # Implemented Conversions
+/// - [`L1<f32, Centimeter>`] to [`L1<f32, Meter>`]
+/// - [`L1<f32, Centimeter>`] to [`L1<f32, Millimeter>`]
+/// - [`L1<f64, Centimeter>`] to [`L1<f64, Meter>`]
+/// - [`L1<f64, Centimeter>`] to [`L1<f64, Millimeter>`]
+#[derive(Debug, Clone, Copy)]
+pub struct Centimeter;
+impl Unit for Centimeter {
+    const ABBREVIATION: &'static str = "cm";
+}
+impl L1Unit for Centimeter {}
+
+impl Centimeter {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> L1<V, Centimeter> {
+        L1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}
+
+/// Unit Millimeter
+/// 
+/// # Implemented Conversions
+/// - [`L1<f32, Millimeter>`] to [`L1<f32, Meter>`]
+/// - [`L1<f64, Millimeter>`] to [`L1<f64, Meter>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Millimeter;
 impl Unit for Millimeter {
@@ -335,6 +383,170 @@ impl Quectometer {
     }
 }
 
+// Unit Conversions
+
+impl From<L1<f32, Kilometer>> for L1<f32, Meter> {
+    fn from(val: L1<f32, Kilometer>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 1_000.0
+        }
+    }
+}
+
+impl From<L1<f32, Kilometer>> for L1<f32, Centimeter> {
+    fn from(val: L1<f32, Kilometer>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 100_000.0
+        }
+    }
+}
+
+impl From<L1<f32, Kilometer>> for L1<f32, Millimeter> {
+    fn from(val: L1<f32, Kilometer>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 1_000_000.0
+        }
+    }
+}
+
+impl From<L1<f64, Kilometer>> for L1<f64, Meter> {
+    fn from(val: L1<f64, Kilometer>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 1_000.0
+        }
+    }
+}
+
+impl From<L1<f64, Kilometer>> for L1<f64, Centimeter> {
+    fn from(val: L1<f64, Kilometer>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 100_000.0
+        }
+    }
+}
+
+impl From<L1<f64, Kilometer>> for L1<f64, Millimeter> {
+    fn from(val: L1<f64, Kilometer>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 1_000_000.0
+        }
+    }
+}
+
+impl From<L1<f32, Meter>> for L1<f32, Kilometer> {
+    fn from(val: L1<f32, Meter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value / 1_000.0
+        }
+    }
+}
+
+impl From<L1<f32, Meter>> for L1<f32, Centimeter> {
+    fn from(val: L1<f32, Meter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 100.0
+        }
+    }
+}
+
+impl From<L1<f32, Meter>> for L1<f32, Millimeter> {
+    fn from(val: L1<f32, Meter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 1_000.0
+        }
+    }
+}
+
+impl From<L1<f64, Meter>> for L1<f64, Kilometer> {
+    fn from(val: L1<f64, Meter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value / 1_000.0
+        }
+    }
+}
+
+impl From<L1<f64, Meter>> for L1<f64, Centimeter> {
+    fn from(val: L1<f64, Meter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 100.0
+        }
+    }
+}
+
+impl From<L1<f64, Meter>> for L1<f64, Millimeter> {
+    fn from(val: L1<f64, Meter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 1_000.0
+        }
+    }
+}
+
+impl From<L1<f32, Centimeter>> for L1<f32, Meter> {
+    fn from(val: L1<f32, Centimeter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value / 100.0
+        }
+    }
+}
+
+impl From<L1<f32, Centimeter>> for L1<f32, Millimeter> {
+    fn from(val: L1<f32, Centimeter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 10.0
+        }
+    }
+}
+
+impl From<L1<f64, Centimeter>> for L1<f64, Meter> {
+    fn from(val: L1<f64, Centimeter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value / 100.0
+        }
+    }
+}
+
+impl From<L1<f64, Centimeter>> for L1<f64, Millimeter> {
+    fn from(val: L1<f64, Centimeter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value * 10.0
+        }
+    }
+}
+
+impl From<L1<f32, Millimeter>> for L1<f32, Meter> {
+    fn from(val: L1<f32, Millimeter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value / 1_000.0
+        }
+    }
+}
+
+impl From<L1<f64, Millimeter>> for L1<f64, Meter> {
+    fn from(val: L1<f64, Millimeter>) -> Self {
+        L1 {
+            unit: PhantomData,
+            value: val.value / 1_000.0
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::{test_utils::assert_close, types::l1_tn1::MeterPerSecond};
@@ -394,6 +606,17 @@ mod tests {
         let b = Meter::new(3.0);
         let c = a - b;
         assert_close(c.value, 2.0, 1e-10);
+    }
+
+    #[test]
+    fn test_l1_conversion() {
+        // Start at meter and go through all conversions and back to meter, checking that the final value is equal to the original value.
+        let original = Meter::new(1.0);
+        let km: L1<f64, Kilometer> = original.into();
+        let cm: L1<f64, Centimeter> = km.into();
+        let mm: L1<f64, Millimeter> = cm.into();
+        let m: L1<f64, Meter> = mm.into();
+        assert_close(m.value, original.value, 1e-10);
     }
 
     #[test]
