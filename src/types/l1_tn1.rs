@@ -13,7 +13,7 @@ pub struct L1_TN1<V: QuantityNum, U: Unit> {
 impl<V: QuantityNum, U: Unit> Dimension for L1_TN1<V, U> {
     type ValueType = V;
 
-    fn get_raw(&self) -> &Self::ValueType {
+    fn get(&self) -> &Self::ValueType {
         &self.value
     }
 }

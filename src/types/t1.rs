@@ -16,7 +16,7 @@ where V: QuantityNum, U: T1Unit {
 impl<V: QuantityNum, U: T1Unit> Dimension for T1<V, U> {
     type ValueType = V;
 
-    fn get_raw(&self) -> &Self::ValueType {
+    fn get(&self) -> &Self::ValueType {
         &self.value
     }
 }

@@ -13,8 +13,9 @@ impl QuantityNum for f64 {}
 pub trait Dimension {
     type ValueType: QuantityNum;
 
+    /// Returns a reference to the underlying value of the dimension.
     #[must_use]
-    fn get_raw(&self) -> &Self::ValueType;
+    fn get(&self) -> &Self::ValueType;
 }
 
 /// Marker Traits for Units

@@ -26,7 +26,7 @@ impl<V: QuantityNum + Display, U: L1Unit> core::fmt::Display for L1<V, U> {
 impl<V: QuantityNum, U: L1Unit> Dimension for L1<V, U> {
     type ValueType = V;
 
-    fn get_raw(&self) -> &Self::ValueType {
+    fn get(&self) -> &Self::ValueType {
         &self.value
     }
 }
