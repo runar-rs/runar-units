@@ -44,7 +44,7 @@ impl<V: QuantityNum + Add<Output = V>, U: L1Unit> Add<L1<V, U>> for L1<V, U> {
 }
 
 /// `AddAssign` with same `ValueType` and same Unit
-impl<V: QuantityNum, U: L1Unit> AddAssign<L1<V, U>> for L1<V, U> {
+impl<V: QuantityNum + AddAssign, U: L1Unit> AddAssign<L1<V, U>> for L1<V, U> {
     fn add_assign(&mut self, rhs: L1<V, U>) {
         self.value += rhs.value;
     }
@@ -63,7 +63,7 @@ impl<V: QuantityNum + Sub<Output = V>, U: L1Unit> Sub<L1<V,U>> for L1<V, U> {
 }
 
 /// `SubAssign` with same `ValueType` and same Unit
-impl<V: QuantityNum, U: L1Unit> SubAssign<L1<V, U>> for L1<V,U> {
+impl<V: QuantityNum + SubAssign, U: L1Unit> SubAssign<L1<V, U>> for L1<V,U> {
     fn sub_assign(&mut self, rhs: L1<V, U>) {
         self.value -= rhs.value;
     }

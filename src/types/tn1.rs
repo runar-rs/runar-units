@@ -46,7 +46,7 @@ impl<V: QuantityNum + Add<Output = V>, U: TN1Unit> Add<TN1<V, U>> for TN1<V, U> 
 }
 
 /// `AddAssign` with same `ValueType` and same Unit
-impl<V: QuantityNum, U: TN1Unit> AddAssign<TN1<V, U>> for TN1<V, U> {
+impl<V: QuantityNum + AddAssign, U: TN1Unit> AddAssign<TN1<V, U>> for TN1<V, U> {
     fn add_assign(&mut self, rhs: TN1<V, U>) {
         self.value += rhs.value;
     }
@@ -65,7 +65,7 @@ impl<V: QuantityNum + Sub<Output = V>, U: TN1Unit> Sub<TN1<V, U>> for TN1<V, U> 
 }
 
 /// `SubAssign` with same `ValueType` and same Unit
-impl<V: QuantityNum, U: TN1Unit> SubAssign<TN1<V, U>> for TN1<V, U> {
+impl<V: QuantityNum + SubAssign, U: TN1Unit> SubAssign<TN1<V, U>> for TN1<V, U> {
     fn sub_assign(&mut self, rhs: TN1<V, U>) {
         self.value -= rhs.value;
     }
@@ -84,7 +84,7 @@ impl<V: QuantityNum + Mul<Output = V>, U: TN1Unit> Mul<V> for TN1<V, U> {
 }
 
 /// `MulAssign` with scalar of same `ValueType`
-impl<V: QuantityNum + Mul<Output = V>, U: TN1Unit> MulAssign<V> for TN1<V, U> {
+impl<V: QuantityNum + MulAssign, U: TN1Unit> MulAssign<V> for TN1<V, U> {
     fn mul_assign(&mut self, rhs: V) {
         self.value *= rhs;
     }
@@ -103,7 +103,7 @@ impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> Div<V> for TN1<V, U> {
 }
 
 /// `DivAssign` with scalar of same `ValueType`
-impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> DivAssign<V> for TN1<V, U> {
+impl<V: QuantityNum + DivAssign, U: TN1Unit> DivAssign<V> for TN1<V, U> {
     fn div_assign(&mut self, rhs: V) {
         self.value /= rhs;
     }

@@ -1,11 +1,9 @@
 #![cfg_attr(not(test), no_std)]
 
-use core::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
-
 pub mod consts;
 pub mod types;
 
-pub trait QuantityNum: Add + AddAssign + Sub + SubAssign + Mul + MulAssign + Div + DivAssign + Clone + Sized {}
+pub trait QuantityNum: Sized {}
 
 impl QuantityNum for f32 {}
 impl QuantityNum for f64 {}
