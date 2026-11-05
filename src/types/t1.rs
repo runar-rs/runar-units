@@ -1,6 +1,7 @@
-use core::ops::{Add, AddAssign, Sub, SubAssign};
+use core::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
 use core::marker::PhantomData;
 use core::fmt::Display;
+use crate::types::tn1::{Hertz, TN1};
 use crate::{Dimension, QuantityNum, Unit};
 
 pub type Time<V, U> = T1<V, U>;
@@ -58,9 +59,55 @@ impl<V: QuantityNum + SubAssign, U: T1Unit> SubAssign<T1<V, U>> for T1<V, U> {
     }
 }
 
-impl<U: T1Unit> T1<f64, U> {
+/// `Mul` with same `ValueType` and scalar
+impl<V: QuantityNum + Mul<Output = V>, U: T1Unit> Mul<V> for T1<V, U> {
+    type Output = Self;
+    fn mul(self, rhs: V) -> Self::Output {
+        T1 {
+            unit: PhantomData,
+            value: self.value * rhs,
+        }
+    }
+}
+
+/// `MulAssign` with same `ValueType` and scalar
+impl<V: QuantityNum + MulAssign, U: T1Unit> MulAssign<V> for T1<V, U> {
+    fn mul_assign(&mut self, rhs: V) {
+        self.value *= rhs;
+    }
+}
+
+/// `Div` with same `ValueType` and scalar
+impl<V: QuantityNum + Div<Output = V>, U: T1Unit> Div<V> for T1<V, U> {
+    type Output = Self;
+    fn div(self, rhs: V) -> Self::Output {
+        T1 {
+            unit: PhantomData,
+            value: self.value / rhs,
+        }
+    }
+}
+
+/// `DivAssign` with same `ValueType` and scalar
+impl<V: QuantityNum + DivAssign, U: T1Unit> DivAssign<V> for T1<V, U> {
+    fn div_assign(&mut self, rhs: V) {
+        self.value /= rhs;
+    }
+}
+
+/// `Mul` with same `ValueType` and `tn1` unit
+impl<V: QuantityNum + Mul<Output = V>> Mul<TN1<V, Hertz>> for T1<V, Second> {
+    type Output = V;
+    
+    fn mul(self, rhs: TN1<V, Hertz>) -> Self::Output {
+        self.value * rhs.value
+    }
+}
+
+impl<V: QuantityNum, U: T1Unit> T1<V, U> {
+    #[deprecated(note ="Use the `new` method on the unit type instead")]
     #[must_use]
-    pub fn new(value: f64) -> Self {
+    pub fn new(value: V) -> Self {
         T1 {
             unit: PhantomData,
             value

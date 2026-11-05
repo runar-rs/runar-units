@@ -8,6 +8,7 @@ use crate::types::l1_tn1::{L1_TN1, MeterPerSecond};
 use crate::types::t1::{Second, T1};
 use crate::{Dimension, QuantityNum, Unit};
 
+#[derive(Debug, Clone, Copy)]
 pub struct TN1<V, U>
 where V: QuantityNum, U: TN1Unit {
     pub(crate) unit: PhantomData<U>,
@@ -33,7 +34,7 @@ impl<U: TN1Unit> TN1<f64, U> {
     }
 }
 
-/// Add with same `ValueType` and same Unit
+/// `Add` with same `ValueType` and same Unit
 impl<V: QuantityNum + Add<Output = V>, U: TN1Unit> Add<TN1<V, U>> for TN1<V, U> {
     type Output = Self;
 
@@ -52,7 +53,7 @@ impl<V: QuantityNum + AddAssign, U: TN1Unit> AddAssign<TN1<V, U>> for TN1<V, U> 
     }
 }
 
-/// Sub with same `ValueType` and same Unit
+/// `Sub` with same `ValueType` and same Unit
 impl<V: QuantityNum + Sub<Output = V>, U: TN1Unit> Sub<TN1<V, U>> for TN1<V, U> {
     type Output = Self;
 
@@ -71,7 +72,7 @@ impl<V: QuantityNum + SubAssign, U: TN1Unit> SubAssign<TN1<V, U>> for TN1<V, U> 
     }
 }
 
-/// Mul with scalar of same `ValueType`
+/// `Mul` with scalar of same `ValueType`
 impl<V: QuantityNum + Mul<Output = V>, U: TN1Unit> Mul<V> for TN1<V, U> {
     type Output = Self;
 
@@ -90,7 +91,7 @@ impl<V: QuantityNum + MulAssign, U: TN1Unit> MulAssign<V> for TN1<V, U> {
     }
 }
 
-/// Div with scalar of same `ValueType`
+/// `Div` with scalar of same `ValueType`
 impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> Div<V> for TN1<V, U> {
     type Output = Self;
 
@@ -109,7 +110,7 @@ impl<V: QuantityNum + DivAssign, U: TN1Unit> DivAssign<V> for TN1<V, U> {
     }
 }
 
-/// Div with same `ValueType` and same Unit
+/// `Div` with same `ValueType` and same Unit
 impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> Div<TN1<V, U>> for TN1<V, U> {
     type Output = V;
 
@@ -118,7 +119,7 @@ impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> Div<TN1<V, U>> for TN1<V, U> 
     }
 }
 
-/// Mul with same `ValueType` and Hertz and Second
+/// `Mul` with same `ValueType` and Hertz and Second
 impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for TN1<V, Hertz> {
     type Output = V;
 
@@ -127,7 +128,7 @@ impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for TN1<V, Hertz> {
     }
 }
 
-/// Mul with same `ValueType` and Hertz and Meter
+/// `Mul` with same `ValueType` and Hertz and Meter
 impl<V: QuantityNum + Mul<Output = V>> Mul<L1<V, Meter>> for TN1<V, Hertz> {
     type Output = L1_TN1<V, MeterPerSecond>;
     fn mul(self, rhs: L1<V, Meter>) -> Self::Output {
@@ -271,6 +272,7 @@ impl<V: QuantityNum + Display> Display for TN1<V, Kilohertz> {
     }
 }
 
+#[derive(Debug, Clone, Copy)]
 pub struct Hertz;
 impl Unit for Hertz {
     const ABBREVIATION: &'static str = "Hz";
@@ -281,6 +283,15 @@ impl TN1Unit for Hertz {}
 impl<V: QuantityNum + Display> Display for TN1<V, Hertz> {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "{} Hz", self.value)
+    }
+}
+
+impl Hertz {
+    pub fn new<V: QuantityNum>(value: V) -> TN1<V, Hertz> {
+        TN1 {
+            unit: PhantomData,
+            value
+        }
     }
 }
 
