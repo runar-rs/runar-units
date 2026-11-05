@@ -1,10 +1,9 @@
 use core::fmt::Display;
-use core::ops::{Add, AddAssign, Div, Mul, Sub, SubAssign};
 use core::marker::PhantomData;
 
 use crate::types::l1_t1::{L1_T1, MeterSecond};
-use crate::types::l1_tn1::{L1_TN1, MeterPerSecond};
-use crate::types::t1::{Second, T1};
+use crate::types::l1_tn1::L1_TN1;
+use crate::types::t1::{Second, T1, T1Unit};
 use crate::{Dimension, QuantityNum, Unit};
 
 pub type Length<V, U> = L1<V, U>;
@@ -31,67 +30,10 @@ impl<V: QuantityNum, U: L1Unit> Dimension for L1<V, U> {
     }
 }
 
-/// Add with same `ValueType` and same Unit
-impl<V: QuantityNum + Add<Output = V>, U: L1Unit> Add<L1<V, U>> for L1<V, U> {
-    type Output = Self;
+impl_dimension_ops!(L1, L1Unit);
 
-    fn add(self, rhs: L1<V, U>) -> Self::Output {
-        L1 {
-            unit: PhantomData,
-            value: self.value + rhs.value,
-        }
-    }
-}
-
-/// `AddAssign` with same `ValueType` and same Unit
-impl<V: QuantityNum + AddAssign, U: L1Unit> AddAssign<L1<V, U>> for L1<V, U> {
-    fn add_assign(&mut self, rhs: L1<V, U>) {
-        self.value += rhs.value;
-    }
-}
-
-/// Sub with same `ValueType` and same Unit
-impl<V: QuantityNum + Sub<Output = V>, U: L1Unit> Sub<L1<V,U>> for L1<V, U> {
-    type Output = Self;
-
-    fn sub(self, rhs: L1<V,U>) -> Self::Output {
-        L1 {
-            unit: PhantomData,
-            value: self.value - rhs.value
-        }
-    }
-}
-
-/// `SubAssign` with same `ValueType` and same Unit
-impl<V: QuantityNum + SubAssign, U: L1Unit> SubAssign<L1<V, U>> for L1<V,U> {
-    fn sub_assign(&mut self, rhs: L1<V, U>) {
-        self.value -= rhs.value;
-    }
-}
-
-/// Mul with same `ValueType` and Second and Meter
-impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for L1<V, Meter> {
-    type Output = L1_T1<V, MeterSecond>;
-
-    fn mul(self, rhs: T1<V, Second>) -> Self::Output {
-        L1_T1 {
-            unit: PhantomData,
-            value: self.value * rhs.value,
-        }
-    }
-}
-
-/// Div with same `ValueType` and Meter divided by Second
-impl<V: QuantityNum + Div<Output = V>> Div<T1<V, Second>> for L1<V, Meter> {
-    type Output = L1_TN1<V, MeterPerSecond>;
-
-    fn div(self, rhs: T1<V, Second>) -> Self::Output {
-        L1_TN1 {
-            unit: PhantomData,
-            value: self.value / rhs.value,
-        }
-    }
-}
+impl_dimension_mul!(L1, T1 => L1_T1, L1Unit, T1Unit);
+impl_dimension_div!(L1, T1 => L1_TN1, L1Unit, T1Unit);
 /// `PartialEq` with same `ValueType` and same Unit
 impl<V: QuantityNum + PartialEq, U: L1Unit> PartialEq for L1<V, U> {
     fn eq(&self, other: &Self) -> bool {
@@ -142,6 +84,7 @@ pub trait L1Unit: Unit {}
 pub struct Kilometer;
 impl Unit for Kilometer {
     const ABBREVIATION: &'static str = "km";
+    const SCALE_TO_BASE: f64 = 1e3;
 }
 impl L1Unit for Kilometer {}
 
@@ -192,6 +135,7 @@ impl Meter {
 pub struct Centimeter;
 impl Unit for Centimeter {
     const ABBREVIATION: &'static str = "cm";
+    const SCALE_TO_BASE: f64 = 1e-2;
 }
 impl L1Unit for Centimeter {}
 
@@ -214,6 +158,7 @@ impl Centimeter {
 pub struct Millimeter;
 impl Unit for Millimeter {
     const ABBREVIATION: &'static str = "mm";
+    const SCALE_TO_BASE: f64 = 1e-3;
 }
 impl L1Unit for Millimeter {}
 
@@ -231,6 +176,7 @@ impl Millimeter {
 pub struct Micrometer;
 impl Unit for Micrometer {
     const ABBREVIATION: &'static str = "µm";
+    const SCALE_TO_BASE: f64 = 1e-6;
 }
 impl L1Unit for Micrometer {}
 
@@ -248,6 +194,7 @@ impl Micrometer {
 pub struct Nanometer;
 impl Unit for Nanometer {
     const ABBREVIATION: &'static str = "nm";
+    const SCALE_TO_BASE: f64 = 1e-9;
 }
 impl L1Unit for Nanometer {}
 
@@ -265,6 +212,7 @@ impl Nanometer {
 pub struct Picometer;
 impl Unit for Picometer {
     const ABBREVIATION: &'static str = "pm";
+    const SCALE_TO_BASE: f64 = 1e-12;
 }
 impl L1Unit for Picometer {}
 
@@ -283,6 +231,7 @@ impl Picometer {
 pub struct Femtometer;
 impl Unit for Femtometer {
     const ABBREVIATION: &'static str = "fm";
+    const SCALE_TO_BASE: f64 = 1e-15;
 }
 impl L1Unit for Femtometer {}
 
@@ -301,6 +250,7 @@ impl Femtometer {
 pub struct Attometer;
 impl Unit for Attometer {
     const ABBREVIATION: &'static str = "am";
+    const SCALE_TO_BASE: f64 = 1e-18;
 }
 impl L1Unit for Attometer {}
 
@@ -318,6 +268,7 @@ impl Attometer {
 pub struct Zeptometer;
 impl Unit for Zeptometer {
     const ABBREVIATION: &'static str = "zm";
+    const SCALE_TO_BASE: f64 = 1e-21;
 }
 impl L1Unit for Zeptometer {}
 
@@ -337,6 +288,7 @@ impl Zeptometer {
 pub struct Yoctometer;
 impl Unit for Yoctometer {
     const ABBREVIATION: &'static str = "ym";
+    const SCALE_TO_BASE: f64 = 1e-24;
 }
 impl L1Unit for Yoctometer {}
 
@@ -354,6 +306,7 @@ impl Yoctometer {
 pub struct Rontometer;
 impl Unit for Rontometer {
     const ABBREVIATION: &'static str = "rm";
+    const SCALE_TO_BASE: f64 = 1e-27;
 }
 impl L1Unit for Rontometer {}
 
@@ -371,6 +324,7 @@ impl Rontometer {
 pub struct Quectometer;
 impl Unit for Quectometer {
     const ABBREVIATION: &'static str = "qm";
+    const SCALE_TO_BASE: f64 = 1e-30;
 }
 impl L1Unit for Quectometer {}
 
@@ -386,167 +340,11 @@ impl Quectometer {
 
 // Unit Conversions
 
-impl From<L1<f32, Kilometer>> for L1<f32, Meter> {
-    fn from(val: L1<f32, Kilometer>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 1_000.0
-        }
-    }
-}
-
-impl From<L1<f32, Kilometer>> for L1<f32, Centimeter> {
-    fn from(val: L1<f32, Kilometer>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 100_000.0
-        }
-    }
-}
-
-impl From<L1<f32, Kilometer>> for L1<f32, Millimeter> {
-    fn from(val: L1<f32, Kilometer>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 1_000_000.0
-        }
-    }
-}
-
-impl From<L1<f64, Kilometer>> for L1<f64, Meter> {
-    fn from(val: L1<f64, Kilometer>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 1_000.0
-        }
-    }
-}
-
-impl From<L1<f64, Kilometer>> for L1<f64, Centimeter> {
-    fn from(val: L1<f64, Kilometer>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 100_000.0
-        }
-    }
-}
-
-impl From<L1<f64, Kilometer>> for L1<f64, Millimeter> {
-    fn from(val: L1<f64, Kilometer>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 1_000_000.0
-        }
-    }
-}
-
-impl From<L1<f32, Meter>> for L1<f32, Kilometer> {
-    fn from(val: L1<f32, Meter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value / 1_000.0
-        }
-    }
-}
-
-impl From<L1<f32, Meter>> for L1<f32, Centimeter> {
-    fn from(val: L1<f32, Meter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 100.0
-        }
-    }
-}
-
-impl From<L1<f32, Meter>> for L1<f32, Millimeter> {
-    fn from(val: L1<f32, Meter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 1_000.0
-        }
-    }
-}
-
-impl From<L1<f64, Meter>> for L1<f64, Kilometer> {
-    fn from(val: L1<f64, Meter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value / 1_000.0
-        }
-    }
-}
-
-impl From<L1<f64, Meter>> for L1<f64, Centimeter> {
-    fn from(val: L1<f64, Meter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 100.0
-        }
-    }
-}
-
-impl From<L1<f64, Meter>> for L1<f64, Millimeter> {
-    fn from(val: L1<f64, Meter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 1_000.0
-        }
-    }
-}
-
-impl From<L1<f32, Centimeter>> for L1<f32, Meter> {
-    fn from(val: L1<f32, Centimeter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value / 100.0
-        }
-    }
-}
-
-impl From<L1<f32, Centimeter>> for L1<f32, Millimeter> {
-    fn from(val: L1<f32, Centimeter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 10.0
-        }
-    }
-}
-
-impl From<L1<f64, Centimeter>> for L1<f64, Meter> {
-    fn from(val: L1<f64, Centimeter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value / 100.0
-        }
-    }
-}
-
-impl From<L1<f64, Centimeter>> for L1<f64, Millimeter> {
-    fn from(val: L1<f64, Centimeter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value * 10.0
-        }
-    }
-}
-
-impl From<L1<f32, Millimeter>> for L1<f32, Meter> {
-    fn from(val: L1<f32, Millimeter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value / 1_000.0
-        }
-    }
-}
-
-impl From<L1<f64, Millimeter>> for L1<f64, Meter> {
-    fn from(val: L1<f64, Millimeter>) -> Self {
-        L1 {
-            unit: PhantomData,
-            value: val.value / 1_000.0
-        }
-    }
-}
+impl_linear_unit_conversions!(
+    L1;
+    Kilometer, Meter, Centimeter, Millimeter, Micrometer, Nanometer, Picometer,
+    Femtometer, Attometer, Zeptometer, Yoctometer, Rontometer, Quectometer
+);
 
 #[cfg(test)]
 mod tests {
@@ -632,6 +430,15 @@ mod tests {
     }
 
     #[test]
+    fn test_l1_mul_t1_applies_operand_scales() {
+        let length = Kilometer::new(1.0);
+        let time = crate::types::t1::Hour::new(1.0);
+        let result: L1_T1<f64, MeterSecond> = length * time;
+
+        assert_close(result.value, 1000.0 * 3600.0, 1e-10);
+    }
+
+    #[test]
     fn test_l1_div_t1() {
         let length = Meter::new(10.0);
         let time = Second::new(2.0);
@@ -640,5 +447,14 @@ mod tests {
         // type of the division
         let result: L1_TN1<f64, MeterPerSecond> = length / time;
         assert_close(result.value, 5.0, 1e-10);
+    }
+
+    #[test]
+    fn test_l1_div_t1_applies_operand_scales() {
+        let length = Kilometer::new(1.0);
+        let time = crate::types::t1::Hour::new(1.0);
+        let result: L1_TN1<f64, MeterPerSecond> = length / time;
+
+        assert_close(result.value, 1000.0 / 3600.0, 1e-10);
     }
 }

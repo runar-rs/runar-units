@@ -2,7 +2,7 @@
 /// 
 use core::fmt::Display;
 use core::marker::PhantomData;
-use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+use core::ops::{Div, Mul};
 use crate::types::l1::{L1, Meter};
 use crate::types::l1_tn1::{L1_TN1, MeterPerSecond};
 use crate::types::t1::{Second, T1};
@@ -34,81 +34,7 @@ impl<U: TN1Unit> TN1<f64, U> {
     }
 }
 
-/// `Add` with same `ValueType` and same Unit
-impl<V: QuantityNum + Add<Output = V>, U: TN1Unit> Add<TN1<V, U>> for TN1<V, U> {
-    type Output = Self;
-
-    fn add(self, rhs: TN1<V, U>) -> Self::Output {
-        TN1 {
-            unit: PhantomData,
-            value: self.value + rhs.value,
-        }
-    }
-}
-
-/// `AddAssign` with same `ValueType` and same Unit
-impl<V: QuantityNum + AddAssign, U: TN1Unit> AddAssign<TN1<V, U>> for TN1<V, U> {
-    fn add_assign(&mut self, rhs: TN1<V, U>) {
-        self.value += rhs.value;
-    }
-}
-
-/// `Sub` with same `ValueType` and same Unit
-impl<V: QuantityNum + Sub<Output = V>, U: TN1Unit> Sub<TN1<V, U>> for TN1<V, U> {
-    type Output = Self;
-
-    fn sub(self, rhs: TN1<V, U>) -> Self::Output {
-        TN1 {
-            unit: PhantomData,
-            value: self.value - rhs.value,
-        }
-    }
-}
-
-/// `SubAssign` with same `ValueType` and same Unit
-impl<V: QuantityNum + SubAssign, U: TN1Unit> SubAssign<TN1<V, U>> for TN1<V, U> {
-    fn sub_assign(&mut self, rhs: TN1<V, U>) {
-        self.value -= rhs.value;
-    }
-}
-
-/// `Mul` with scalar of same `ValueType`
-impl<V: QuantityNum + Mul<Output = V>, U: TN1Unit> Mul<V> for TN1<V, U> {
-    type Output = Self;
-
-    fn mul(self, rhs: V) -> Self::Output {
-        TN1 {
-            unit: PhantomData,
-            value: self.value * rhs,
-        }
-    }
-}
-
-/// `MulAssign` with scalar of same `ValueType`
-impl<V: QuantityNum + MulAssign, U: TN1Unit> MulAssign<V> for TN1<V, U> {
-    fn mul_assign(&mut self, rhs: V) {
-        self.value *= rhs;
-    }
-}
-
-/// `Div` with scalar of same `ValueType`
-impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> Div<V> for TN1<V, U> {
-    type Output = Self;
-
-    fn div(self, rhs: V) -> Self::Output {
-        TN1 {
-            unit: PhantomData,
-            value: self.value / rhs,
-        }
-    }
-}
-
-/// `DivAssign` with scalar of same `ValueType`
-impl<V: QuantityNum + DivAssign, U: TN1Unit> DivAssign<V> for TN1<V, U> {
-    fn div_assign(&mut self, rhs: V) {
-        self.value /= rhs;
-    }
-}
+impl_dimension_ops!(TN1, TN1Unit);
 
 /// `Div` with same `ValueType` and same Unit
 impl<V: QuantityNum + Div<Output = V>, U: TN1Unit> Div<TN1<V, U>> for TN1<V, U> {

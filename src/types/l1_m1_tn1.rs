@@ -1,6 +1,5 @@
 use core::fmt::Display;
 use core::marker::PhantomData;
-use core::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
 
 
 use crate::{Dimension, QuantityNum, Unit};
@@ -31,81 +30,7 @@ impl<V: QuantityNum, U: L1_M1_TN1Unit> Dimension for L1_M1_TN1<V, U> {
     }
 }
 
-/// `Add` with same `ValueType` and same `Unit`
-impl<V: QuantityNum + Add<Output = V>, U: L1_M1_TN1Unit> Add<L1_M1_TN1<V, U>> for L1_M1_TN1<V, U> {
-    type Output = L1_M1_TN1<V, U>;
-
-    fn add(self, rhs: L1_M1_TN1<V, U>) -> Self::Output {
-        L1_M1_TN1 {
-            unit: PhantomData,
-            value: self.value + rhs.value
-        }
-    }
-}
-
-/// `AddAssign` with same `ValueType` and same `Unit`
-impl<V: QuantityNum + AddAssign, U: L1_M1_TN1Unit> AddAssign<L1_M1_TN1<V, U>> for L1_M1_TN1<V, U> {
-    fn add_assign(&mut self, rhs: L1_M1_TN1<V, U>) {
-        self.value += rhs.value;
-    }
-}
-
-/// `Sub` with same `ValueType` and same `Unit`
-impl<V: QuantityNum + Sub<Output = V>, U: L1_M1_TN1Unit> Sub<L1_M1_TN1<V, U>> for L1_M1_TN1<V, U> {
-    type Output = L1_M1_TN1<V, U>;
-
-    fn sub(self, rhs: L1_M1_TN1<V, U>) -> Self::Output {
-        L1_M1_TN1 {
-            unit: PhantomData,
-            value: self.value - rhs.value
-        }
-    }
-}
-
-/// `SubAssign` with same `ValueType` and same `Unit`
-impl<V: QuantityNum + SubAssign, U: L1_M1_TN1Unit> SubAssign<L1_M1_TN1<V, U>> for L1_M1_TN1<V,U> {
-    fn sub_assign(&mut self, rhs: L1_M1_TN1<V, U>) {
-        self.value -= rhs.value;
-    }
-}
-
-/// `Mul` with scalar of same `ValueType`
-impl<V: QuantityNum + Mul<Output = V>, U: L1_M1_TN1Unit> Mul<V> for L1_M1_TN1<V, U> {
-    type Output = Self;
-
-    fn mul(self, rhs: V) -> Self::Output {
-        L1_M1_TN1 {
-            unit: PhantomData,
-            value: self.value * rhs
-        }
-    }
-}
-
-/// `MulAssign` with scalar of same `ValueType`
-impl<V: QuantityNum + MulAssign, U: L1_M1_TN1Unit> MulAssign<V> for L1_M1_TN1<V, U> {
-    fn mul_assign(&mut self, rhs: V) {
-        self.value *= rhs;
-    }
-}
-
-/// `Div` with scalar of same `ValueType`
-impl<V: QuantityNum + Div<Output = V>, U: L1_M1_TN1Unit> Div<V> for L1_M1_TN1<V, U> {
-    type Output = Self;
-
-    fn div(self, rhs: V) -> Self::Output {
-        L1_M1_TN1 {
-            unit: PhantomData,
-            value: self.value / rhs
-        }
-    }
-}
-
-/// `DivAssign` with scalar of same `ValueType`
-impl<V: QuantityNum + DivAssign, U: L1_M1_TN1Unit> DivAssign<V> for L1_M1_TN1<V, U> {
-    fn div_assign(&mut self, rhs: V) {
-        self.value /= rhs;
-    }
-}
+impl_dimension_ops!(L1_M1_TN1, L1_M1_TN1Unit);
 
 
 /// Marker trait for units of `L1_M1_TN1`
@@ -144,24 +69,24 @@ impl KilogramMeterPerSecond {
     }
 }
 
-/// Transform NetwonSecond to KilogramMeterPerSecond.
-/// 
-/// As those two units are equivalent, this is a simple conversion that does not change the value.
-/// Because of that, this conversion is implemented with genetics.
-impl<V: QuantityNum> From<L1_M1_TN1<V, NewtonSecond>> for L1_M1_TN1<V, KilogramMeterPerSecond> {
-    fn from(value: L1_M1_TN1<V, NewtonSecond>) -> Self {
-        L1_M1_TN1 {
-            unit: PhantomData,
-            value: value.value
-        }
+#[cfg(test)]
+mod tests {
+    use super::{Impulse, KilogramMeterPerSecond, NewtonSecond};
+    use crate::Dimension;
+
+    #[test]
+    fn converts_between_all_listed_units() {
+        let impulse: Impulse<f64, NewtonSecond> = NewtonSecond::new(12.5);
+        let converted: Impulse<f64, KilogramMeterPerSecond> = impulse.into();
+        assert_eq!(converted.get(), &12.5);
+
+        let restored: Impulse<f64, NewtonSecond> = converted.into();
+        assert_eq!(restored.get(), &12.5);
     }
 }
 
-impl<V: QuantityNum> From<L1_M1_TN1<V, KilogramMeterPerSecond>> for L1_M1_TN1<V, NewtonSecond> {
-    fn from(value: L1_M1_TN1<V, KilogramMeterPerSecond>) -> Self {
-        L1_M1_TN1 {
-            unit: PhantomData,
-            value: value.value
-        }
-    }
-}
+impl_linear_unit_conversions!(
+    L1_M1_TN1;
+    NewtonSecond,
+    KilogramMeterPerSecond
+);
