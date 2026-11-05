@@ -389,7 +389,7 @@ impl From<T1<f32, Day>> for T1<f32, Minute> {
     fn from(val: T1<f32, Day>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 1440.0
+            value: val.value * 1_440.0
         }
     }
 }
@@ -398,7 +398,7 @@ impl From<T1<f32, Day>> for T1<f32, Second> {
     fn from(val: T1<f32, Day>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 86400.0,
+            value: val.value * 86_400.0,
         }
     }
 }
@@ -407,7 +407,7 @@ impl From<T1<f32, Day>> for T1<f32, Millisecond> {
     fn from(val: T1<f32, Day>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 86400000.0,
+            value: val.value * 86_400_000.0,
         }
     }
 }
@@ -425,7 +425,7 @@ impl From<T1<f64, Day>> for T1<f64, Minute> {
     fn from(val: T1<f64, Day>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 1440.0
+            value: val.value * 1_440.0
         }
     }
 }
@@ -434,7 +434,7 @@ impl From<T1<f64, Day>> for T1<f64, Second> {
     fn from(val: T1<f64, Day>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 86400.0
+            value: val.value * 86_400.0
         }
     }
 }
@@ -443,7 +443,7 @@ impl From<T1<f64, Day>> for T1<f64, Millisecond> {
     fn from(val: T1<f64, Day>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 86400000.0
+            value: val.value * 86_400_000.0
         }
     }
 }
@@ -470,7 +470,7 @@ impl From<T1<f32, Hour>> for T1<f32, Second> {
     fn from(val: T1<f32, Hour>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 3600.0
+            value: val.value * 3_600.0
         }
     }
 }
@@ -479,7 +479,7 @@ impl From<T1<f32, Hour>> for T1<f32, Millisecond> {
     fn from(val: T1<f32, Hour>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 3600000.0
+            value: val.value * 3_600_000.0
         }
     }
 }
@@ -506,7 +506,7 @@ impl From<T1<f64, Hour>> for T1<f64, Second> {
     fn from(val: T1<f64, Hour>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 3600.0
+            value: val.value * 3_600.0
         }
     }
 }
@@ -515,7 +515,7 @@ impl From<T1<f64, Hour>> for T1<f64, Millisecond> {
     fn from(val: T1<f64, Hour>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 3600000.0
+            value: val.value * 3_600_000.0
         }
     }
 }
@@ -524,7 +524,7 @@ impl From<T1<f32, Minute>> for T1<f32, Day> {
     fn from(val: T1<f32, Minute>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value / 1440.0
+            value: val.value / 1_440.0
         }
     }
 }
@@ -551,7 +551,7 @@ impl From<T1<f32, Minute>> for T1<f32, Millisecond> {
     fn from(val: T1<f32, Minute>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 60000.0
+            value: val.value * 60_000.0
         }
     }
 }
@@ -560,7 +560,7 @@ impl From<T1<f64, Minute>> for T1<f64, Day> {
     fn from(val: T1<f64, Minute>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value / 1440.0
+            value: val.value / 1_440.0
         }
     }
 }
@@ -587,7 +587,7 @@ impl From<T1<f64, Minute>> for T1<f64, Millisecond> {
     fn from(val: T1<f64, Minute>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 60000.0
+            value: val.value * 60_000.0
         }
     }
 }
@@ -596,7 +596,7 @@ impl From<T1<f32, Second>> for T1<f32, Day> {
     fn from(val: T1<f32, Second>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value / 86400.0
+            value: val.value / 86_400.0
         }
     }
 }
@@ -605,7 +605,7 @@ impl From<T1<f32, Second>> for T1<f32, Hour> {
     fn from(val: T1<f32, Second>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value / 3600.0
+            value: val.value / 3_600.0
         }
     }
 }
@@ -623,7 +623,7 @@ impl From<T1<f32, Second>> for T1<f32, Millisecond> {
     fn from(val: T1<f32, Second>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 1000.0
+            value: val.value * 1_000.0
         }
     }
 }
@@ -641,7 +641,7 @@ impl From<T1<f64, Second>> for T1<f64, Day> {
     fn from(val: T1<f64, Second>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value / 86400.0
+            value: val.value / 86_400.0
         }
     }
 }
@@ -650,7 +650,7 @@ impl From<T1<f64, Second>> for T1<f64, Hour> {
     fn from(val: T1<f64, Second>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value / 3600.0
+            value: val.value / 3_600.0
         }
     }
 }
@@ -668,7 +668,7 @@ impl From<T1<f64, Second>> for T1<f64, Millisecond> {
     fn from(val: T1<f64, Second>) -> Self {
         T1 {
             unit: PhantomData,
-            value: val.value * 1000.0
+            value: val.value * 1_000.0
         }
     }
 }

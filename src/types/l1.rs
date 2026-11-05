@@ -107,6 +107,7 @@ impl<V: QuantityNum + PartialOrd, U: L1Unit> PartialOrd for L1<V, U> {
 }
 
 impl<U: L1Unit> L1<f64, U> {
+    #[deprecated(note = "Use the implementation of the unit instead, e.g., `Meter::new(value)`")]
     #[must_use]
     pub fn new(value: f64) -> Self {
         L1 {
