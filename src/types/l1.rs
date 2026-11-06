@@ -317,7 +317,7 @@ impl_linear_unit_conversions!(
 
 #[cfg(test)]
 mod tests {
-    use crate::{test_utils::assert_close, types::l1_tn1::MeterPerSecond};
+    use crate::{test_utils::assert_close, types::{l1_t1::MeterSecond, l1_tn1::MeterPerSecond, t1::Second}};
 
     use super::*;
 
