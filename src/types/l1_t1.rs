@@ -1,5 +1,4 @@
 use core::marker::PhantomData;
-use core::ops::{Add, AddAssign, Sub, SubAssign};
 
 use crate::{Dimension, QuantityNum, Unit};
 
@@ -18,44 +17,7 @@ impl<V: QuantityNum, U: Unit> Dimension for L1_T1<V, U> {
     }
 }
 
-/// Add for same `ValueType` and same Unit
-impl<V: QuantityNum + Add<Output = V>, U: Unit> Add<L1_T1<V, U>> for L1_T1<V, U> {
-    type Output = L1_T1<V, U>;
-
-    fn add(self, rhs: L1_T1<V, U>) -> Self::Output {
-        L1_T1 {
-            unit: PhantomData,
-            value: self.value + rhs.value,
-        }
-    }
-}
-
-/// `AddAssign` for same `ValueType` and same Unit
-impl<V: QuantityNum + AddAssign, U: Unit> AddAssign<L1_T1<V, U>> for L1_T1<V, U> {
-    fn add_assign(&mut self, rhs: L1_T1<V, U>) {
-        self.value += rhs.value;
-    }
-}
-
-/// Sub for same `ValueType` and same Unit
-impl<V: QuantityNum + Sub<Output = V>, U: Unit> Sub<L1_T1<V, U>> for L1_T1<V, U> {
-    type Output = L1_T1<V, U>;
-
-    fn sub(self, rhs: L1_T1<V, U>) -> Self::Output {
-        L1_T1 {
-            unit: PhantomData,
-            value: self.value - rhs.value,
-        }
-    }
-}
-
-/// `SubAssign` for same `ValueType` and same Unit
-impl<V: QuantityNum + SubAssign, U: Unit> SubAssign<L1_T1<V, U>> for L1_T1<V, U> {
-    fn sub_assign(&mut self, rhs: L1_T1<V, U>) {
-        self.value -= rhs.value;
-    }
-}
-
+impl_dimension_ops!(L1_T1, Unit);
 pub struct MeterSecond;
 impl Unit for MeterSecond {
     const ABBREVIATION: &'static str = "ms";

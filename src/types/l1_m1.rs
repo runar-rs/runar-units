@@ -1,9 +1,8 @@
 use core::fmt::Display;
-use core::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
 use core::marker::PhantomData;
 
-use crate::types::l1::{L1, Meter};
-use crate::types::m1::{Kilogram, M1};
+use crate::types::l1::{L1, L1Unit};
+use crate::types::m1::{M1, M1Unit};
 use crate::{Dimension, QuantityNum, Unit};
 
 
@@ -31,105 +30,10 @@ impl<V: QuantityNum, U: L1_M1Unit> Dimension for L1_M1<V, U> {
 
 // Ops
 
-/// Add same `ValueType` and same `Unit`
-impl<V: QuantityNum + Add<Output = V>, U: L1_M1Unit> Add<L1_M1<V, U>> for L1_M1<V, U> {
-    type Output = L1_M1<V, U>;
+impl_dimension_ops!(L1_M1, L1_M1Unit);
 
-    fn add(self, rhs: L1_M1<V, U>) -> Self::Output {
-        L1_M1 {
-            unit: PhantomData,
-            value: self.value + rhs.value
-        }
-    }
-}
-
-/// AddAssign with same `ValueType` and same `Unit`
-impl<V: QuantityNum + AddAssign, U: L1_M1Unit> AddAssign<L1_M1<V, U>> for L1_M1<V, U> {
-    fn add_assign(&mut self, rhs: L1_M1<V, U>) {
-        self.value += rhs.value;
-    }
-}
-
-/// Sub with same `ValueType` and same `Unit`
-impl<V: QuantityNum + Sub<Output = V>, U: L1_M1Unit> Sub<L1_M1<V, U>> for L1_M1<V, U> {
-    type Output = L1_M1<V, U>;
-
-    fn sub(self, rhs: L1_M1<V, U>) -> Self::Output {
-        L1_M1 {
-            unit: PhantomData,
-            value: self.value - rhs.value
-        }
-    }
-}
-
-/// SubAssign with same `ValueType` and same `Unit`
-impl<V: QuantityNum + SubAssign, U: L1_M1Unit> SubAssign<L1_M1<V, U>> for L1_M1<V,U> {
-    fn sub_assign(&mut self, rhs: L1_M1<V, U>) {
-        self.value -= rhs.value;
-    }
-}
-
-/// Mul with same `ValueType` and scalar
-impl<V: QuantityNum + Mul<Output = V>, U: L1_M1Unit> Mul<V> for L1_M1<V, U> {
-    type Output = L1_M1<V, U>;
-
-    fn mul(self, rhs: V) -> Self::Output {
-        L1_M1 {
-            unit: PhantomData,
-            value: self.value * rhs
-        }
-    }
-}
-
-/// MulAssign with same `ValueType` and scalar
-impl<V: QuantityNum + MulAssign, U: L1_M1Unit> MulAssign<V> for L1_M1<V, U> {
-    fn mul_assign(&mut self, rhs: V) {
-        self.value *= rhs;
-    }
-}
-
-/// Div with same `ValueType` and scalar
-impl<V: QuantityNum + Div<Output = V>, U: L1_M1Unit> Div<V> for L1_M1<V, U> {
-    type Output = L1_M1<V, U>;
-
-    fn div(self, rhs: V) -> Self::Output {
-        L1_M1 {
-            unit: PhantomData,
-            value: self.value / rhs
-        }
-    }
-}
-
-/// DivAssign with same `ValueType` and scalar
-impl<V: QuantityNum + DivAssign, U: L1_M1Unit> DivAssign<V> for L1_M1<V, U> {
-    fn div_assign(&mut self, rhs: V) {
-        self.value /= rhs;
-    }
-}
-
-/// Div with same `ValueType` and MeterKilogram and Meter
-impl<V: QuantityNum + Div<Output = V>> Div<L1<V, Meter>> for L1_M1<V, MeterKilogram> {
-    type Output = M1<V, Kilogram>;
-
-    fn div(self, rhs: L1<V, Meter>) -> Self::Output {
-        M1 {
-            unit: PhantomData,
-            value: self.value / rhs.value
-        }
-    }
-}
-
-/// Div with same `ValueType` and MeterKilogram and Kilogram
-impl<V: QuantityNum + Div<Output = V>> Div<M1<V, Kilogram>> for L1_M1<V, MeterKilogram> {
-    type Output = L1<V, Meter>;
-
-    fn div(self, rhs: M1<V, Kilogram>) -> Self::Output {
-        L1 {
-            unit: PhantomData,
-            value: self.value / rhs.value
-        }
-    }
-}
+impl_dimension_div!(L1_M1, L1_M1Unit, L1, L1Unit => M1);
+impl_dimension_div!(L1_M1, L1_M1Unit, M1, M1Unit => L1);
 
 #[allow(non_camel_case_types)]
 pub trait L1_M1Unit: Unit {}
