@@ -93,28 +93,58 @@ macro_rules! dimension_base_unit {
 /// );
 /// ```
 macro_rules! impl_dimension_mul_with_unit {
-    /* (scalar $scalar:ty, $quantity:ident => $output:ident, $output_unit:ty, $quantity_bound:path) => {
-        impl<U> core::ops::Mul<$scalar> for $quantity<$scalar, U>
+    (scalar, (), $rhs:ident, $rhs_bound:path => $output:ident, $output_unit:ty) => {
+        impl<V, UR> core::ops::Mul<$rhs<V, UR>> for V
         where
-            $scalar: crate::LinearScale
-                + core::ops::Mul<Output = $scalar>,
-            U: $quantity_bound,
+            V: crate::LinearScale + core::ops::Mul<Output = V>,
+            UR: $rhs_bound,
         {
-            type Output = $output<$scalar, $output_unit>;
+            type Output = $output<V, $output_unit>;
 
-            fn mul(self, rhs: $scalar) -> Self::Output {
+            fn mul(self, rhs: $rhs<V, UR>) -> Self::Output {
                 $output {
                     unit: core::marker::PhantomData,
-                    value: (self.value * rhs)
-                        * <$scalar as crate::LinearScale>::from_f64(
-                            U::SCALE_TO_BASE
-                                / <$output_unit as crate::Unit>::SCALE_TO_BASE,
+                    value: (self * rhs.value)
+                        * V::from_f64(UR::SCALE_TO_BASE / <$output_unit as crate::Unit>::SCALE_TO_BASE,),
+                }
+            }
+        }
+    };
+    ($lhs:ident, $lhs_bound:path, scalar, () => $output:ident, $output_unit:ty) => {
+        impl<V, UL> core::ops::Mul<V> for $lhs<V, UL>
+        where
+            V: crate::LinearScale
+                + core::ops::Mul<Output = V>,
+            UL: $lhs_bound,
+        {
+            type Output = $output<V, $output_unit>;
+
+            fn mul(self, rhs: V) -> Self::Output {
+                $output {
+                    unit: core::marker::PhantomData,
+                    value: (self.value * rhs) * V::from_f64(UL::SCALE_TO_BASE / <$output_unit as crate::Unit>::SCALE_TO_BASE,
                         ),
                 }
             }
         }
-    }; */
-    ($lhs:ident, $rhs:ident => $output:ident, $output_unit:ty, $lhs_bound:path, $rhs_bound:path) => {
+    };
+    ($lhs:ident, $lhs_bound:path, $rhs:ident, $rhs_bound:path => scalar, ()) => {
+        impl<V, UL, UR> core::ops::Mul<$rhs<V, UR>> for $lhs<V, UL>
+        where
+            V: crate::LinearScale
+                + core::ops::Mul<Output = V>,
+            UL: $lhs_bound,
+            UR: $rhs_bound,
+        {
+            type Output = V;
+
+            fn mul(self, rhs: $rhs<V, UR>) -> Self::Output {
+                (self.value * rhs.value)
+                    * V::from_f64(UL::SCALE_TO_BASE * UR::SCALE_TO_BASE)
+            }
+        }
+    };
+    ($lhs:ident, $lhs_bound:path, $rhs:ident, $rhs_bound:path => $output:ident, $output_unit:ty) => {
         impl<V, UL, UR> core::ops::Mul<$rhs<V, UR>> for $lhs<V, UL>
         where
             V: crate::LinearScale
@@ -134,57 +164,6 @@ macro_rules! impl_dimension_mul_with_unit {
                                 / <$output_unit as crate::Unit>::SCALE_TO_BASE,
                         ),
                 }
-            }
-        }
-    };
-    (scalar, $rhs:ident => $output:ident, $output_unit:ty, $rhs_bound:path) => {
-        impl<V, UR> core::ops::Mul<$rhs<V, UR>> for V
-        where
-            V: crate::LinearScale + core::ops::Mul<Output = V>,
-            UR: $rhs_bound,
-        {
-            type Output = $output<V, $output_unit>;
-
-            fn mul(self, rhs: $rhs<V, UR>) -> Self::Output {
-                $output {
-                    unit: core::marker::PhantomData,
-                    value: (self * rhs.value)
-                        * V::from_f64(UR::SCALE_TO_BASE / <$output_unit as crate::Unit>::SCALE_TO_BASE,),
-                }
-            }
-        }
-    };
-    ($lhs:ident, scalar => $output:ident, $output_unit:ty, $lhs_bound:path) => {
-        impl<V, UL> core::ops::Mul<V> for $lhs<V, UL>
-        where
-            V: crate::LinearScale
-                + core::ops::Mul<Output = V>,
-            UL: $lhs_bound,
-        {
-            type Output = $output<V, $output_unit>;
-
-            fn mul(self, rhs: V) -> Self::Output {
-                $output {
-                    unit: core::marker::PhantomData,
-                    value: (self.value * rhs) * V::from_f64(UL::SCALE_TO_BASE / <$output_unit as crate::Unit>::SCALE_TO_BASE,
-                        ),
-                }
-            }
-        }
-    };
-    ($lhs:ident, $rhs:ident => scalar, $lhs_bound:path, $rhs_bound:path) => {
-        impl<V, UL, UR> core::ops::Mul<$rhs<V, UR>> for $lhs<V, UL>
-        where
-            V: crate::LinearScale
-                + core::ops::Mul<Output = V>,
-            UL: $lhs_bound,
-            UR: $rhs_bound,
-        {
-            type Output = V;
-
-            fn mul(self, rhs: $rhs<V, UR>) -> Self::Output {
-                (self.value * rhs.value)
-                    * V::from_f64(UL::SCALE_TO_BASE * UR::SCALE_TO_BASE)
             }
         }
     };
@@ -216,7 +195,7 @@ macro_rules! impl_dimension_mul_with_unit {
 ///     -> Output<V, OutputUnit>
 /// ```
 macro_rules! impl_dimension_div_with_unit {
-    ($lhs:ident, $rhs:ident => $output:ident, $output_unit:ty, $lhs_bound:path, $rhs_bound:path) => {
+    ($lhs:ident, $lhs_bound:path, $rhs:ident, $rhs_bound:path => $output:ident, $output_unit:ty) => {
         impl<V, UL, UR> core::ops::Div<$rhs<V, UR>> for $lhs<V, UL>
         where
             V: crate::LinearScale
@@ -240,6 +219,69 @@ macro_rules! impl_dimension_div_with_unit {
             }
         }
     };
+    // Leave lhs_bound in the macro to avoid confusion with the scalar case, but it is not used.
+    (scalar, (), $rhs:ident, $rhs_bound:path => $output:ident, $output_unit:ty) => {
+        impl<V, UR> core::ops::Div<$rhs<V, UR>> for V
+        where
+            V: crate::LinearScale
+                + core::ops::Div<Output = V>
+                + core::ops::Mul<Output = V>,
+            UR: $rhs_bound,
+        {
+            type Output = $output<V, $output_unit>;
+
+            fn div(self, rhs: $rhs<V, UR>) -> Self::Output {
+                $output {
+                    unit: core::marker::PhantomData,
+                    value: (self / rhs.value)
+                        * V::from_f64(UR::SCALE_TO_BASE / <$output_unit as crate::Unit>::SCALE_TO_BASE,
+                        ),
+                }
+            }
+        }
+    };
+    ($lhs:ident, $lhs_bound:path, scalar, () => $output:ident, $output_unit:ty) => {
+        impl<V, UL> core::ops::Div<V> for $lhs<V, UL>
+        where
+            V: crate::LinearScale
+                + core::ops::Div<Output = V>
+                + core::ops::Mul<Output = V>,
+            UL: $lhs_bound,
+        {
+            type Output = $output<V, $output_unit>;
+
+            fn div(self, rhs: V) -> Self::Output {
+                $output {
+                    unit: core::marker::PhantomData,
+                    value: (self.value / rhs)
+                        * V::from_f64(
+                            UL::SCALE_TO_BASE / <$output_unit as crate::Unit>::SCALE_TO_BASE,
+                        ),
+                }
+            }
+        }
+    };
+    ($lhs:ident, $lhs_bound:path, $rhs:ident, $rhs_bound:path => scalar, ()) => {
+        impl<V, UL, UR> core::ops::Div<$rhs<V, UR>> for $lhs<V, UL>
+        where
+            V: crate::LinearScale
+                + core::ops::Div<Output = V>
+                + core::ops::Mul<Output = V>,
+            UL: $lhs_bound,
+            UR: $rhs_bound,
+        {
+            type Output = V;
+
+            fn div(self, rhs: $rhs<V, UR>) -> Self::Output {
+                (self.value / rhs.value)
+                            * V::from_f64(
+                                UL::SCALE_TO_BASE
+                                    / UR::SCALE_TO_BASE
+                            ),
+            }
+        }
+    };
+
 }
 
 /// Implements multiplication using the canonical base unit of the output dimension.
@@ -263,13 +305,32 @@ macro_rules! impl_dimension_div_with_unit {
 /// The output unit is resolved from `$output`; for `L1_T1` it is
 /// `MeterSecond`.
 macro_rules! impl_dimension_mul {
-    ($lhs:ident, $rhs:ident => $output:ident, $lhs_bound:path, $rhs_bound:path) => {
+    (scalar, (), $rhs:ident, $rhs_bound:path => $output:ident) => {
         impl_dimension_mul_with_unit!(
-            $lhs,
-            $rhs => $output,
-            dimension_base_unit!($output),
-            $lhs_bound,
-            $rhs_bound
+            scalar, (),
+            $rhs, $rhs_bound
+            => $output, dimension_base_unit!($output)
+        );
+    };
+    ($lhs:ident, $lhs_bound:path, scalar, () => $output:ident) => {
+        impl_dimension_mul_with_unit!(
+            $lhs, $lhs_bound,
+            scalar, ()
+            => $output, dimension_base_unit!($output)
+        );
+    };
+    ($lhs:ident, $lhs_bound:path, $rhs:ident, $rhs_bound:path => scalar) => {
+        impl_dimension_mul_with_unit!(
+            $lhs, $lhs_bound,
+            $rhs, $rhs_bound
+            => scalar, ()
+        );
+    };
+    ($lhs:ident, $lhs_bound:path, $rhs:ident, $rhs_bound:path => $output:ident) => {
+        impl_dimension_mul_with_unit!(
+            $lhs, $lhs_bound,
+            $rhs, $rhs_bound
+            => $output, dimension_base_unit!($output)
         );
     };
 }
@@ -288,13 +349,32 @@ macro_rules! impl_dimension_mul {
 /// - `$lhs_bound`: marker trait for valid left-hand units.
 /// - `$rhs_bound`: marker trait for valid right-hand units.
 macro_rules! impl_dimension_div {
-    ($lhs:ident, $rhs:ident => $output:ident, $lhs_bound:path, $rhs_bound:path) => {
+    ($lhs:ident, $lhs_bound:path, $rhs:ident, $rhs_bound:path => $output:ident) => {
         impl_dimension_div_with_unit!(
-            $lhs,
-            $rhs => $output,
-            dimension_base_unit!($output),
-            $lhs_bound,
-            $rhs_bound
+            $lhs, $lhs_bound,
+            $rhs, $rhs_bound
+            => $output, dimension_base_unit!($output)
+        );
+    };
+    (scalar, $lhs_bound:path, $rhs:ident, $rhs_bound:path => $output:ident) => {
+        impl_dimension_div_with_unit!(
+            scalar, $lhs_bound,
+            $rhs, $rhs_bound
+            => $output, dimension_base_unit!($output)
+        );
+    };
+    ($lhs:ident, $lhs_bound:path, scalar, $rhs_bound:path => $output:ident) => {
+        impl_dimension_div_with_unit!(
+            $lhs, $lhs_bound,
+            scalar, $rhs_bound
+            => $output, dimension_base_unit!($output)
+        );
+    };
+    ($lhs:ident, $lhs_bound:path, $rhs:ident, $rhs_bound:path => scalar) => {
+        impl_dimension_div_with_unit!(
+            $lhs, $lhs_bound,
+            $rhs, $rhs_bound
+            => scalar, (())
         );
     };
 }
@@ -559,25 +639,19 @@ mod test_utils {
     }
 
     impl_dimension_mul_with_unit!(
-        TestQuantity,
-        TestQuantity => TestQuantity,
-        BaseUnit,
-        TestUnit,
-        TestUnit
+        TestQuantity, TestUnit,
+        TestQuantity, TestUnit => TestQuantity, BaseUnit
     );
 
     impl_dimension_mul_with_unit!(
-        TestQuantity,
-        scalar => TestQuantity,
-        BaseUnit,
-        TestUnit
+        TestQuantity, TestUnit,
+        scalar, () => TestQuantity,
+        BaseUnit
     );
 
     impl_dimension_mul_with_unit!(
-        ScalarQuantity,
-        TestQuantity => scalar,
-        TestUnit,
-        TestUnit
+        ScalarQuantity, TestUnit,
+        TestQuantity, TestUnit => scalar, ()
     );
 
     #[test]

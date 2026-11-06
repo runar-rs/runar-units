@@ -33,7 +33,7 @@ impl<V: QuantityNum, U: M1Unit> Dimension for M1<V, U> {
 
 impl_dimension_ops!(M1, M1Unit);
 
-impl_dimension_mul!(M1, L1 => L1_M1, M1Unit, L1Unit);
+impl_dimension_mul!(M1, M1Unit, L1,  L1Unit => L1_M1);
 
 /// Marker traits for units of mass M1.
 pub trait M1Unit: Unit {}

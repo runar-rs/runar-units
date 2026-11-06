@@ -32,8 +32,8 @@ impl<V: QuantityNum, U: L1Unit> Dimension for L1<V, U> {
 
 impl_dimension_ops!(L1, L1Unit);
 
-impl_dimension_mul!(L1, T1 => L1_T1, L1Unit, T1Unit);
-impl_dimension_div!(L1, T1 => L1_TN1, L1Unit, T1Unit);
+impl_dimension_mul!(L1, L1Unit, T1,  T1Unit => L1_T1);
+impl_dimension_div!(L1, L1Unit, T1,  T1Unit => L1_TN1);
 /// `PartialEq` with same `ValueType` and same Unit
 impl<V: QuantityNum + PartialEq, U: L1Unit> PartialEq for L1<V, U> {
     fn eq(&self, other: &Self) -> bool {

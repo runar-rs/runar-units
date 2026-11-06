@@ -42,8 +42,8 @@ impl<U: TN1Unit> TN1<f64, U> {
 }
 
 impl_dimension_ops!(TN1, TN1Unit);
-impl_dimension_mul_with_unit!(TN1, T1 => scalar, TN1Unit, T1Unit);
-impl_dimension_mul_with_unit!(TN1, L1 => L1_TN1, MeterPerSecond, TN1Unit, L1Unit);
+impl_dimension_mul!(TN1, TN1Unit, T1,  T1Unit => scalar);
+impl_dimension_mul!(TN1, TN1Unit, L1,  L1Unit => L1_TN1);
 
 pub trait TN1Unit: Unit {}
 

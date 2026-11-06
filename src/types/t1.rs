@@ -31,7 +31,7 @@ impl<V: QuantityNum, U: T1Unit> Dimension for T1<V, U> {
 
 // Operators
 impl_dimension_ops!(T1, T1Unit);
-impl_dimension_mul_with_unit!(T1, TN1 => scalar, T1Unit, TN1Unit);
+impl_dimension_mul!(T1, T1Unit, TN1,  TN1Unit => scalar);
 
 
 impl<V: QuantityNum, U: T1Unit> T1<V, U> {

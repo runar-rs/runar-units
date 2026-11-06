@@ -32,8 +32,8 @@ impl<V: QuantityNum, U: L1_M1Unit> Dimension for L1_M1<V, U> {
 
 impl_dimension_ops!(L1_M1, L1_M1Unit);
 
-impl_dimension_div!(L1_M1, L1 => M1, L1_M1Unit, L1Unit);
-impl_dimension_div!(L1_M1, M1 => L1, L1_M1Unit, M1Unit);
+impl_dimension_div!(L1_M1, L1_M1Unit, L1, L1Unit => M1);
+impl_dimension_div!(L1_M1, L1_M1Unit, M1, M1Unit => L1);
 
 #[allow(non_camel_case_types)]
 pub trait L1_M1Unit: Unit {}
