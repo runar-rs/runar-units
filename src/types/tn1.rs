@@ -2,9 +2,8 @@
 /// 
 use core::fmt::Display;
 use core::marker::PhantomData;
-use core::ops::Mul;
-use crate::types::l1::{L1, L1Unit, Meter};
-use crate::types::l1_tn1::{L1_TN1, L1_TN1Unit, MeterPerSecond};
+use crate::types::l1::{L1, L1Unit};
+use crate::types::l1_tn1::L1_TN1;
 use crate::types::t1::{T1, T1Unit};
 use crate::{Dimension, QuantityNum, Unit};
 

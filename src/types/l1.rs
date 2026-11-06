@@ -1,9 +1,9 @@
 use core::fmt::Display;
 use core::marker::PhantomData;
 
-use crate::types::l1_t1::{L1_T1, MeterSecond};
+use crate::types::l1_t1::L1_T1;
 use crate::types::l1_tn1::L1_TN1;
-use crate::types::t1::{Second, T1, T1Unit};
+use crate::types::t1::{T1, T1Unit};
 use crate::{Dimension, QuantityNum, Unit};
 
 pub type Length<V, U> = L1<V, U>;

@@ -1,7 +1,6 @@
-use core::ops::Mul;
 use core::marker::PhantomData;
 use core::fmt::Display;
-use crate::types::tn1::{Hertz, TN1, TN1Unit};
+use crate::types::tn1::{TN1, TN1Unit};
 use crate::{Dimension, QuantityNum, Unit};
 
 pub type Time<V, U> = T1<V, U>;
