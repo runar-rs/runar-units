@@ -14,6 +14,13 @@ where V: QuantityNum, U: T1Unit {
     pub(crate) value: V
 }
 
+impl<V: QuantityNum + Display, U: T1Unit> core::fmt::Display for T1<V, U> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        Display::fmt(&self.value, f)?;
+        write!(f, " {}", U::ABBREVIATION)
+    }
+}
+
 impl<V: QuantityNum, U: T1Unit> Dimension for T1<V, U> {
     type ValueType = V;
 
@@ -35,7 +42,6 @@ impl<V: QuantityNum + Mul<Output = V>> Mul<TN1<V, Hertz>> for T1<V, Second> {
 }
 
 impl<V: QuantityNum, U: T1Unit> T1<V, U> {
-    #[deprecated(note ="Use the `new` method on the unit type instead")]
     #[must_use]
     pub fn new(value: V) -> Self {
         T1 {
@@ -45,30 +51,12 @@ impl<V: QuantityNum, U: T1Unit> T1<V, U> {
     }
 }
 
-impl<V: QuantityNum + Display, U: T1Unit> core::fmt::Display for T1<V, U> {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        Display::fmt(&self.value, f)?;
-        write!(f, " {}", U::ABBREVIATION)
-    }
-}
-
 
 // Units
 
 /// Marker trait for units, that represent time.
 pub trait T1Unit: Unit {}
 
-/// Unit Day
-/// 
-/// # Implemented Conversions
-/// - [`T1<f32, Day>`] to [`T1<f32, Hour>`]
-/// - [`T1<f32, Day>`] to [`T1<f32, Minute>`]
-/// - [`T1<f32, Day>`] to [`T1<f32, Second>`]
-/// - [`T1<f64, Day>`] to [`T1<f32, Millisecond>`]
-/// - [`T1<f64, Day>`] to [`T1<f64, Hour>`]
-/// - [`T1<f64, Day>`] to [`T1<f64, Minute>`]
-/// - [`T1<f64, Day>`] to [`T1<f64, Second>`]
-/// - [`T1<f64, Day>`] to [`T1<f64, Millisecond>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Day;
 impl Unit for Day {
@@ -86,17 +74,7 @@ impl Day {
         }
     }
 }
-/// Unit Hour
-/// 
-/// # Implemented Conversions
-/// - [`T1<f32, Hour>`] to [`T1<f32, Day>`]
-/// - [`T1<f32, Hour>`] to [`T1<f32, Minute>`]
-/// - [`T1<f32, Hour>`] to [`T1<f32, Second>`]
-/// - [`T1<f32, Hour>`] to [`T1<f32, Millisecond>`]
-/// - [`T1<f64, Hour>`] to [`T1<f64, Day>`]
-/// - [`T1<f64, Hour>`] to [`T1<f64, Minute>`]
-/// - [`T1<f64, Hour>`] to [`T1<f64, Second>`]
-/// - [`T1<f64, Hour>`] to [`T1<f64, Millisecond>`]
+
 #[derive(Debug, Clone, Copy)]
 pub struct Hour;
 impl Unit for Hour {
@@ -114,17 +92,7 @@ impl Hour {
         }
     }
 }
-/// Unit Minute
-/// 
-/// # Implemented Conversions
-/// - [`T1<f32, Minute>`] to [`T1<f32, Day>`]
-/// - [`T1<f32, Minute>`] to [`T1<f32, Hour>`]
-/// - [`T1<f32, Minute>`] to [`T1<f32, Second>`]
-/// - [`T1<f32, Minute>`] to [`T1<f32, Millisecond>`]
-/// - [`T1<f64, Minute>`] to [`T1<f64, Day>`]
-/// - [`T1<f64, Minute>`] to [`T1<f64, Hour>`]
-/// - [`T1<f64, Minute>`] to [`T1<f64, Second>`]
-/// - [`T1<f64, Minute>`] to [`T1<f64, Millisecond>`]
+
 #[derive(Debug, Clone, Copy)]
 pub struct Minute;
 impl Unit for Minute {
@@ -143,19 +111,7 @@ impl Minute {
     }
 }
 
-/// Unit Second
-/// 
-/// # Implemented Conversions
-/// - [`T1<f32, Second>`] to [`T1<f32, Day>`]
-/// - [`T1<f32, Second>`] to [`T1<f32, Hour>`]
-/// - [`T1<f32, Second>`] to [`T1<f32, Minute>`]
-/// - [`T1<f32, Second>`] to [`T1<f32, Millisecond>`]
-/// - [`T1<f32, Second>`] to [`T1<f32, Microsecond>`]
-/// - [`T1<f64, Second>`] to [`T1<f64, Day>`]
-/// - [`T1<f64, Second>`] to [`T1<f64, Hour>`]
-/// - [`T1<f64, Second>`] to [`T1<f64, Minute>`]
-/// - [`T1<f64, Second>`] to [`T1<f64, Millisecond>`]
-/// - [`T1<f64, Second>`] to [`T1<f64, Microsecond>`]
+
 #[derive(Debug, Clone, Copy)]
 pub struct Second;
 impl Unit for Second {
@@ -366,6 +322,7 @@ impl Quectosecond {
         }
     }
 }
+
 impl_linear_unit_conversions!(
     T1;
     Day, Hour, Minute, Second, Millisecond, Microsecond, Nanosecond, Picosecond,

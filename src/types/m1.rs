@@ -38,15 +38,7 @@ impl_dimension_mul!(M1, L1 => L1_M1, M1Unit, L1Unit);
 /// Marker traits for units of mass M1.
 pub trait M1Unit: Unit {}
 
-/// Unit for Kilogram (kg)
-/// 
-/// # Implemented Conversions
-/// - [`M1<f32, Kilogram>`] to [`M1<f32, Gram>`]
-/// - [`M1<f32, Kilogram>`] to [`M1<f32, Milligram>`]
-/// - [`M1<f32, Kilogram>`] to [`M1<f32, Microgram>`]
-/// - [`M1<f64, Kilogram>`] to [`M1<f64, Gram>`]
-/// - [`M1<f64, Kilogram>`] to [`M1<f64, Milligram>`]
-/// - [`M1<f64, Kilogram>`] to [`M1<f64, Microgram>`]
+
 #[derive(Debug, Clone, Copy)]
 pub struct Kilogram;
 impl Unit for Kilogram {
@@ -64,19 +56,7 @@ impl Kilogram {
     }
 }
 
-/// Unit for Gram (g)
-/// 
-/// # Implemented Conversions
-/// - [`M1<f32, Gram>`] to [`M1<f32, Kilogram>`]
-/// - [`M1<f32, Gram>`] to [`M1<f32, Milligram>`]
-/// - [`M1<f32, Gram>`] to [`M1<f32, Microgram>`]
-/// - [`M1<f32, Gram>`] to [`M1<f32, Nanogram>`]
-/// - [`M1<f32, Gram>`] to [`M1<f32, Picogram>`]
-/// - [`M1<f64, Gram>`] to [`M1<f64, Kilogram>`]
-/// - [`M1<f64, Gram>`] to [`M1<f64, Milligram>`]
-/// - [`M1<f64, Gram>`] to [`M1<f64, Microgram>`]
-/// - [`M1<f64, Gram>`] to [`M1<f64, Nanogram>`]
-/// - [`M1<f64, Gram>`] to [`M1<f64, Picogram>`]
+
 #[derive(Debug, Clone, Copy)]
 pub struct Gram;
 impl Unit for Gram {
@@ -95,19 +75,7 @@ impl Gram {
     }
 }
 
-/// Unit for Milligram (mg)
-/// 
-/// # Implemented Conversions
-/// - [`M1<f32, Milligram>`] to [`M1<f32, Kilogram>`]
-/// - [`M1<f32, Milligram>`] to [`M1<f32, Gram>`]
-/// - [`M1<f32, Milligram>`] to [`M1<f32, Microgram>`]
-/// - [`M1<f32, Milligram>`] to [`M1<f32, Nanogram>`]
-/// - [`M1<f32, Milligram>`] to [`M1<f32, Picogram>`]
-/// - [`M1<f64, Milligram>`] to [`M1<f64, Kilogram>`]
-/// - [`M1<f64, Milligram>`] to [`M1<f64, Gram>`]
-/// - [`M1<f64, Milligram>`] to [`M1<f64, Microgram>`]
-/// - [`M1<f64, Milligram>`] to [`M1<f64, Nanogram>`]
-/// - [`M1<f64, Milligram>`] to [`M1<f64, Picogram>`]
+
 #[derive(Debug, Clone, Copy)]
 pub struct Milligram;
 impl Unit for Milligram {
@@ -144,19 +112,7 @@ impl Microgram {
     }
 }
 
-/// Unit for Nanogram (ng)
-/// 
-/// # Implemented Conversions
-/// - [`M1<f32, Nanogram>`] to [`M1<f32, Kilogram>`]
-/// - [`M1<f32, Nanogram>`] to [`M1<f32, Gram>`]
-/// - [`M1<f32, Nanogram>`] to [`M1<f32, Milligram>`]
-/// - [`M1<f32, Nanogram>`] to [`M1<f32, Microgram>`]
-/// - [`M1<f32, Nanogram>`] to [`M1<f32, Picogram>`]
-/// - [`M1<f64, Nanogram>`] to [`M1<f64, Kilogram>`]
-/// - [`M1<f64, Nanogram>`] to [`M1<f64, Gram>`]
-/// - [`M1<f64, Nanogram>`] to [`M1<f64, Milligram>`]
-/// - [`M1<f64, Nanogram>`] to [`M1<f64, Microgram>`]
-/// - [`M1<f64, Nanogram>`] to [`M1<f64, Picogram>`]
+
 #[derive(Debug, Clone, Copy)]
 pub struct Nanogram;
 impl Unit for Nanogram {
