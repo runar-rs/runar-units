@@ -1,3 +1,5 @@
+//! Velocity
+
 use core::marker::PhantomData;
 
 use crate::{Dimension, QuantityNum, Unit};

@@ -1,8 +1,9 @@
+//! Impulse
 use core::fmt::Display;
 use core::marker::PhantomData;
 
 
-use crate::{Dimension, QuantityNum, Unit};
+use crate::{Dimension, QuantityNum, Unit, types::{l1_m1_tn2::L1_M1_TN2, tn1::{TN1, TN1Unit}}};
 
 
 
@@ -31,7 +32,7 @@ impl<V: QuantityNum, U: L1_M1_TN1Unit> Dimension for L1_M1_TN1<V, U> {
 }
 
 impl_dimension_ops!(L1_M1_TN1, L1_M1_TN1Unit);
-
+impl_dimension_mul!(L1_M1_TN1, L1_M1_TN1Unit, TN1, TN1Unit => L1_M1_TN2);
 
 /// Marker trait for units of `L1_M1_TN1`
 #[allow(non_camel_case_types)]

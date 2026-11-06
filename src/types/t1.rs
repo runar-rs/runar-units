@@ -1,5 +1,7 @@
 use core::marker::PhantomData;
 use core::fmt::Display;
+use crate::types::l1::{L1, L1Unit};
+use crate::types::l1_t1::L1_T1;
 use crate::types::tn1::{TN1, TN1Unit};
 use crate::{Dimension, QuantityNum, Unit};
 
@@ -31,7 +33,7 @@ impl<V: QuantityNum, U: T1Unit> Dimension for T1<V, U> {
 // Operators
 impl_dimension_ops!(T1, T1Unit);
 impl_dimension_mul!(T1, T1Unit, TN1,  TN1Unit => scalar);
-
+impl_dimension_mul!(T1, T1Unit, L1, L1Unit => L1_T1);
 
 impl<V: QuantityNum, U: T1Unit> T1<V, U> {
     #[must_use]

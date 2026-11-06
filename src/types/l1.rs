@@ -1,3 +1,5 @@
+//! Length
+
 use core::fmt::Display;
 use core::marker::PhantomData;
 
@@ -383,7 +385,8 @@ mod tests {
         let km: L1<f64, Kilometer> = original.into();
         let cm: L1<f64, Centimeter> = km.into();
         let mm: L1<f64, Millimeter> = cm.into();
-        let m: L1<f64, Meter> = mm.into();
+        let zm: L1<f64, Zeptometer> = mm.into();
+        let m: L1<f64, Meter> = zm.into();
         assert_close(m.value, original.value, 1e-10);
     }
 
