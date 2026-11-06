@@ -3,9 +3,9 @@
 use core::fmt::Display;
 use core::marker::PhantomData;
 use core::ops::Mul;
-use crate::types::l1::{L1, Meter};
-use crate::types::l1_tn1::{L1_TN1, MeterPerSecond};
-use crate::types::t1::{Second, T1};
+use crate::types::l1::{L1, L1Unit, Meter};
+use crate::types::l1_tn1::{L1_TN1, L1_TN1Unit, MeterPerSecond};
+use crate::types::t1::{T1, T1Unit};
 use crate::{Dimension, QuantityNum, Unit};
 
 #[derive(Debug, Clone, Copy)]
@@ -42,26 +42,8 @@ impl<U: TN1Unit> TN1<f64, U> {
 }
 
 impl_dimension_ops!(TN1, TN1Unit);
-
-/// `Mul` with same `ValueType` and Hertz and Second
-impl<V: QuantityNum + Mul<Output = V>> Mul<T1<V, Second>> for TN1<V, Hertz> {
-    type Output = V;
-
-    fn mul(self, rhs: T1<V, Second>) -> Self::Output {
-        self.value * rhs.value
-    }
-}
-
-/// `Mul` with same `ValueType` and Hertz and Meter
-impl<V: QuantityNum + Mul<Output = V>> Mul<L1<V, Meter>> for TN1<V, Hertz> {
-    type Output = L1_TN1<V, MeterPerSecond>;
-    fn mul(self, rhs: L1<V, Meter>) -> Self::Output {
-        L1_TN1 {
-            unit: PhantomData,
-            value: self.value * rhs.value,
-        }
-    }
-}
+impl_dimension_mul_with_unit!(TN1, T1 => scalar, TN1Unit, T1Unit);
+impl_dimension_mul_with_unit!(TN1, L1 => L1_TN1, MeterPerSecond, TN1Unit, L1Unit);
 
 pub trait TN1Unit: Unit {}
 
@@ -219,3 +201,17 @@ impl Unit for Rontohertz {
     const ABBREVIATION: &'static str = "rHz";
 }
 impl TN1Unit for Rontohertz {}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::types::t1::Second;
+
+    #[test]
+    fn test_mul_tn1_t1() {
+        let frequency = TN1::<f64, Hertz>::new(2.0);
+        let time = T1::<f64, Second>::new(3.0);
+        let result = frequency * time;
+        assert_eq!(result, 6.0);
+    }
+}

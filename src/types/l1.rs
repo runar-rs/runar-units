@@ -70,16 +70,6 @@ impl<U: L1Unit> L1<f64, U> {
 
 pub trait L1Unit: Unit {}
 
-
-/// Unit Kilometer
-/// 
-/// # Implemented Conversions
-/// - [`L1<f32, Kilometer>`] to [`L1<f32, Meter>`]
-/// - [`L1<f32, Kilometer>`] to [`L1<f32, Centimeter>`]
-/// - [`L1<f32, Kilometer>`] to [`L1<f32, Millimeter>`]
-/// - [`L1<f64, Kilometer>`] to [`L1<f64, Meter>`]
-/// - [`L1<f64, Kilometer>`] to [`L1<f64, Centimeter>`]
-/// - [`L1<f64, Kilometer>`] to [`L1<f64, Millimeter>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Kilometer;
 impl Unit for Kilometer {
@@ -98,15 +88,6 @@ impl Kilometer {
     }
 }
 
-/// Unit Meter
-/// 
-/// # Implemented Conversions
-/// - [`L1<f32, Meter>`] to [`L1<f32, Kilometer>`]
-/// - [`L1<f32, Meter>`] to [`L1<f32, Centimeter>`]
-/// - [`L1<f32, Meter>`] to [`L1<f32, Millimeter>`]
-/// - [`L1<f64, Meter>`] to [`L1<f64, Kilometer>`]
-/// - [`L1<f64, Meter>`] to [`L1<f64, Centimeter>`]
-/// - [`L1<f64, Meter>`] to [`L1<f64, Millimeter>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Meter;
 impl Unit for Meter {
@@ -124,13 +105,6 @@ impl Meter {
     }
 }
 
-/// Unit Centimeter
-/// 
-/// # Implemented Conversions
-/// - [`L1<f32, Centimeter>`] to [`L1<f32, Meter>`]
-/// - [`L1<f32, Centimeter>`] to [`L1<f32, Millimeter>`]
-/// - [`L1<f64, Centimeter>`] to [`L1<f64, Meter>`]
-/// - [`L1<f64, Centimeter>`] to [`L1<f64, Millimeter>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Centimeter;
 impl Unit for Centimeter {
@@ -149,11 +123,6 @@ impl Centimeter {
     }
 }
 
-/// Unit Millimeter
-/// 
-/// # Implemented Conversions
-/// - [`L1<f32, Millimeter>`] to [`L1<f32, Meter>`]
-/// - [`L1<f64, Millimeter>`] to [`L1<f64, Meter>`]
 #[derive(Debug, Clone, Copy)]
 pub struct Millimeter;
 impl Unit for Millimeter {

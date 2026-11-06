@@ -1,7 +1,7 @@
 use core::ops::Mul;
 use core::marker::PhantomData;
 use core::fmt::Display;
-use crate::types::tn1::{Hertz, TN1};
+use crate::types::tn1::{Hertz, TN1, TN1Unit};
 use crate::{Dimension, QuantityNum, Unit};
 
 pub type Time<V, U> = T1<V, U>;
@@ -31,15 +31,8 @@ impl<V: QuantityNum, U: T1Unit> Dimension for T1<V, U> {
 
 // Operators
 impl_dimension_ops!(T1, T1Unit);
+impl_dimension_mul_with_unit!(T1, TN1 => scalar, T1Unit, TN1Unit);
 
-/// `Mul` with same `ValueType` and `tn1` unit
-impl<V: QuantityNum + Mul<Output = V>> Mul<TN1<V, Hertz>> for T1<V, Second> {
-    type Output = V;
-    
-    fn mul(self, rhs: TN1<V, Hertz>) -> Self::Output {
-        self.value * rhs.value
-    }
-}
 
 impl<V: QuantityNum, U: T1Unit> T1<V, U> {
     #[must_use]
