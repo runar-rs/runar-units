@@ -30,4 +30,23 @@ impl<V: QuantityNum, U: Theta1Unit> Dimension for Theta1<V, U> {
     }
 }
 
+impl_dimension_ops!(Theta1, Theta1Unit);
+
 pub trait Theta1Unit: Unit {}
+
+#[derive(Debug, Clone, Copy)]
+pub struct Kelvin;
+impl Unit for Kelvin {
+    const ABBREVIATION: &'static str = "K";
+}
+impl Theta1Unit for Kelvin {}
+
+impl Kelvin {
+    #[must_use]
+    pub fn new<V: QuantityNum>(value: V) -> Theta1<V, Kelvin> {
+        Theta1 {
+            unit: PhantomData,
+            value
+        }
+    }
+}

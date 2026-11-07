@@ -52,6 +52,8 @@ macro_rules! dimension_base_unit {
     (L1_M1) => { crate::types::l1_m1::MeterKilogram };
     (L1_M1_TN1) => { crate::types::l1_m1_tn1::NewtonSecond };
     (L1_M1_TN2) => { crate::types::l1_m1_tn2::Newton };
+    (L2) => { crate::types::l2::SquareMeter };
+    (L3) => { crate::types::l3::CubicMeter };
 }
 
 /// Implements multiplication between two dimensions with an explicit output unit.

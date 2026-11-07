@@ -58,6 +58,7 @@ impl NewtonSecond {
 pub struct KilogramMeterPerSecond;
 impl Unit for KilogramMeterPerSecond {
     const ABBREVIATION: &'static str = "kg·m/s";
+    const LATEX_ABBREVIATION: &'static str = r"\frac{kg \cdot m}{s}";
 }
 impl L1_M1_TN1Unit for KilogramMeterPerSecond {}
 
