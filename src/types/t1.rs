@@ -1,18 +1,22 @@
-use core::marker::PhantomData;
-use core::fmt::Display;
+//! Time
 use crate::types::l1::{L1, L1Unit};
 use crate::types::l1_t1::L1_T1;
 use crate::types::tn1::{TN1, TN1Unit};
 use crate::{Dimension, QuantityNum, Unit};
+use core::fmt::Display;
+use core::marker::PhantomData;
 
 pub type Time<V, U> = T1<V, U>;
 /// T1 is a dimension for time, with a value type V and a unit U. The unit U must implement the
 /// `T1Unit` trait, which is a marker trait for units that represent time.
 #[derive(Debug, Clone, Copy)]
 pub struct T1<V, U>
-where V: QuantityNum, U: T1Unit {
+where
+    V: QuantityNum,
+    U: T1Unit,
+{
     pub(crate) unit: PhantomData<U>,
-    pub(crate) value: V
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: T1Unit> core::fmt::Display for T1<V, U> {
@@ -40,11 +44,10 @@ impl<V: QuantityNum, U: T1Unit> T1<V, U> {
     pub fn new(value: V) -> Self {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
-
 
 // Units
 
@@ -64,7 +67,7 @@ impl Day {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Day> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -82,7 +85,7 @@ impl Hour {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Hour> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -100,11 +103,10 @@ impl Minute {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Minute> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
-
 
 #[derive(Debug, Clone, Copy)]
 pub struct Second;
@@ -119,7 +121,7 @@ impl Second {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Second> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -139,7 +141,7 @@ impl Millisecond {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Millisecond> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -159,7 +161,7 @@ impl Microsecond {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Microsecond> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -179,7 +181,7 @@ impl Nanosecond {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Nanosecond> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -198,7 +200,7 @@ impl Picosecond {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Picosecond> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -217,7 +219,7 @@ impl Femtosecond {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Femtosecond> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -236,7 +238,7 @@ impl Attosecond {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Attosecond> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -255,7 +257,7 @@ impl Zeptosecond {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Zeptosecond> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -274,7 +276,7 @@ impl Yoktosecond {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Yoktosecond> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -293,7 +295,7 @@ impl Rontosecond {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Rontosecond> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -312,7 +314,7 @@ impl Quectosecond {
     pub fn new<V: QuantityNum>(value: V) -> T1<V, Quectosecond> {
         T1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }

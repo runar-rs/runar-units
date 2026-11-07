@@ -5,15 +5,17 @@ use core::marker::PhantomData;
 
 use crate::types::l1_t1::L1_T1;
 use crate::types::l1_tn1::L1_TN1;
-use crate::types::t1::{T1, T1Unit};
 use crate::{Dimension, QuantityNum, Unit};
 
 pub type Length<V, U> = L1<V, U>;
 #[derive(Debug, Clone, Copy)]
 pub struct L1<V, U>
-where V: QuantityNum, U: L1Unit {
+where
+    V: QuantityNum,
+    U: L1Unit,
+{
     pub(crate) unit: PhantomData<U>,
-    pub(crate) value: V
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: L1Unit> core::fmt::Display for L1<V, U> {
@@ -23,7 +25,6 @@ impl<V: QuantityNum + Display, U: L1Unit> core::fmt::Display for L1<V, U> {
     }
 }
 
-
 impl<V: QuantityNum, U: L1Unit> Dimension for L1<V, U> {
     type ValueType = V;
 
@@ -32,10 +33,20 @@ impl<V: QuantityNum, U: L1Unit> Dimension for L1<V, U> {
     }
 }
 
-impl_dimension_ops!(L1, L1Unit);
+impl_dimension_ops!(crate::types::l1::L1, crate::types::l1::L1Unit);
 
-impl_dimension_mul!(L1, L1Unit, T1,  T1Unit => L1_T1);
-impl_dimension_div!(L1, L1Unit, T1,  T1Unit => L1_TN1);
+impl_dimension_mul!(
+    crate::types::l1::L1,
+    crate::types::l1::L1Unit,
+    crate::types::t1::T1,
+    crate::types::t1::T1Unit => crate::types::l1_t1::L1_T1
+);
+impl_dimension_div!(
+    crate::types::l1::L1,
+    crate::types::l1::L1Unit,
+    crate::types::t1::T1,
+    crate::types::t1::T1Unit => crate::types::l1_tn1::L1_TN1
+);
 /// `PartialEq` with same `ValueType` and same Unit
 impl<V: QuantityNum + PartialEq, U: L1Unit> PartialEq for L1<V, U> {
     fn eq(&self, other: &Self) -> bool {
@@ -56,7 +67,7 @@ impl<U: L1Unit> L1<f64, U> {
     pub fn new(value: f64) -> Self {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 
@@ -64,10 +75,9 @@ impl<U: L1Unit> L1<f64, U> {
     pub fn abs(self) -> Self {
         L1 {
             unit: PhantomData,
-            value: self.value.abs()
+            value: self.value.abs(),
         }
     }
-
 }
 
 pub trait L1Unit: Unit {}
@@ -85,7 +95,7 @@ impl Kilometer {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Kilometer> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -102,7 +112,7 @@ impl Meter {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Meter> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -120,7 +130,7 @@ impl Centimeter {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Centimeter> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -138,7 +148,7 @@ impl Millimeter {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Millimeter> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -156,7 +166,7 @@ impl Micrometer {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Micrometer> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -174,7 +184,7 @@ impl Nanometer {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Nanometer> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -192,11 +202,10 @@ impl Picometer {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Picometer> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
-
 
 #[derive(Debug, Clone, Copy)]
 pub struct Femtometer;
@@ -211,11 +220,10 @@ impl Femtometer {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Femtometer> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
-
 
 #[derive(Debug, Clone, Copy)]
 pub struct Attometer;
@@ -230,7 +238,7 @@ impl Attometer {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Attometer> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -248,12 +256,10 @@ impl Zeptometer {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Zeptometer> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
-
-
 
 #[derive(Debug, Clone, Copy)]
 pub struct Yoctometer;
@@ -268,7 +274,7 @@ impl Yoctometer {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Yoctometer> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -286,7 +292,7 @@ impl Rontometer {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Rontometer> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -304,7 +310,7 @@ impl Quectometer {
     pub fn new<V: QuantityNum>(value: V) -> L1<V, Quectometer> {
         L1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -319,7 +325,10 @@ impl_linear_unit_conversions!(
 
 #[cfg(test)]
 mod tests {
-    use crate::{test_utils::assert_close, types::{l1_t1::MeterSecond, l1_tn1::MeterPerSecond, t1::Second}};
+    use crate::{
+        test_utils::assert_close,
+        types::{l1_t1::MeterSecond, l1_tn1::MeterPerSecond, t1::Second},
+    };
 
     use super::*;
 
@@ -367,8 +376,6 @@ mod tests {
 
         assert_close(result1.value, result2.value, 1e-10);
     }
-
-
 
     #[test]
     fn test_l1_sub() {

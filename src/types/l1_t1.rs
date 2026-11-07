@@ -2,7 +2,6 @@ use core::marker::PhantomData;
 
 use crate::{Dimension, QuantityNum, Unit};
 
-
 #[allow(non_camel_case_types)]
 pub struct L1_T1<V: QuantityNum, U: Unit> {
     pub unit: PhantomData<U>,

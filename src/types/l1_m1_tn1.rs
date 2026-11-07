@@ -2,18 +2,24 @@
 use core::fmt::Display;
 use core::marker::PhantomData;
 
-
-use crate::{Dimension, QuantityNum, Unit, types::{l1_m1_tn2::L1_M1_TN2, tn1::{TN1, TN1Unit}}};
-
-
+use crate::{
+    Dimension, QuantityNum, Unit,
+    types::{
+        l1_m1_tn2::L1_M1_TN2,
+        tn1::{TN1, TN1Unit},
+    },
+};
 
 pub type Impulse<V, U> = L1_M1_TN1<V, U>;
 
 #[allow(non_camel_case_types)]
 pub struct L1_M1_TN1<V, U>
-where V: QuantityNum, U: L1_M1_TN1Unit {
+where
+    V: QuantityNum,
+    U: L1_M1_TN1Unit,
+{
     pub(crate) unit: PhantomData<U>,
-    pub(crate) value: V
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: L1_M1_TN1Unit> Display for L1_M1_TN1<V, U> {
@@ -38,7 +44,6 @@ impl_dimension_mul!(L1_M1_TN1, L1_M1_TN1Unit, TN1, TN1Unit => L1_M1_TN2);
 #[allow(non_camel_case_types)]
 pub trait L1_M1_TN1Unit: Unit {}
 
-
 #[derive(Debug, Clone, Copy)]
 pub struct NewtonSecond;
 impl Unit for NewtonSecond {
@@ -50,7 +55,7 @@ impl NewtonSecond {
     pub fn new<V: QuantityNum>(value: V) -> L1_M1_TN1<V, NewtonSecond> {
         L1_M1_TN1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -66,7 +71,7 @@ impl KilogramMeterPerSecond {
     pub fn new<V: QuantityNum>(value: V) -> L1_M1_TN1<V, KilogramMeterPerSecond> {
         L1_M1_TN1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }

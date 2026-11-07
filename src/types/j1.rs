@@ -7,9 +7,12 @@ use crate::{Dimension, QuantityNum, Unit};
 
 #[derive(Debug, Clone, Copy)]
 pub struct J1<V, U>
-where V: QuantityNum, U: J1Unit {
+where
+    V: QuantityNum,
+    U: J1Unit,
+{
     pub(crate) unit: PhantomData<U>,
-    pub(crate) value: V
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: J1Unit> core::fmt::Display for J1<V, U> {

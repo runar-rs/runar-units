@@ -1,3 +1,5 @@
+//! Amount of Substance
+
 use core::fmt::Display;
 use core::marker::PhantomData;
 
@@ -7,9 +9,12 @@ pub type AmountOfSubstance<V, U> = N1<V, U>;
 
 #[derive(Debug, Clone, Copy)]
 pub struct N1<V, U>
-where V: QuantityNum, U: N1Unit {
+where
+    V: QuantityNum,
+    U: N1Unit,
+{
     pub(crate) unit: PhantomData<U>,
-    pub(crate) value: V
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: N1Unit> core::fmt::Display for N1<V, U> {
@@ -30,7 +35,6 @@ impl<V: QuantityNum, U: N1Unit> Dimension for N1<V, U> {
 
 impl_dimension_ops!(N1, N1Unit);
 
-
 /// Marker trait for `N1` units.
 pub trait N1Unit: Unit {}
 
@@ -46,7 +50,7 @@ impl Mole {
     pub fn new<V: QuantityNum>(value: V) -> N1<V, Mole> {
         N1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -64,7 +68,7 @@ impl Millimole {
     pub fn new<V: QuantityNum>(value: V) -> N1<V, Millimole> {
         N1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }

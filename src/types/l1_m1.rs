@@ -5,12 +5,11 @@ use crate::types::l1::{L1, L1Unit};
 use crate::types::m1::{M1, M1Unit};
 use crate::{Dimension, QuantityNum, Unit};
 
-
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone, Copy)]
 pub struct L1_M1<V: QuantityNum, U: L1_M1Unit> {
-    pub (crate) unit: PhantomData<U>,
-    pub (crate) value: V
+    pub(crate) unit: PhantomData<U>,
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: L1_M1Unit> Display for L1_M1<V, U> {
@@ -49,7 +48,7 @@ impl MeterKilogram {
     pub fn new<V: QuantityNum>(value: V) -> L1_M1<V, MeterKilogram> {
         L1_M1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }

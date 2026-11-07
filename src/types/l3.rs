@@ -1,13 +1,18 @@
+//! Volume
 use core::fmt::Display;
 use core::marker::PhantomData;
 
+use crate::types::*;
 use crate::{Dimension, QuantityNum, Unit};
 
 #[derive(Debug, Clone, Copy)]
 pub struct L3<V, U>
-where V: QuantityNum, U: L3Unit {
+where
+    V: QuantityNum,
+    U: L3Unit,
+{
     pub(crate) unit: PhantomData<U>,
-    pub(crate) value: V
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: L3Unit> core::fmt::Display for L3<V, U> {
@@ -27,6 +32,8 @@ impl<V: QuantityNum, U: L3Unit> Dimension for L3<V, U> {
 }
 
 impl_dimension_ops!(L3, L3Unit);
+impl_dimension_div_with_unit!(L3, L3Unit, l1::L1, l1::L1Unit => l2::L2, l2::SquareMeter);
+impl_dimension_div_with_unit!(L3, L3Unit, l2::L2, l2::L2Unit => l1::L1, l1::Meter);
 
 pub trait L3Unit: Unit {}
 
@@ -43,7 +50,7 @@ impl CubicMeter {
     pub fn new<V: QuantityNum>(value: V) -> L3<V, CubicMeter> {
         L3 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }

@@ -1,15 +1,25 @@
+//! Area
 use core::fmt::Display;
 use core::marker::PhantomData;
 
-use crate::{Dimension, QuantityNum, Unit, types::{l1::{L1, L1Unit}, l3::L3}};
+use crate::{
+    Dimension, QuantityNum, Unit,
+    types::{
+        l1::{L1, L1Unit},
+        l3::L3,
+    },
+};
 
 pub type Area<V, U> = L2<V, U>;
 
 #[derive(Debug, Clone, Copy)]
 pub struct L2<V, U>
-where V: QuantityNum, U: L2Unit {
+where
+    V: QuantityNum,
+    U: L2Unit,
+{
     pub(crate) unit: PhantomData<U>,
-    pub(crate) value: V
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: L2Unit> core::fmt::Display for L2<V, U> {
@@ -48,7 +58,7 @@ impl SquareMeter {
     pub fn new<V: QuantityNum>(value: V) -> L2<V, SquareMeter> {
         L2 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }

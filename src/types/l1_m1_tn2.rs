@@ -1,5 +1,5 @@
 //! Force
-//! 
+//!
 
 use core::fmt::Display;
 use core::marker::PhantomData;
@@ -11,9 +11,12 @@ pub type Force<V, U> = L1_M1_TN2<V, U>;
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone, Copy)]
 pub struct L1_M1_TN2<V, U>
-where V: QuantityNum, U: L1_M1_TN2Unit {
+where
+    V: QuantityNum,
+    U: L1_M1_TN2Unit,
+{
     pub(crate) unit: PhantomData<U>,
-    pub(crate) value: V
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: L1_M1_TN2Unit> Display for L1_M1_TN2<V, U> {
@@ -47,7 +50,7 @@ impl Newton {
     pub fn new<V: QuantityNum>(value: V) -> L1_M1_TN2<V, Newton> {
         L1_M1_TN2 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -63,7 +66,7 @@ impl KilogramMeterPerSecondSquared {
     pub fn new<V: QuantityNum>(value: V) -> L1_M1_TN2<V, KilogramMeterPerSecondSquared> {
         L1_M1_TN2 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }

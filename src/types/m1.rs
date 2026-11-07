@@ -1,3 +1,4 @@
+//! Mass
 use core::fmt::Display;
 use core::marker::PhantomData;
 
@@ -9,7 +10,10 @@ pub type Mass<V, U> = M1<V, U>;
 
 #[derive(Debug, Clone, Copy)]
 pub struct M1<V, U>
-where V: QuantityNum, U: M1Unit {
+where
+    V: QuantityNum,
+    U: M1Unit,
+{
     pub(crate) value: V,
     pub(crate) unit: PhantomData<U>,
 }
@@ -38,7 +42,6 @@ impl_dimension_mul!(M1, M1Unit, L1,  L1Unit => L1_M1);
 /// Marker traits for units of mass M1.
 pub trait M1Unit: Unit {}
 
-
 #[derive(Debug, Clone, Copy)]
 pub struct Kilogram;
 impl Unit for Kilogram {
@@ -55,7 +58,6 @@ impl Kilogram {
         }
     }
 }
-
 
 #[derive(Debug, Clone, Copy)]
 pub struct Gram;
@@ -74,7 +76,6 @@ impl Gram {
         }
     }
 }
-
 
 #[derive(Debug, Clone, Copy)]
 pub struct Milligram;
@@ -111,7 +112,6 @@ impl Microgram {
         }
     }
 }
-
 
 #[derive(Debug, Clone, Copy)]
 pub struct Nanogram;

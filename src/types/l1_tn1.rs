@@ -8,8 +8,8 @@ pub type Velocity<V, U> = L1_TN1<V, U>;
 
 #[allow(non_camel_case_types)]
 pub struct L1_TN1<V: QuantityNum, U: Unit> {
-    pub (crate) unit: PhantomData<U>,
-    pub (crate) value: V
+    pub(crate) unit: PhantomData<U>,
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum, U: Unit> Dimension for L1_TN1<V, U> {
@@ -36,11 +36,10 @@ impl MeterPerSecond {
     pub fn new<V: QuantityNum>(value: V) -> L1_TN1<V, MeterPerSecond> {
         L1_TN1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
 
 #[cfg(test)]
-mod tests {
-}
+mod tests {}

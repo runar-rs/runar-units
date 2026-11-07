@@ -1,16 +1,19 @@
 //! Electric Current
 
+use crate::{Dimension, QuantityNum, Unit};
 use core::fmt::Display;
 use core::marker::PhantomData;
-use crate::{Dimension, QuantityNum, Unit};
 
 pub type ElectricCurrent<V, U> = I1<V, U>;
 
 #[derive(Debug, Clone, Copy)]
 pub struct I1<V, U>
-where V: QuantityNum, U: I1Unit {
+where
+    V: QuantityNum,
+    U: I1Unit,
+{
     pub(crate) unit: PhantomData<U>,
-    pub(crate) value: V
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: I1Unit> core::fmt::Display for I1<V, U> {
@@ -47,7 +50,7 @@ impl Ampere {
     pub fn new<V: QuantityNum>(value: V) -> I1<V, Ampere> {
         I1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -64,7 +67,7 @@ impl Milliampere {
     pub fn new<V: QuantityNum>(value: V) -> I1<V, Milliampere> {
         I1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -81,7 +84,7 @@ impl Microampere {
     pub fn new<V: QuantityNum>(value: V) -> I1<V, Microampere> {
         I1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }

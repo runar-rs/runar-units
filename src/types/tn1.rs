@@ -1,17 +1,19 @@
-/// Dimension for TN1
-/// 
-use core::fmt::Display;
-use core::marker::PhantomData;
+//! Frequency
 use crate::types::l1::{L1, L1Unit};
 use crate::types::l1_tn1::L1_TN1;
 use crate::types::t1::{T1, T1Unit};
 use crate::{Dimension, QuantityNum, Unit};
+use core::fmt::Display;
+use core::marker::PhantomData;
 
 #[derive(Debug, Clone, Copy)]
 pub struct TN1<V, U>
-where V: QuantityNum, U: TN1Unit {
+where
+    V: QuantityNum,
+    U: TN1Unit,
+{
     pub(crate) unit: PhantomData<U>,
-    pub(crate) value: V
+    pub(crate) value: V,
 }
 
 impl<V: QuantityNum + Display, U: TN1Unit> core::fmt::Display for TN1<V, U> {
@@ -35,7 +37,7 @@ impl<U: TN1Unit> TN1<f64, U> {
     pub fn new(value: f64) -> Self {
         TN1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -52,13 +54,11 @@ impl Unit for Quettahertz {
 }
 impl TN1Unit for Quettahertz {}
 
-
 pub struct Ronnahertz;
 impl Unit for Ronnahertz {
     const ABBREVIATION: &'static str = "RHz";
 }
 impl TN1Unit for Ronnahertz {}
-
 
 pub struct Yottahertz;
 impl Unit for Yottahertz {
@@ -66,15 +66,11 @@ impl Unit for Yottahertz {
 }
 impl TN1Unit for Yottahertz {}
 
-
-
 pub struct Zettahertz;
 impl Unit for Zettahertz {
     const ABBREVIATION: &'static str = "ZHz";
 }
 impl TN1Unit for Zettahertz {}
-
-
 
 pub struct Exahertz;
 impl Unit for Exahertz {
@@ -82,16 +78,11 @@ impl Unit for Exahertz {
 }
 impl TN1Unit for Exahertz {}
 
-
-
 pub struct Petahertz;
 impl Unit for Petahertz {
     const ABBREVIATION: &'static str = "PHz";
 }
 impl TN1Unit for Petahertz {}
-
-
-
 
 pub struct Terahertz;
 impl Unit for Terahertz {
@@ -99,13 +90,11 @@ impl Unit for Terahertz {
 }
 impl TN1Unit for Terahertz {}
 
-
 pub struct Gigahertz;
 impl Unit for Gigahertz {
     const ABBREVIATION: &'static str = "GHz";
 }
 impl TN1Unit for Gigahertz {}
-
 
 pub struct Megahertz;
 impl Unit for Megahertz {
@@ -113,13 +102,11 @@ impl Unit for Megahertz {
 }
 impl TN1Unit for Megahertz {}
 
-
 pub struct Kilohertz;
 impl Unit for Kilohertz {
     const ABBREVIATION: &'static str = "kHz";
 }
 impl TN1Unit for Kilohertz {}
-
 
 #[derive(Debug, Clone, Copy)]
 pub struct Hertz;
@@ -128,12 +115,11 @@ impl Unit for Hertz {
 }
 impl TN1Unit for Hertz {}
 
-
 impl Hertz {
     pub fn new<V: QuantityNum>(value: V) -> TN1<V, Hertz> {
         TN1 {
             unit: PhantomData,
-            value
+            value,
         }
     }
 }
@@ -144,13 +130,11 @@ impl Unit for Millihertz {
 }
 impl TN1Unit for Millihertz {}
 
-
 pub struct Microhertz;
 impl Unit for Microhertz {
     const ABBREVIATION: &'static str = "μHz";
 }
 impl TN1Unit for Microhertz {}
-
 
 pub struct Nanohertz;
 impl Unit for Nanohertz {
@@ -158,14 +142,11 @@ impl Unit for Nanohertz {
 }
 impl TN1Unit for Nanohertz {}
 
-
 pub struct Picohertz;
 impl Unit for Picohertz {
     const ABBREVIATION: &'static str = "pHz";
 }
 impl TN1Unit for Picohertz {}
-
-
 
 pub struct Femtohertz;
 impl Unit for Femtohertz {
@@ -173,13 +154,11 @@ impl Unit for Femtohertz {
 }
 impl TN1Unit for Femtohertz {}
 
-
 pub struct Attohertz;
 impl Unit for Attohertz {
     const ABBREVIATION: &'static str = "aHz";
 }
 impl TN1Unit for Attohertz {}
-
 
 pub struct Zeptohertz;
 impl Unit for Zeptohertz {
@@ -187,13 +166,11 @@ impl Unit for Zeptohertz {
 }
 impl TN1Unit for Zeptohertz {}
 
-
 pub struct Yoctohertz;
 impl Unit for Yoctohertz {
     const ABBREVIATION: &'static str = "yHz";
 }
 impl TN1Unit for Yoctohertz {}
-
 
 pub struct Rontohertz;
 impl Unit for Rontohertz {
