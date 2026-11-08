@@ -32,8 +32,8 @@ impl<V: QuantityNum, U: L3Unit> Dimension for L3<V, U> {
 }
 
 impl_dimension_ops!(L3, L3Unit);
-impl_dimension_div_with_unit!(L3, L3Unit, l1::L1, l1::L1Unit => l2::L2, l2::SquareMeter);
-impl_dimension_div_with_unit!(L3, L3Unit, l2::L2, l2::L2Unit => l1::L1, l1::Meter);
+impl_dimension_div_with_unit!(L3, L3Unit, l_1::L1, l_1::L1Unit => l_2::L2, l_2::SquareMeter);
+impl_dimension_div_with_unit!(L3, L3Unit, l_2::L2, l_2::L2Unit => l_1::L1, l_1::Meter);
 
 pub trait L3Unit: Unit {}
 

@@ -1,9 +1,9 @@
 use core::fmt::Display;
 use core::marker::PhantomData;
 
-use crate::types::l1::{L1, L1Unit};
-use crate::types::m1::{M1, M1Unit};
 use crate::{Dimension, QuantityNum, Unit};
+use crate::types::*;
+
 
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone, Copy)]
@@ -31,8 +31,8 @@ impl<V: QuantityNum, U: L1_M1Unit> Dimension for L1_M1<V, U> {
 
 impl_dimension_ops!(L1_M1, L1_M1Unit);
 
-impl_dimension_div!(L1_M1, L1_M1Unit, L1, L1Unit => M1);
-impl_dimension_div!(L1_M1, L1_M1Unit, M1, M1Unit => L1);
+impl_dimension_div_with_unit!(L1_M1, L1_M1Unit, l_1::L1, l_1::L1Unit => m_1::M1, m_1::Kilogram);
+impl_dimension_div_with_unit!(L1_M1, L1_M1Unit, m_1::M1, m_1::M1Unit => l_1::L1, l_1::Meter);
 
 #[allow(non_camel_case_types)]
 pub trait L1_M1Unit: Unit {}

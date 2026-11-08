@@ -8,6 +8,7 @@ use crate::types::*;
 
 pub type ElectricCurrent<V, U> = I1<V, U>;
 
+#[allow(non_camel_case_types)]
 #[derive(Debug, Clone, Copy)]
 pub struct I1<V, U>
 where
@@ -37,12 +38,12 @@ impl<V: QuantityNum, U: I1Unit> Dimension for I1<V, U> {
 impl_dimension_ops!(I1, I1Unit);
 impl_dimension_mul_with_unit!(
     I1, I1Unit,
-    tn1::TN1, tn1::TN1Unit
-    => i1_tn1::I1_TN1, i1_tn1::Coulomb);
+    t_n1::TN1, t_n1::TN1Unit
+    => i_1_t_n1::I1_TN1, i_1_t_n1::Coulomb);
 impl_dimension_div_with_unit!(
     I1, I1Unit,
-    t1::T1, t1::T1Unit
-    => i1_tn1::I1_TN1, i1_tn1::Coulomb);
+    t_1::T1, t_1::T1Unit
+    => i_1_t_n1::I1_TN1, i_1_t_n1::Coulomb);
 // Units
 
 /// Marker trait for `I1` units.

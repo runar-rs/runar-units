@@ -2,9 +2,8 @@
 use core::fmt::Display;
 use core::marker::PhantomData;
 
-use crate::types::l1::{L1, L1Unit};
-use crate::types::l1_m1::L1_M1;
 use crate::{Dimension, QuantityNum, Unit};
+use crate::types::*;
 
 pub type Mass<V, U> = M1<V, U>;
 
@@ -37,7 +36,11 @@ impl<V: QuantityNum, U: M1Unit> Dimension for M1<V, U> {
 
 impl_dimension_ops!(M1, M1Unit);
 
-impl_dimension_mul!(M1, M1Unit, L1,  L1Unit => L1_M1);
+impl_dimension_mul_with_unit!(
+    M1, M1Unit,
+    l_1::L1, l_1::L1Unit
+    => l_1_m_1::L1_M1, l_1_m_1::MeterKilogram
+);
 
 /// Marker traits for units of mass M1.
 pub trait M1Unit: Unit {}

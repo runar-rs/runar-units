@@ -26,20 +26,51 @@
 //! - `1` - Positive exponent
 //! - `n1` - Negative exponent
 
-pub mod i1;
-pub mod i1_tn1;
-pub mod in1_l2_m1_tn3;
-pub mod j1;
-pub mod l1;
-pub mod l1_m1;
-pub mod l1_m1_tn1;
-pub mod l1_m1_tn2;
-pub mod l1_t1;
-pub mod l1_tn1;
-pub mod l2;
-pub mod l3;
-pub mod m1;
-pub mod n1;
-pub mod t1;
-pub mod theta1;
-pub mod tn1;
+pub mod i_1;
+pub use i_1 as electric_current;
+
+pub mod i_1_t_n1;
+pub use i_1_t_n1 as electric_charge;
+
+pub mod i_n1_l_2_m_1_t_n3;
+pub use i_n1_l_2_m_1_t_n3 as electric_potential;
+
+pub mod j_1;
+pub use j_1 as luminous_intensity;
+
+pub mod l_1;
+pub use l_1 as length;
+
+pub mod l_1_m_1;
+
+pub mod l_1_m_1_t_n1;
+pub use l_1_m_1_t_n1 as impulse;
+
+pub mod l_1_m_1_t_n2;
+pub use l_1_m_1_t_n2 as force;
+
+pub mod l_1_t_1;
+
+pub mod l_1_t_n1;
+pub use l_1_t_n1 as speed;
+
+pub mod l_2;
+pub use l_2 as area;
+
+pub mod l_3;
+pub use l_3 as volume;
+
+pub mod m_1;
+pub use m_1 as mass;
+
+pub mod n_1;
+pub use n_1 as amount_of_substance;
+
+pub mod t_1;
+pub use t_1 as time;
+
+pub mod t_n1;
+pub use t_n1 as frequency;
+
+pub mod theta_1;
+pub use theta_1 as thermodynamic_temperature;

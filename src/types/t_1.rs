@@ -1,10 +1,9 @@
 //! Time
-use crate::types::l1::{L1, L1Unit};
-use crate::types::l1_t1::L1_T1;
-use crate::types::tn1::{TN1, TN1Unit};
-use crate::{Dimension, QuantityNum, Unit};
 use core::fmt::Display;
 use core::marker::PhantomData;
+
+use crate::{Dimension, QuantityNum, Unit};
+use crate::types::*;
 
 pub type Time<V, U> = T1<V, U>;
 /// T1 is a dimension for time, with a value type V and a unit U. The unit U must implement the
@@ -36,8 +35,8 @@ impl<V: QuantityNum, U: T1Unit> Dimension for T1<V, U> {
 
 // Operators
 impl_dimension_ops!(T1, T1Unit);
-impl_dimension_mul!(T1, T1Unit, TN1,  TN1Unit => scalar);
-impl_dimension_mul!(T1, T1Unit, L1, L1Unit => L1_T1);
+impl_dimension_mul_with_unit!(T1, T1Unit, t_n1::TN1, t_n1::TN1Unit => scalar, ());
+impl_dimension_mul_with_unit!(T1, T1Unit, l_1::L1, l_1::L1Unit => l_1_t_1::L1_T1, l_1_t_1::MeterSecond);
 
 impl<V: QuantityNum, U: T1Unit> T1<V, U> {
     #[must_use]
@@ -327,7 +326,7 @@ impl_linear_unit_conversions!(
 
 #[cfg(test)]
 mod tests {
-    use crate::{test_utils::assert_close, types::t1::Second};
+    use crate::{test_utils::assert_close, types::t_1::Second};
 
     use super::*;
 
