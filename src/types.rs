@@ -27,6 +27,8 @@
 //! - `n1` - Negative exponent
 
 pub mod i1;
+pub mod i1_tn1;
+pub mod in1_l2_m1_tn3;
 pub mod j1;
 pub mod l1;
 pub mod l1_m1;

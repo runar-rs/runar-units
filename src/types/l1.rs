@@ -3,9 +3,9 @@
 use core::fmt::Display;
 use core::marker::PhantomData;
 
-use crate::types::l1_t1::L1_T1;
-use crate::types::l1_tn1::L1_TN1;
 use crate::{Dimension, QuantityNum, Unit};
+
+use crate::types::*;
 
 pub type Length<V, U> = L1<V, U>;
 #[derive(Debug, Clone, Copy)]
@@ -35,12 +35,25 @@ impl<V: QuantityNum, U: L1Unit> Dimension for L1<V, U> {
 
 impl_dimension_ops!(crate::types::l1::L1, crate::types::l1::L1Unit);
 
-impl_dimension_mul!(
-    crate::types::l1::L1,
-    crate::types::l1::L1Unit,
-    crate::types::t1::T1,
-    crate::types::t1::T1Unit => crate::types::l1_t1::L1_T1
+impl_dimension_mul_with_unit!(
+    L1, L1Unit,
+    t1::T1, t1::T1Unit
+    => l1_t1::L1_T1, l1_t1::MeterSecond
 );
+
+impl_dimension_mul_with_unit!(
+    L1, L1Unit,
+    L1, L1Unit
+    => l2::L2, l2::SquareMeter
+);
+
+impl_dimension_mul_with_unit!(
+    L1, L1Unit,
+    l2::L2, l2::L2Unit
+    => l3::L3, l3::CubicMeter
+);
+
+
 impl_dimension_div!(
     crate::types::l1::L1,
     crate::types::l1::L1Unit,
@@ -327,7 +340,7 @@ impl_linear_unit_conversions!(
 mod tests {
     use crate::{
         test_utils::assert_close,
-        types::{l1_t1::MeterSecond, l1_tn1::MeterPerSecond, t1::Second},
+        types::{l1_t1::{L1_T1, MeterSecond}, l1_tn1::{L1_TN1, MeterPerSecond}, t1::Second},
     };
 
     use super::*;

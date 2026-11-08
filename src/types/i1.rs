@@ -1,8 +1,10 @@
 //! Electric Current
 
-use crate::{Dimension, QuantityNum, Unit};
 use core::fmt::Display;
 use core::marker::PhantomData;
+
+use crate::{Dimension, QuantityNum, Unit};
+use crate::types::*;
 
 pub type ElectricCurrent<V, U> = I1<V, U>;
 
@@ -33,7 +35,14 @@ impl<V: QuantityNum, U: I1Unit> Dimension for I1<V, U> {
 }
 
 impl_dimension_ops!(I1, I1Unit);
-
+impl_dimension_mul_with_unit!(
+    I1, I1Unit,
+    tn1::TN1, tn1::TN1Unit
+    => i1_tn1::I1_TN1, i1_tn1::Coulomb);
+impl_dimension_div_with_unit!(
+    I1, I1Unit,
+    t1::T1, t1::T1Unit
+    => i1_tn1::I1_TN1, i1_tn1::Coulomb);
 // Units
 
 /// Marker trait for `I1` units.
