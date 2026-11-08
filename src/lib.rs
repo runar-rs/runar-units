@@ -132,13 +132,14 @@ macro_rules! dimension_base_unit {
 ///
 /// Example:
 ///
-/// ```
+/// ```text
 /// impl_dimension_mul_with_unit!(
-///     L1,
-///     T1 => L1_T1,
-///     MeterSecond,
-///     L1Unit,
-///     T1Unit
+///     crate::types::l1::L1,
+///     crate::types::l1::L1Unit,
+///     crate::types::t1::T1,
+///     crate::types::t1::T1Unit
+///         => crate::types::l1_t1::L1_T1,
+///     crate::types::l1_t1::MeterSecond
 /// );
 /// ```
 macro_rules! impl_dimension_mul_with_unit {
@@ -347,8 +348,13 @@ macro_rules! impl_dimension_div_with_unit {
 /// - `$lhs_bound`: marker trait for valid left-hand units.
 /// - `$rhs_bound`: marker trait for valid right-hand units.
 ///
-/// ```
-/// impl_dimension_mul!(L1, T1 => L1_T1, L1Unit, T1Unit);
+/// ```text
+/// impl_dimension_mul!(
+///     crate::types::l1::L1,
+///     crate::types::l1::L1Unit,
+///     crate::types::t1::T1,
+///     crate::types::t1::T1Unit => crate::types::l1_t1::L1_T1
+/// );
 /// ```
 ///
 /// The output unit is resolved from `$output`; for `L1_T1` it is

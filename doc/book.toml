@@ -1,0 +1,7 @@
+[book]
+title = "Runar-Units Documentation"
+authors = ["D4B2A"]
+language = "en"
+
+[output.html]
+mathjax-support = true
