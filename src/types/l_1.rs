@@ -33,32 +33,31 @@ impl<V: QuantityNum, U: L1Unit> Dimension for L1<V, U> {
     }
 }
 
-impl_dimension_ops!(crate::types::l1::L1, crate::types::l1::L1Unit);
+impl_dimension_ops!(crate::types::l_1::L1, crate::types::l_1::L1Unit);
 
 impl_dimension_mul_with_unit!(
     L1, L1Unit,
-    t1::T1, t1::T1Unit
-    => l1_t1::L1_T1, l1_t1::MeterSecond
+    t_1::T1, t_1::T1Unit
+    => l_1_t_1::L1_T1, l_1_t_1::MeterSecond
 );
 
 impl_dimension_mul_with_unit!(
     L1, L1Unit,
     L1, L1Unit
-    => l2::L2, l2::SquareMeter
+    => l_2::L2, l_2::SquareMeter
 );
 
 impl_dimension_mul_with_unit!(
     L1, L1Unit,
-    l2::L2, l2::L2Unit
-    => l3::L3, l3::CubicMeter
+    l_2::L2, l_2::L2Unit
+    => l_3::L3, l_3::CubicMeter
 );
 
 
-impl_dimension_div!(
-    crate::types::l1::L1,
-    crate::types::l1::L1Unit,
-    crate::types::t1::T1,
-    crate::types::t1::T1Unit => crate::types::l1_tn1::L1_TN1
+impl_dimension_div_with_unit!(
+    l_1::L1, l_1::L1Unit,
+    t_1::T1, t_1::T1Unit
+    => l_1_t_n1::L1_TN1, l_1_t_n1::MeterPerSecond
 );
 /// `PartialEq` with same `ValueType` and same Unit
 impl<V: QuantityNum + PartialEq, U: L1Unit> PartialEq for L1<V, U> {
@@ -340,7 +339,7 @@ impl_linear_unit_conversions!(
 mod tests {
     use crate::{
         test_utils::assert_close,
-        types::{l1_t1::{L1_T1, MeterSecond}, l1_tn1::{L1_TN1, MeterPerSecond}, t1::Second},
+        types::{l_1_t_1::{L1_T1, MeterSecond}, l_1_t_n1::{L1_TN1, MeterPerSecond}, t_1::Second},
     };
 
     use super::*;
@@ -424,7 +423,7 @@ mod tests {
     #[test]
     fn test_l1_mul_t1_applies_operand_scales() {
         let length = Kilometer::new(1.0);
-        let time = crate::types::t1::Hour::new(1.0);
+        let time = crate::types::t_1::Hour::new(1.0);
         let result: L1_T1<f64, MeterSecond> = length * time;
 
         assert_close(result.value, 1000.0 * 3600.0, 1e-10);
@@ -444,7 +443,7 @@ mod tests {
     #[test]
     fn test_l1_div_t1_applies_operand_scales() {
         let length = Kilometer::new(1.0);
-        let time = crate::types::t1::Hour::new(1.0);
+        let time = crate::types::t_1::Hour::new(1.0);
         let result: L1_TN1<f64, MeterPerSecond> = length / time;
 
         assert_close(result.value, 1000.0 / 3600.0, 1e-10);

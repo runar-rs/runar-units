@@ -2,13 +2,8 @@
 use core::fmt::Display;
 use core::marker::PhantomData;
 
-use crate::{
-    Dimension, QuantityNum, Unit,
-    types::{
-        l1::{L1, L1Unit},
-        l3::L3,
-    },
-};
+use crate::{Dimension, QuantityNum, Unit};
+use crate::types::*;
 
 pub type Area<V, U> = L2<V, U>;
 
@@ -40,8 +35,17 @@ impl<V: QuantityNum, U: L2Unit> Dimension for L2<V, U> {
 
 impl_dimension_ops!(L2, L2Unit);
 
-impl_dimension_mul!(L2, L2Unit, L1, L1Unit => L3);
-impl_dimension_div!(L2, L2Unit, L1, L1Unit => L1);
+impl_dimension_mul_with_unit!(
+    L2, L2Unit,
+    l_1::L1, l_1::L1Unit
+    => l_3::L3, l_3::CubicMeter
+);
+
+impl_dimension_div_with_unit!(
+    L2, L2Unit,
+    l_1::L1, l_1::L1Unit
+    => l_1::L1, l_1::Meter
+);
 
 pub trait L2Unit: Unit {}
 

@@ -2,17 +2,13 @@
 use core::fmt::Display;
 use core::marker::PhantomData;
 
-use crate::{
-    Dimension, QuantityNum, Unit,
-    types::{
-        l1_m1_tn2::L1_M1_TN2,
-        tn1::{TN1, TN1Unit},
-    },
-};
+use crate::{Dimension, QuantityNum, Unit};
+use crate::types::*;
 
 pub type Impulse<V, U> = L1_M1_TN1<V, U>;
 
 #[allow(non_camel_case_types)]
+#[derive(Debug, Clone, Copy)]
 pub struct L1_M1_TN1<V, U>
 where
     V: QuantityNum,
@@ -38,7 +34,10 @@ impl<V: QuantityNum, U: L1_M1_TN1Unit> Dimension for L1_M1_TN1<V, U> {
 }
 
 impl_dimension_ops!(L1_M1_TN1, L1_M1_TN1Unit);
-impl_dimension_mul!(L1_M1_TN1, L1_M1_TN1Unit, TN1, TN1Unit => L1_M1_TN2);
+impl_dimension_mul_with_unit!(
+    L1_M1_TN1, L1_M1_TN1Unit,
+    t_n1::TN1, t_n1::TN1Unit
+    => l_1_m_1_t_n2::L1_M1_TN2, l_1_m_1_t_n2::Newton);
 
 /// Marker trait for units of `L1_M1_TN1`
 #[allow(non_camel_case_types)]

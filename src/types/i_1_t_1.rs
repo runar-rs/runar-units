@@ -5,11 +5,11 @@ use core::marker::PhantomData;
 
 use crate::{Dimension, QuantityNum, Unit};
 
-pub type ElectricCharge<V, U> = I1_TN1<V, U>;
+pub type ElectricCharge<V, U> = I1_T1<V, U>;
 
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone, Copy)]
-pub struct I1_TN1<V, U>
+pub struct I1_T1<V, U>
 where
     V: QuantityNum,
     U: I1_TN1Unit,
@@ -18,14 +18,14 @@ where
     pub(crate) value: V,
 }
 
-impl<V: QuantityNum + Display, U: I1_TN1Unit> core::fmt::Display for I1_TN1<V, U> {
+impl<V: QuantityNum + Display, U: I1_TN1Unit> core::fmt::Display for I1_T1<V, U> {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         Display::fmt(&self.value, f)?;
         write!(f, " {}", U::ABBREVIATION)
     }
 }
 
-impl<V: QuantityNum, U: I1_TN1Unit> Dimension for I1_TN1<V, U> {
+impl<V: QuantityNum, U: I1_TN1Unit> Dimension for I1_T1<V, U> {
     type ValueType = V;
 
     fn get(&self) -> &Self::ValueType {
@@ -33,7 +33,7 @@ impl<V: QuantityNum, U: I1_TN1Unit> Dimension for I1_TN1<V, U> {
     }
 }
 
-impl_dimension_ops!(I1_TN1, I1_TN1Unit);
+impl_dimension_ops!(I1_T1, I1_TN1Unit);
 
 #[allow(non_camel_case_types)]
 pub trait I1_TN1Unit: Unit{
@@ -48,8 +48,8 @@ impl Unit for Coulomb {
 impl I1_TN1Unit for Coulomb {}
 
 impl Coulomb {
-    pub fn new<V: QuantityNum>(value: V) -> I1_TN1<V, Coulomb> {
-        I1_TN1 {
+    pub fn new<V: QuantityNum>(value: V) -> I1_T1<V, Coulomb> {
+        I1_T1 {
             unit: PhantomData,
             value,
         }

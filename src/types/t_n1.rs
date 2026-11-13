@@ -1,10 +1,10 @@
 //! Frequency
-use crate::types::l1::{L1, L1Unit};
-use crate::types::l1_tn1::L1_TN1;
-use crate::types::t1::{T1, T1Unit};
-use crate::{Dimension, QuantityNum, Unit};
+
 use core::fmt::Display;
 use core::marker::PhantomData;
+
+use crate::{Dimension, QuantityNum, Unit};
+use crate::types::*;
 
 #[derive(Debug, Clone, Copy)]
 pub struct TN1<V, U>
@@ -43,8 +43,8 @@ impl<U: TN1Unit> TN1<f64, U> {
 }
 
 impl_dimension_ops!(TN1, TN1Unit);
-impl_dimension_mul!(TN1, TN1Unit, T1,  T1Unit => scalar);
-impl_dimension_mul!(TN1, TN1Unit, L1,  L1Unit => L1_TN1);
+impl_dimension_mul_with_unit!(TN1, TN1Unit, t_1::T1,  t_1::T1Unit => scalar, ());
+impl_dimension_mul_with_unit!(TN1, TN1Unit, l_1::L1,  l_1::L1Unit => l_1_t_n1::L1_TN1, l_1_t_n1::MeterPerSecond);
 
 pub trait TN1Unit: Unit {}
 
@@ -181,12 +181,13 @@ impl TN1Unit for Rontohertz {}
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::t1::Second;
+    #[allow(unused_imports)]
+    use crate::types::*;
 
     #[test]
     fn test_mul_tn1_t1() {
         let frequency = TN1::<f64, Hertz>::new(2.0);
-        let time = T1::<f64, Second>::new(3.0);
+        let time = t_1::T1::<f64, t_1::Second>::new(3.0);
         let result = frequency * time;
         assert_eq!(result, 6.0);
     }
