@@ -38,12 +38,12 @@ impl<V: QuantityNum, U: I1Unit> Dimension for I1<V, U> {
 impl_dimension_ops!(I1, I1Unit);
 impl_dimension_mul_with_unit!(
     I1, I1Unit,
-    t_n1::TN1, t_n1::TN1Unit
-    => i_1_t_n1::I1_TN1, i_1_t_n1::Coulomb);
+    t_1::T1, t_1::T1Unit
+    => i_1_t_1::I1_T1, i_1_t_1::Coulomb);
 impl_dimension_div_with_unit!(
     I1, I1Unit,
-    t_1::T1, t_1::T1Unit
-    => i_1_t_n1::I1_TN1, i_1_t_n1::Coulomb);
+    t_n1::TN1, t_n1::TN1Unit
+    => i_1_t_1::I1_T1, i_1_t_1::Coulomb);
 // Units
 
 /// Marker trait for `I1` units.

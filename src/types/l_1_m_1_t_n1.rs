@@ -8,6 +8,7 @@ use crate::types::*;
 pub type Impulse<V, U> = L1_M1_TN1<V, U>;
 
 #[allow(non_camel_case_types)]
+#[derive(Debug, Clone, Copy)]
 pub struct L1_M1_TN1<V, U>
 where
     V: QuantityNum,

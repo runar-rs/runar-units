@@ -29,14 +29,17 @@
 pub mod i_1;
 pub use i_1 as electric_current;
 
-pub mod i_1_t_n1;
-pub use i_1_t_n1 as electric_charge;
+pub mod i_1_t_1;
+pub use i_1_t_1 as electric_charge;
 
 pub mod i_n1_l_2_m_1_t_n3;
 pub use i_n1_l_2_m_1_t_n3 as electric_potential;
 
 pub mod j_1;
 pub use j_1 as luminous_intensity;
+
+pub mod j_1_sr_1;
+pub use j_1_sr_1 as luminous_flux;
 
 pub mod l_1;
 pub use l_1 as length;
@@ -66,11 +69,16 @@ pub use m_1 as mass;
 pub mod n_1;
 pub use n_1 as amount_of_substance;
 
+pub mod sr_1;
+pub use sr_1 as solid_angle;
+
 pub mod t_1;
 pub use t_1 as time;
 
 pub mod t_n1;
 pub use t_n1 as frequency;
+
+pub mod t_n1_theta_1;
 
 pub mod theta_1;
 pub use theta_1 as thermodynamic_temperature;
